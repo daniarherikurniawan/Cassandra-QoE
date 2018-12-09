@@ -1,5 +1,7 @@
 # Cassandra-QoE
 
+chmod 777 up.sh
+
 git add --all .
 git commit -m "minor update" -a
 git push origin master

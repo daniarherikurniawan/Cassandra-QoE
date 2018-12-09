@@ -9,7 +9,7 @@ cluster = Cluster([str(IP)])
 
 session.execute('USE test')
 
-rows = session.execute('SELECT name, age, email FROM users')
+rows = session.execute('SELECT emp_name, emp_city, emp_phone FROM emp')
 for user_row in rows:
-    print user_row.name, user_row.age, user_row.email
+    print user_row.emp_name, user_row.emp_city, user_row.emp_phone
 
