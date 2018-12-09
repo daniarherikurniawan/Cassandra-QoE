@@ -1,5 +1,8 @@
 # Cassandra-QoE
 
+git add --all .
+git commit -m "minor update" -a
+git push origin master
 
 There are 3 Cassandra nodes:
 - cass-1.cassandra-qoe.cs331-uc.emulab.net
@@ -56,3 +59,38 @@ There are 3 Cassandra nodes:
 	cd /tmp/Cassandra-QoE/apache-cassandra-3.0.17/bin
 	sudo chmod 777 nodetool
 	./nodetool status
+
+
+====================================================================================
+
+cd /tmp/Cassandra-QoE/apache-cassandra-3.0.17
+chmod 777 scripts/getIP.sh
+myIP="$(./scripts/getIP.sh)"
+cd /tmp/Cassandra-QoE/apache-cassandra-3.0.17/bin
+cqlsh echo $myIP
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
