@@ -127,6 +127,10 @@ There are 3 Cassandra nodes:
 	export LC_ALL=C
 	pip install cassandra-driver
 
+	cd /tmp/Cassandra-QoE/
+	python insertData.py
+
+
 
 
 
