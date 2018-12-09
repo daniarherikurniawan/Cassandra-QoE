@@ -6,7 +6,7 @@ p = subprocess.Popen("scripts/getIP.sh", stdout=subprocess.PIPE, shell=True)
 (IP, status) = p.communicate()
 
 cluster = Cluster([str(IP)])
-
+session = cluster.connect()
 session.execute('USE test')
 
 rows = session.execute('SELECT emp_name, emp_city, emp_phone FROM emp')
