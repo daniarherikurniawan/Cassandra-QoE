@@ -130,7 +130,7 @@ There are 3 Cassandra nodes:
 	pip install cassandra-driver
 
 	cd /tmp/Cassandra-QoE/
-	python insertData.py
+	python scripts/insertData.py
 
 
 
