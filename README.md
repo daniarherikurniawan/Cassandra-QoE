@@ -70,7 +70,7 @@ There are 3 Cassandra nodes:
 
 	bash
 	cd /tmp/Cassandra-QoE/
-	chmod 777 scripts/getIP.sh
+	chmod 777 scripts/*
 	myIP="$(./scripts/getIP.sh)"
 	cd /tmp/Cassandra-QoE/apache-cassandra-3.0.17/bin
 	chmod 777 cqlsh
@@ -79,45 +79,45 @@ There are 3 Cassandra nodes:
 ====================================================================================
 > Prepare the data and insert test data
 
-	CREATE KEYSPACE test
+	CREATE KEYSPACE CassDB
 		WITH replication = {'class':'SimpleStrategy', 'replication_factor' : 3};
 
-	USE test
+	USE CassDB;
 
-	CREATE TABLE emp(
-	   emp_id int PRIMARY KEY,
-	   emp_name text,
-	   emp_city text,
-	   emp_sal varint,
-	   emp_phone varint
+	CREATE TABLE users(
+	   id UUID PRIMARY KEY,
+	   name text,
+	   address text,
+	   salary varint,
+	   phone text
 	   );
 
-	select * from emp;
+	select * from users;
 
-	INSERT INTO emp (emp_id, emp_name, emp_city,
-	   emp_phone, emp_sal) VALUES(1,'ram', 'Hyderabad', 9848022338, 50000);
+	INSERT INTO users (id, name, address,
+	   salary, phone) VALUES(now(),'ram', 'Hyderabad', 9848022338, '50000');
 
-	INSERT INTO emp (emp_id, emp_name, emp_city,
-	   emp_phone, emp_sal) VALUES(2,'robin', 'Hyderabad', 9848022339, 40000);
+	INSERT INTO users (id, name, address,
+	   salary, phone) VALUES(now(),'robin', 'Hyderabad', 9848022339, '40000');
 
-	INSERT INTO emp (emp_id, emp_name, emp_city,
-	   emp_phone, emp_sal) VALUES(3,'rahman', 'Chennai', 9848022330, 45000);
+	INSERT INTO users (id, name, address,
+	   salary, phone) VALUES(now(),'rahman', 'Chennai', 9848022330, '45000');
 
-	select * from emp;
+	select * from users;
 
 
 ====================================================================================
 > Another Query
 
-	UPDATE emp SET emp_city='Delhi',emp_sal=50000
-	   WHERE emp_id=2;
+	UPDATE users SET address='Delhi',salary=50000
+	   WHERE id=e9454d00-fc01-11e8-add1-35de7ed92caa;
 
-	SELECT emp_name, emp_sal from emp;
+	SELECT name, salary from users;
 
-	CREATE INDEX ON emp(emp_sal);
-	SELECT * FROM emp WHERE emp_sal=50000;
+	CREATE INDEX ON users(salary);
+	SELECT * FROM users WHERE salary=50000;
 
-	DELETE FROM emp WHERE emp_id=3;
+	DELETE FROM users WHERE id=3e9454d00-fc01-11e8-add1-35de7ed92caa;
 
 	exit
 
@@ -128,9 +128,10 @@ There are 3 Cassandra nodes:
 	pip -V
 	export LC_ALL=C
 	pip install cassandra-driver
+	pip install Faker
 
 	cd /tmp/Cassandra-QoE/
-	python scripts/insertData.py
+	python scripts/generateTestData.py
 
 
 
