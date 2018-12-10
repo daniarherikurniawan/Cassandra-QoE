@@ -61,11 +61,11 @@ class PagedResultHandler(object):
         if self.future.has_more_pages:
             self.future.start_fetching_next_page()
         else:
-        	print('Got the result from node '+str(self.replicaAddress)+
+        	print('Result from node '+str(self.replicaAddress)+
         		' (non-backend latency: '+str(self.latency)+' ms)')
         	proxy.reduceQueue(self.replicaAddress)
-        	for user_row in rows:
-        		print user_row.name, user_row.address, user_row.phone
+        	# for user_row in rows:
+        	# 	print user_row.name, user_row.address, user_row.phone
             # self.finished_event.set()
     def handle_error(self, exc):
         self.error = exc
