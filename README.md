@@ -25,7 +25,7 @@ There are 3 Cassandra nodes:
 
 	cd /tmp/
 	git clone https://github.com/daniarherikurniawan/Cassandra-QoE.git
-	cd Cassandra-QoE/apache-cassandra-3.0.17
+	cd /tmp/Cassandra-QoE/apache-cassandra-3.0.17
 	cp conf/cassandra1.yaml conf/cassandra.yaml 
 	cd bin
 	sudo chmod 777 cassandra
@@ -36,7 +36,7 @@ There are 3 Cassandra nodes:
 
 	cd /tmp/
 	git clone https://github.com/daniarherikurniawan/Cassandra-QoE.git
-	cd Cassandra-QoE/apache-cassandra-3.0.17
+	cd /tmp/Cassandra-QoE/apache-cassandra-3.0.17
 	cp conf/cassandra2.yaml conf/cassandra.yaml 
 	cd bin
 	sudo chmod 777 cassandra
@@ -47,12 +47,26 @@ There are 3 Cassandra nodes:
 
 	cd /tmp/
 	git clone https://github.com/daniarherikurniawan/Cassandra-QoE.git
-	cd Cassandra-QoE/apache-cassandra-3.0.17
+	cd /tmp/Cassandra-QoE/apache-cassandra-3.0.17
 	cp conf/cassandra3.yaml conf/cassandra.yaml 
 	cd bin
 	sudo chmod 777 cassandra
 	cd /tmp/Cassandra-QoE/apache-cassandra-3.0.17/bin/
 	./cassandra -f
+
+> run in client
+
+	cd /tmp/
+	git clone https://github.com/daniarherikurniawan/Cassandra-QoE.git
+	cd /tmp/Cassandra-QoE/apache-cassandra-3.0.17
+	sudo apt-get update
+	printf 'Y' | sudo apt-get install python-pip
+	pip -V
+	export LC_ALL=C
+	pip install cassandra-driver
+	pip install Faker
+
+	python
 
 
 ====================================================================================
@@ -140,6 +154,7 @@ There are 3 Cassandra nodes:
 ====================================================================================
 > Insert test data using python driver
 
+	sudo apt-get update
 	printf 'Y' | sudo apt-get install python-pip
 	pip -V
 	export LC_ALL=C

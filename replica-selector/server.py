@@ -1,7 +1,10 @@
 # pip install freeport
-from xmlrpc.server import SimpleXMLRPCServer
+# from xmlrpc.server import SimpleXMLRPCServer
+import xmlrpclib
+from SimpleXMLRPCServer import SimpleXMLRPCServer
+import subprocess
 
-list_servers = [['server_A',0],['server_B',0], ['server_C',0]]
+list_servers = [['155.98.38.66',0],['155.98.38.70',0], ['155.98.38.57',0]]
 
 def getReplicaServer(latency):
 	global list_servers
@@ -27,7 +30,12 @@ def getQueue():
 	global list_servers
 	return list_servers
 
-server = SimpleXMLRPCServer(("localhost", 8000))
+
+p = subprocess.Popen("/tmp/Cassandra-QoE/scripts/getIP.sh", stdout=subprocess.PIPE, shell=True)
+(IP, status) = p.communicate()
+IP=IP.replace('\n','')
+server = SimpleXMLRPCServer((str(IP), 8000))
+server = SimpleXMLRPCServer((str(IP), 8000))
 print("Listening on port 8000...")
 server.register_function(getReplicaServer, 'getReplicaServer')
 server.register_function(reduceQueue, 'reduceQueue')
