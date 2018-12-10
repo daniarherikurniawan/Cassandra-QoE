@@ -135,16 +135,14 @@ Open 8 SSH terminal :
 	
 	cd /tmp/
 	git clone https://github.com/daniarherikurniawan/Cassandra-QoE.git
-	cd /tmp/Cassandra-QoE/apache-cassandra-3.0.17
-
-	python
-	// run server script
+	cd /tmp/Cassandra-QoE/
+	python replica-selector/server.py
 
 > run in client for the replica selection
 
 	cd /tmp/
 	git clone https://github.com/daniarherikurniawan/Cassandra-QoE.git
-	cd /tmp/Cassandra-QoE/apache-cassandra-3.0.17
+	cd /tmp/Cassandra-QoE/
 	sudo apt-get update
 	printf 'Y' | sudo apt-get install python-pip
 	pip -V
@@ -197,6 +195,9 @@ Open 8 SSH terminal :
 
 ====================================================================================
 > Another Query
+	
+	./cqlsh $myIP
+	USE CassDB;
 
 	UPDATE users SET address='Delhi',salary=50000
 	   WHERE id=e9454d00-fc01-11e8-add1-35de7ed92caa;
