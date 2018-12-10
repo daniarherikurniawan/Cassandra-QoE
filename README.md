@@ -127,7 +127,7 @@ There are 3 Cassandra nodes:
 	// edit the list servers in script
 	// run server script
 
-> run in client
+> run in client for the replica selection
 
 	cd /tmp/
 	git clone https://github.com/daniarherikurniawan/Cassandra-QoE.git
@@ -135,7 +135,7 @@ There are 3 Cassandra nodes:
 	sudo apt-get update
 	printf 'Y' | sudo apt-get install python-pip
 	pip -V
-	
+
 	bash
 	export LC_ALL=C
 	pip install cassandra-driver
@@ -144,6 +144,28 @@ There are 3 Cassandra nodes:
 	python
 	// edit the IP selector
 	// run client script
+
+
+> run in client for rabbitMQ
+	
+	apt-key adv --keyserver "hkps.pool.sks-keyservers.net" --recv-keys "0x6B73A36E6026DFCA"
+
+	sudo tee /etc/apt/sources.list.d/bintray.rabbitmq.list <<EOF
+	deb https://dl.bintray.com/rabbitmq-erlang/debian xenial erlang
+	deb https://dl.bintray.com/rabbitmq/debian xenial main
+	EOF
+
+	sudo apt-get update
+	sudo apt-get install rabbitmq-server
+
+	sudo invoke-rc.d rabbitmq-server start
+	systemctl status rabbitmq-server.service
+
+	bash
+	pip install pika
+
+
+
 
 ====================================================================================
 > Another Query
