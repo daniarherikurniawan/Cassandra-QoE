@@ -138,7 +138,7 @@ Open 8 SSH terminal :
 	cd /tmp/Cassandra-QoE/
 	python replica-selector/server.py
 
-> run in client for the replica selection
+> run in client for preparing sending request to replica selection
 
 	cd /tmp/
 	git clone https://github.com/daniarherikurniawan/Cassandra-QoE.git
@@ -151,9 +151,6 @@ Open 8 SSH terminal :
 	export LC_ALL=C
 	pip install cassandra-driver
 	pip install Faker
-
-	python
-	// run client script
 
 
 > run in client for rabbitMQ
@@ -168,10 +165,17 @@ Open 8 SSH terminal :
 	sudo apt-get update
 	sudo apt-get install rabbitmq-server
 
+	<!-- =================== -->
+	// check the status of rabbitMQ, it should be automatically started
+
 	sudo invoke-rc.d rabbitmq-server start
 	systemctl status rabbitmq-server.service
 
+	<!-- =================== -->
+	// if rabbit-mq is ready, then:
+
 	bash
+	export LC_ALL=C
 	pip install pika
 
 > in Client => rabbit-mq receiver
