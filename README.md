@@ -54,21 +54,6 @@ There are 3 Cassandra nodes:
 	cd /tmp/Cassandra-QoE/apache-cassandra-3.0.17/bin/
 	./cassandra -f
 
-> run in client
-
-	cd /tmp/
-	git clone https://github.com/daniarherikurniawan/Cassandra-QoE.git
-	cd /tmp/Cassandra-QoE/apache-cassandra-3.0.17
-	sudo apt-get update
-	printf 'Y' | sudo apt-get install python-pip
-	pip -V
-	export LC_ALL=C
-	pip install cassandra-driver
-	pip install Faker
-
-	python
-
-
 ====================================================================================
 > open a new ssh on any node to check the status of Cassandra cluster
 
@@ -119,6 +104,35 @@ There are 3 Cassandra nodes:
 	   salary, phone) VALUES(now(),'rahman', 'Chennai', 45000, '9848022330');
 
 	select * from users;
+
+
+====================================================================================
+> run in server
+	
+	cd /tmp/
+	git clone https://github.com/daniarherikurniawan/Cassandra-QoE.git
+	cd /tmp/Cassandra-QoE/apache-cassandra-3.0.17
+
+	python
+	// edit the list servers in script
+	// run server script
+
+> run in client
+
+	cd /tmp/
+	git clone https://github.com/daniarherikurniawan/Cassandra-QoE.git
+	cd /tmp/Cassandra-QoE/apache-cassandra-3.0.17
+	sudo apt-get update
+	printf 'Y' | sudo apt-get install python-pip
+	pip -V
+	export LC_ALL=C
+	pip install cassandra-driver
+	pip install Faker
+
+	python
+	// edit the IP selector
+	// run client script
+
 
 ====================================================================================
 > Insert dataset from CSV
