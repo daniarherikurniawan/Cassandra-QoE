@@ -42,7 +42,14 @@ def sendTestRequest(latency):
 def sendRequest(latency):
 	replicaAddress = proxy.getReplicaServer(latency)
 	print("send data to server : "+str(replicaAddress))
-	future = sessions[replicaAddress].execute_async("SELECT * FROM users WHERE name='Lucas Allen' ALLOW FILTERING")
+	future = sessions[replicaAddress].execute_async(
+	    """
+	    INSERT INTO users (id, name, address, salary, phone)
+	    VALUES (%s, %s, %s, %s, %s)
+	    """,
+	    (uuid.uuid1(), fake.name(), fake.address().replace('\n',', '), randint(4000, 100000), str(randint(1000000, 9000000)))
+	)
+	# future = sessions[replicaAddress].execute_async("SELECT * FROM users WHERE name='Lucas Allen' ALLOW FILTERING")
 	handler = PagedResultHandler(future, replicaAddress, latency)
 	print('finish sending async request')
 
