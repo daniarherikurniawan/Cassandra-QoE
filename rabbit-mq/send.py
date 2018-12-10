@@ -6,7 +6,7 @@ connection = pika.BlockingConnection(pika.ConnectionParameters('localhost'))
 channel = connection.channel()
 channel.queue_declare(queue='CassandraQueue')
 
-for x in xrange(1,100):
+for x in xrange(1,5):
 	latency=randint(200, 10000)
 	channel.basic_publish(exchange='',
 	                      routing_key='CassandraQueue',

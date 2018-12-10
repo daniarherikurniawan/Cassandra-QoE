@@ -68,7 +68,7 @@ class PagedResultHandler(object):
         if self.future.has_more_pages:
             self.future.start_fetching_next_page()
         else:
-        	print('Result from node '+str(self.replicaAddress)+
+        	print('Got the result from node '+str(self.replicaAddress)+
         		' (non-backend latency: '+str(self.latency)+' ms)')
         	proxy.reduceQueue(self.replicaAddress)
         	# for user_row in rows:
@@ -100,9 +100,8 @@ channel = connection.channel()
 channel.queue_declare(queue='CassandraQueue')
 
 def callback(ch, method, properties, body):
-    print(" [x] Received request with latency %r" % body)
     sendRequest(int(body))
-    print(" [x] Request sent to replica selector")
+    print(" [*] Request with latency "+ body+" ms is sent to replica selector")
 
 
 channel.basic_consume(callback,
