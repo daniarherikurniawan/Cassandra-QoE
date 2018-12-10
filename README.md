@@ -105,6 +105,12 @@ There are 3 Cassandra nodes:
 
 	select * from users;
 
+====================================================================================
+> Insert dataset from CSV
+	
+	./cqlsh $myIP
+
+	COPY CassDB.users FROM '../../dataset/data-users-1.csv' WITH DELIMITER='|' AND HEADER=TRUE
 
 ====================================================================================
 > Another Query
