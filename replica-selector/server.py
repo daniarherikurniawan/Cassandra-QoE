@@ -21,6 +21,7 @@ def getReplicaServer(latency):
 def reduceQueue(id):
 	global list_servers
 	list_servers[id][1] = list_servers[id][1] - 1 
+	return True
 
 def getQueue():
 	global list_servers

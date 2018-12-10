@@ -72,6 +72,7 @@ There are 3 Cassandra nodes:
 	cd /tmp/Cassandra-QoE/
 	chmod 777 scripts/*
 	myIP="$(./scripts/getIP.sh)"
+	echo $myIP
 	cd /tmp/Cassandra-QoE/apache-cassandra-3.0.17/bin
 	chmod 777 cqlsh
 	./cqlsh $myIP
@@ -109,8 +110,9 @@ There are 3 Cassandra nodes:
 > Insert dataset from CSV
 	
 	./cqlsh $myIP
+	USE CassDB;
 
-	COPY CassDB.users FROM '../../dataset/data-users-1.csv' WITH DELIMITER='|' AND HEADER=TRUE;
+	COPY CassDB.users (id,name,address,salary,phone) FROM '../../dataset/data-users-1.csv' WITH DELIMITER='|' AND HEADER=TRUE;
 
 ====================================================================================
 > Another Query
@@ -128,8 +130,10 @@ There are 3 Cassandra nodes:
 	SELECT * FROM users WHERE salary>1000 ALLOW FILTERING;
 
 	DROP TABLE users;
+	TRUNCATE CassDB.users;
+	DESCRIBE TABLES;
 
-	DESCRIBE TABLES
+	SELECT * FROM users LIMIT 10;
 
 	exit
 

@@ -1,8 +1,10 @@
 import xmlrpc.client
 
 proxy = xmlrpc.client.ServerProxy("http://localhost:8000/")
-proxy.add(7, 3)
-proxy.subtract(7, 3)
-proxy.multiply(7, 3)
-proxy.divide(7, 3)
+a = proxy.getReplicaServer(1800)
+b = proxy.reduceQueue(1)
+c = proxy.getQueue()
 
+print(a)
+print(b)
+print(c)
