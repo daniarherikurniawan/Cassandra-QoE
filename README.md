@@ -88,20 +88,20 @@ There are 3 Cassandra nodes:
 	   id UUID PRIMARY KEY,
 	   name text,
 	   address text,
-	   salary varint,
+	   salary int,
 	   phone text
 	   );
 
 	select * from users;
 
 	INSERT INTO users (id, name, address,
-	   salary, phone) VALUES(now(),'ram', 'Hyderabad', 9848022338, '50000');
+	   salary, phone) VALUES(now(),'ram', 'Hyderabad', 50000, '9848022338');
 
 	INSERT INTO users (id, name, address,
-	   salary, phone) VALUES(now(),'robin', 'Hyderabad', 9848022339, '40000');
+	   salary, phone) VALUES(now(),'robin', 'Hyderabad', 40000, '9848022339');
 
 	INSERT INTO users (id, name, address,
-	   salary, phone) VALUES(now(),'rahman', 'Chennai', 9848022330, '45000');
+	   salary, phone) VALUES(now(),'rahman', 'Chennai', 45000, '9848022330');
 
 	select * from users;
 
@@ -125,6 +125,8 @@ There are 3 Cassandra nodes:
 
 	DELETE FROM users WHERE id=3e9454d00-fc01-11e8-add1-35de7ed92caa;
 
+	DROP TABLE users
+
 	exit
 
 ====================================================================================
@@ -139,6 +141,12 @@ There are 3 Cassandra nodes:
 	cd /tmp/Cassandra-QoE/
 	python scripts/generateTestData.py
 
+
+> Random
+	
+	// reduce .git size
+	git reflog expire --all --expire=now
+	git gc --prune=now --aggressive
 
 
 
