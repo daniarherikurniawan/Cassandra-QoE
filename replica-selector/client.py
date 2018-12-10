@@ -72,12 +72,13 @@ class PagedResultHandler(object):
             callback=self.handle_page,
             errback=self.handle_error)
     def handle_page(self, rows):
-        # for user_row in rows:
-        	# print user_row.name, user_row.address, user_row.phone
+        
         if self.future.has_more_pages:
             self.future.start_fetching_next_page()
         else:
         	print('Got the result!!')
+        	for user_row in rows:
+        		print user_row.name, user_row.address, user_row.phone
             # self.finished_event.set()
     def handle_error(self, exc):
         self.error = exc
