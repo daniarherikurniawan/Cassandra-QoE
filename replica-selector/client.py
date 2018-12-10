@@ -10,8 +10,10 @@ fake = Faker()
 
 # p = subprocess.Popen("scripts/getIP.sh", stdout=subprocess.PIPE, shell=True)
 # (IP, status) = p.communicate()
-IP=['155.98.38.66','155.98.38.70','155.98.38.57']
-IPSelector='155.98.38.59'
+IP=['cass-1.cassandra-qoe.cs331-uc.emulab.net',
+	'cass-2.cassandra-qoe.cs331-uc.emulab.net',
+	'cass-3.cassandra-qoe.cs331-uc.emulab.net']
+IPSelector='selector.cassandra-qoe.cs331-uc.emulab.net'
 
 
 clusters = [Cluster([str(IP[0])]), Cluster([str(IP[1])]), Cluster([str(IP[2])])]
@@ -45,21 +47,23 @@ def sendRequest(latency):
 	print('finish sending async request')
 
 
-class PagedResultHandler(object, replicaAddress, latency):
-    def __init__(self, future):
+class PagedResultHandler(object):
+    def __init__(self, future, replicaAddress, latency):
         self.error = None
+        self.replicaAddress = replicaAddress
+        self.latency = latency
         # self.finished_event = show()
         self.future = future
         self.future.add_callbacks(
             callback=self.handle_page,
             errback=self.handle_error)
     def handle_page(self, rows):
-        
         if self.future.has_more_pages:
             self.future.start_fetching_next_page()
         else:
-        	print('Got the result from node '+str(replicaAddress)+
-        		' (non-backend latency: '+latency+' ms)')
+        	print('Got the result from node '+str(self.replicaAddress)+
+        		' (non-backend latency: '+str(self.latency)+' ms)')
+        	proxy.reduceQueue(self.replicaAddress)
         	for user_row in rows:
         		print user_row.name, user_row.address, user_row.phone
             # self.finished_event.set()
@@ -76,21 +80,25 @@ def print_row_count(rows, label):
 def print_err(reason):
     print "Error: {}".format(reason)
 
-sendRequest(1800)
-sendRequest(100)
-sendRequest(8000)
+for x in range(1,10):
+	# listening rabbit mq
+	sendRequest(1800)
+
+# print(str(proxy.getQueue()))
+# sendRequest(100)
+# sendRequest(8000)
 
 
 
-print(str(proxy.getReplicaServer(1000)))
-print(str(proxy.getReplicaServer(7800)))
-print(str(proxy.getQueue()))
-print(str(proxy.reduceQueue(1)))
-print(str(proxy.getQueue()))
+# print(str(proxy.getReplicaServer(1000)))
+# print(str(proxy.getReplicaServer(7800)))
+# print(str(proxy.getQueue()))
+# print(str(proxy.reduceQueue(1)))
 
-future = sessions[1].execute_async("SELECT * FROM users")
-future.add_callback(print_row_count, 'Async')
-future.add_errback(print_err)
+
+# future = sessions[1].execute_async("SELECT * FROM users")
+# future.add_callback(print_row_count, 'Async')
+# future.add_errback(print_err)
 
 
 

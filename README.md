@@ -117,7 +117,7 @@ There are 3 Cassandra nodes:
 
 
 ====================================================================================
-> run in server
+> run in server (selector)
 	
 	cd /tmp/
 	git clone https://github.com/daniarherikurniawan/Cassandra-QoE.git
@@ -135,6 +135,8 @@ There are 3 Cassandra nodes:
 	sudo apt-get update
 	printf 'Y' | sudo apt-get install python-pip
 	pip -V
+	
+	bash
 	export LC_ALL=C
 	pip install cassandra-driver
 	pip install Faker
