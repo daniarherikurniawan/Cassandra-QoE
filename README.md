@@ -138,21 +138,6 @@ Open 8 SSH terminal :
 	cd /tmp/Cassandra-QoE/
 	python replica-selector/server.py
 
-> run in client for preparing sending request to replica selection
-
-	cd /tmp/
-	git clone https://github.com/daniarherikurniawan/Cassandra-QoE.git
-	cd /tmp/Cassandra-QoE/
-	sudo apt-get update
-	printf 'Y' | sudo apt-get install python-pip
-	pip -V
-
-	bash
-	export LC_ALL=C
-	pip install cassandra-driver
-	pip install Faker
-
-
 > run in client for rabbitMQ
 	
 	apt-key adv --keyserver "hkps.pool.sks-keyservers.net" --recv-keys "0x6B73A36E6026DFCA"
@@ -178,16 +163,30 @@ Open 8 SSH terminal :
 	export LC_ALL=C
 	pip install pika
 
-> in Client => rabbit-mq receiver
+	<!-- =================== -->
+	// run rabbit-mq receiver
 	
-	// rabbit-mq/receive.py
+	python /tmp/Cassandra-QoE/rabbit-mq/receive.py
+
+
+> run in client for preparing sending request to replica selection
+
+	cd /tmp/
+	git clone https://github.com/daniarherikurniawan/Cassandra-QoE.git
 	cd /tmp/Cassandra-QoE/
+	sudo apt-get update
+	printf 'Y' | sudo apt-get install python-pip
+	pip -V
 
+	bash
+	export LC_ALL=C
+	pip install cassandra-driver
+	pip install Faker
 
-> in Client => rabbit-mq sender
+	// run rabbit-mq sender
 
-	// rabbit-mq/send.py
-	cd /tmp/Cassandra-QoE/
+	python /tmp/Cassandra-QoE/rabbit-mq/send.py
+
 
 > Make sure these files are running
 - replica-selector/server.py (selector)
