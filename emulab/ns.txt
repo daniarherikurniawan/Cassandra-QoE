@@ -1,0 +1,29 @@
+# This is a simple ns script that demonstrates loops.
+set ns [new Simulator]
+source tb_compat.tcl
+
+# Define the client server
+set client [$ns node]
+tb-set-node-os $client "UBUNTU16-64-STD"
+tb-set-hardware $client d710
+
+# Define the replica selector
+set selector [$ns node]
+tb-set-node-os $selector "UBUNTU16-64-STD"
+tb-set-hardware $selector d710
+
+# Connect the client and selector together.
+set client-lan [$ns make-lan "$client $selector" 1Gb 0ms]
+
+set maxnodes 3
+set lanstr ""
+for {set i 1} {$i <= $maxnodes} {incr i} {
+    set cass($i) [$ns node]
+    append lanstr "$cass($i) "
+    tb-set-node-os $cass($i) UBUNTU16-64-STD
+    tb-set-hardware $cass($i) d710
+}
+# Put all the nodes in a lan
+set db-lan [$ns make-lan "$lanstr $client $selector" 100Mb 0ms]
+# Go!
+$ns run

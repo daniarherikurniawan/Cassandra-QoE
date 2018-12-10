@@ -26,7 +26,7 @@ def show():
 	for user_row in rows:
 	    print user_row.name, user_row.address, user_row.phone
 
-def sendRequest(latency):
+def sendTestRequest(latency):
 	replicaAddress = proxy.getReplicaServer(latency)
 	print("send data to server - "+str(replicaAddress))
 	sessions[replicaAddress].execute(
@@ -37,6 +37,37 @@ def sendRequest(latency):
 	    (uuid.uuid1(), fake.name(), fake.address().replace('\n',', '), randint(4000, 100000), str(randint(1000000, 9000000)))
 	)
 
+def sendRequest(latency):
+	replicaAddress = proxy.getReplicaServer(latency)
+	print("send data to server - "+str(replicaAddress))
+	future = sessions[replicaAddress].execute_async("SELECT * FROM users WHERE name='Lucas Allen' ALLOW FILTERING")
+	handler = PagedResultHandler(future, replicaAddress, latency)
+	print('finish sending async request')
+
+
+class PagedResultHandler(object, replicaAddress, latency):
+    def __init__(self, future):
+        self.error = None
+        # self.finished_event = show()
+        self.future = future
+        self.future.add_callbacks(
+            callback=self.handle_page,
+            errback=self.handle_error)
+    def handle_page(self, rows):
+        
+        if self.future.has_more_pages:
+            self.future.start_fetching_next_page()
+        else:
+        	print('Got the result from node '+str(replicaAddress)+
+        		' (non-backend latency: '+latency+' ms)')
+        	for user_row in rows:
+        		print user_row.name, user_row.address, user_row.phone
+            # self.finished_event.set()
+    def handle_error(self, exc):
+        self.error = exc
+        self.finished_event.set()
+
+
 def print_row_count(rows, label):
     for i, row in enumerate(rows):
         do_something = row
@@ -44,10 +75,6 @@ def print_row_count(rows, label):
 
 def print_err(reason):
     print "Error: {}".format(reason)
-
-future = sessions[1].execute_async("SELECT * FROM users")
-future.add_callback(print_row_count, 'Async')
-future.add_errback(print_err)
 
 sendRequest(1800)
 sendRequest(100)
@@ -61,32 +88,9 @@ print(str(proxy.getQueue()))
 print(str(proxy.reduceQueue(1)))
 print(str(proxy.getQueue()))
 
-
-
-class PagedResultHandler(object):
-    def __init__(self, future):
-        self.error = None
-        # self.finished_event = show()
-        self.future = future
-        self.future.add_callbacks(
-            callback=self.handle_page,
-            errback=self.handle_error)
-    def handle_page(self, rows):
-        
-        if self.future.has_more_pages:
-            self.future.start_fetching_next_page()
-        else:
-        	print('Got the result!!')
-        	for user_row in rows:
-        		print user_row.name, user_row.address, user_row.phone
-            # self.finished_event.set()
-    def handle_error(self, exc):
-        self.error = exc
-        self.finished_event.set()
-
-future = sessions[0].execute_async("SELECT * FROM users WHERE name='Lucas Allen' ALLOW FILTERING")
-handler = PagedResultHandler(future)
-print('finish sending async request')
+future = sessions[1].execute_async("SELECT * FROM users")
+future.add_callback(print_row_count, 'Async')
+future.add_errback(print_err)
 
 
 

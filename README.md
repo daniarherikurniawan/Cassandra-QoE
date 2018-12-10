@@ -12,7 +12,8 @@ There are 3 Cassandra nodes:
 - cass-3.cassandra-qoe.cs331-uc.emulab.net
 
 ====================================================================================
-> Install Java8
+> Open SSH to all nodes
+> Install Java8 on cassandra nodes
 
 	sudo apt-get update
 	printf "Y" | sudo apt-get install software-properties-common
@@ -43,7 +44,7 @@ There are 3 Cassandra nodes:
 	cd /tmp/Cassandra-QoE/apache-cassandra-3.0.17/bin/
 	./cassandra -f
 
-> run in cass-3
+> run in cass-3 (run this after running cass-1 and cass-2)
 
 	cd /tmp/
 	git clone https://github.com/daniarherikurniawan/Cassandra-QoE.git
@@ -64,9 +65,9 @@ There are 3 Cassandra nodes:
 
 ====================================================================================
 <!-- csh -->
-> preparation for running cqlsh
-#csh
-
+> preparation for running cqlsh on any cassandra node
+	
+	#csh
 	bash
 	cd /tmp/Cassandra-QoE/
 	chmod 777 scripts/*
@@ -107,6 +108,15 @@ There are 3 Cassandra nodes:
 
 
 ====================================================================================
+> Insert dataset from CSV
+	
+	./cqlsh $myIP
+	USE CassDB;
+
+	COPY CassDB.users (id,name,address,salary,phone) FROM '../../dataset/data-users-1.csv' WITH DELIMITER='|' AND HEADER=TRUE;
+
+
+====================================================================================
 > run in server
 	
 	cd /tmp/
@@ -132,15 +142,6 @@ There are 3 Cassandra nodes:
 	python
 	// edit the IP selector
 	// run client script
-
-
-====================================================================================
-> Insert dataset from CSV
-	
-	./cqlsh $myIP
-	USE CassDB;
-
-	COPY CassDB.users (id,name,address,salary,phone) FROM '../../dataset/data-users-1.csv' WITH DELIMITER='|' AND HEADER=TRUE;
 
 ====================================================================================
 > Another Query
