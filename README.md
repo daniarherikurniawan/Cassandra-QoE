@@ -110,7 +110,7 @@ There are 3 Cassandra nodes:
 	
 	./cqlsh $myIP
 
-	COPY CassDB.users FROM '../../dataset/data-users-1.csv' WITH DELIMITER='|' AND HEADER=TRUE
+	COPY CassDB.users FROM '../../dataset/data-users-1.csv' WITH DELIMITER='|' AND HEADER=TRUE;
 
 ====================================================================================
 > Another Query
@@ -125,7 +125,11 @@ There are 3 Cassandra nodes:
 
 	DELETE FROM users WHERE id=3e9454d00-fc01-11e8-add1-35de7ed92caa;
 
-	DROP TABLE users
+	SELECT * FROM users WHERE salary>1000 ALLOW FILTERING;
+
+	DROP TABLE users;
+
+	DESCRIBE TABLES
 
 	exit
 
