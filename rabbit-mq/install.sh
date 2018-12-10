@@ -19,9 +19,9 @@ systemctl status rabbitmq-server.service
 bash
 pip install pika
 
-python send.py
+# python send.py
 
-sudo rabbitmqctl list_queues
+# sudo rabbitmqctl list_queues
 
 
-sudo invoke-rc.d rabbitmq-server stop
+# sudo invoke-rc.d rabbitmq-server stop

@@ -6,10 +6,24 @@ git add --all .
 git commit -m "minor update" -a
 git push origin master
 
+There is a front-end clients queue manager
+- client.cassandra-qoe.cs331-uc.emulab.net
+
+There is a replica selector
+- selector.cassandra-qoe.cs331-uc.emulab.net
+
 There are 3 Cassandra nodes:
 - cass-1.cassandra-qoe.cs331-uc.emulab.net
 - cass-2.cassandra-qoe.cs331-uc.emulab.net
 - cass-3.cassandra-qoe.cs331-uc.emulab.net
+
+Open 8 SSH terminal :
+- 2 cass-1 (for inserting the CSV data and running cassandra)
+- 1 cass-2 (for running cassandra)
+- 1 cass-3 (for running cassandra)
+- 1 selector (for waiting a request that will ask a replica address)
+- 3 client (for sending rabbit-mq request, receiving rabbit-mq request, and asking the replica address to Selector)
+
 
 ====================================================================================
 > Open SSH to all nodes
@@ -124,7 +138,6 @@ There are 3 Cassandra nodes:
 	cd /tmp/Cassandra-QoE/apache-cassandra-3.0.17
 
 	python
-	// edit the list servers in script
 	// run server script
 
 > run in client for the replica selection
@@ -142,7 +155,6 @@ There are 3 Cassandra nodes:
 	pip install Faker
 
 	python
-	// edit the IP selector
 	// run client script
 
 
@@ -164,8 +176,24 @@ There are 3 Cassandra nodes:
 	bash
 	pip install pika
 
+> in Client => rabbit-mq receiver
+	
+	// rabbit-mq/receive.py
+	cd /tmp/Cassandra-QoE/
 
 
+> in Client => rabbit-mq sender
+
+	// rabbit-mq/send.py
+	cd /tmp/Cassandra-QoE/
+
+> Make sure these files are running
+- replica-selector/server.py (selector)
+- rabbit-mq/receive.py (client)
+- rabbit-mq/send.py (client)
+
+> Note:
+> You just need to edit the send.py and the algorithm at server.py
 
 ====================================================================================
 > Another Query

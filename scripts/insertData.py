@@ -8,7 +8,7 @@ fake = Faker()
 
 p = subprocess.Popen("scripts/getIP.sh", stdout=subprocess.PIPE, shell=True)
 (IP, status) = p.communicate()
-
+IP=IP.replace('\n','')
 cluster = Cluster([str(IP)])
 session = cluster.connect()
 session.execute('USE CassDB')

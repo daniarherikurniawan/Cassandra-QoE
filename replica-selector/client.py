@@ -80,9 +80,9 @@ def print_row_count(rows, label):
 def print_err(reason):
     print "Error: {}".format(reason)
 
-for x in range(1,10):
+# for x in range(1,10):
 	# listening rabbit mq
-	sendRequest(1800)
+	# sendRequest(1800)
 
 # print(str(proxy.getQueue()))
 # sendRequest(100)
