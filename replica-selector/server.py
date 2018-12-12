@@ -1,3 +1,5 @@
+# run this on selector side
+
 # pip install freeport
 # from xmlrpc.server import SimpleXMLRPCServer
 import xmlrpclib

@@ -1,3 +1,5 @@
+# Run this on client side (request USING rabbit-mq)
+
 #!/usr/bin/env python
 import pika
 from random import randint

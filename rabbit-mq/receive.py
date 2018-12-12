@@ -1,3 +1,5 @@
+# Run this on client side (request USING rabbit-mq)
+
 #!/usr/bin/env python
 # ====================================================
 # client code
@@ -38,7 +40,7 @@ def sendTestRequest(latency):
 	    """,
 	    (uuid.uuid1(), fake.name(), fake.address().replace('\n',', '), randint(4000, 100000), str(randint(1000000, 9000000)))
 	)
-
+# read and write
 def sendRequest(latency):
 	replicaAddress = proxy.getReplicaServer(latency)
 	future = sessions[replicaAddress].execute_async(

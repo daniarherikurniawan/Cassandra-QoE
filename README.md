@@ -128,6 +128,19 @@ Open 8 SSH terminal :
 	USE CassDB;
 
 	COPY CassDB.users (id,name,address,salary,phone) FROM '../../dataset/data-users-1.csv' WITH DELIMITER='|' AND HEADER=TRUE;
+	
+	COPY CassDB.users (id,name,address,salary,phone) FROM '../../dataset/data-users-2.csv' WITH DELIMITER='|' AND HEADER=TRUE;
+	COPY CassDB.users (id,name,address,salary,phone) FROM '../../dataset/data-users-3.csv' WITH DELIMITER='|' AND HEADER=TRUE;
+	COPY CassDB.users (id,name,address,salary,phone) FROM '../../dataset/data-users-4.csv' WITH DELIMITER='|' AND HEADER=TRUE;
+	COPY CassDB.users (id,name,address,salary,phone) FROM '../../dataset/data-users-5.csv' WITH DELIMITER='|' AND HEADER=TRUE;
+	COPY CassDB.users (id,name,address,salary,phone) FROM '../../dataset/data-users-6.csv' WITH DELIMITER='|' AND HEADER=TRUE;
+	COPY CassDB.users (id,name,address,salary,phone) FROM '../../dataset/data-users-7.csv' WITH DELIMITER='|' AND HEADER=TRUE;
+	COPY CassDB.users (id,name,address,salary,phone) FROM '../../dataset/data-users-8.csv' WITH DELIMITER='|' AND HEADER=TRUE;
+	COPY CassDB.users (id,name,address,salary,phone) FROM '../../dataset/data-users-9.csv' WITH DELIMITER='|' AND HEADER=TRUE;
+	COPY CassDB.users (id,name,address,salary,phone) FROM '../../dataset/data-users-10.csv' WITH DELIMITER='|' AND HEADER=TRUE;
+
+	
+	
 
 
 ====================================================================================
@@ -197,6 +210,19 @@ Open 8 SSH terminal :
 > You just need to edit the send.py and the algorithm at server.py
 
 ====================================================================================
+> script for getting the random uuid
+
+import pandas as pd
+import io
+import matplotlib.pyplot as plt
+import numpy as np
+import seaborn as sns
+import datetime
+from datetime import timedelta
+from datetime import datetime
+
+
+====================================================================================
 > Another Query
 	
 	./cqlsh $myIP
@@ -219,6 +245,8 @@ Open 8 SSH terminal :
 	DESCRIBE TABLES;
 
 	SELECT * FROM users LIMIT 10;
+
+	SELECT COUNT(*) FROM users;
 
 	exit
 
