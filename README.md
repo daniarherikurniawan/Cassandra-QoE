@@ -210,16 +210,31 @@ Open 8 SSH terminal :
 > You just need to edit the send.py and the algorithm at server.py
 
 ====================================================================================
-> script for getting the random uuid
+> Installing pandas on client node
 
-import pandas as pd
-import io
-import matplotlib.pyplot as plt
-import numpy as np
-import seaborn as sns
-import datetime
-from datetime import timedelta
-from datetime import datetime
+	bash
+	export LC_ALL=C
+
+	sudo apt install python3-pip --reinstall
+	pip3 install pandas
+	pip3 install matplotlib
+	pip3 install datetime
+	/tmp/Cassandra-QoE/dataset
+	python3
+
+> Python script for preparing the library
+
+	import pandas as pd
+	import io
+	import matplotlib.pyplot as plt
+	import numpy as np
+	import datetime
+	from datetime import timedelta
+	from datetime import datetime
+
+> Python script for getting the random uuid
+	
+
 
 
 ====================================================================================
