@@ -215,11 +215,15 @@ Open 8 SSH terminal :
 	bash
 	export LC_ALL=C
 
-	sudo apt install python3-pip --reinstall
+	sudo apt=get install python3-pip
+	pip3 install cassandra-driver
+	pip3 install Faker
+
 	pip3 install pandas
 	pip3 install matplotlib
 	pip3 install datetime
-	/tmp/Cassandra-QoE/dataset
+
+	cd /tmp/Cassandra-QoE/dataset
 	python3
 
 > Python script for preparing the library

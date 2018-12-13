@@ -16,17 +16,17 @@ def getReplicaServer(latency):
 	global list_servers
 	if (latency < 1500):
 		# group A
-		list_servers[0][1] = list_servers[0][1]+1
+		# list_servers[0][1] = list_servers[0][1]+1
 		return 0
 		# return list_servers[0][0]
 	elif (latency > 5000):
 		# group C
-		list_servers[2][1] = list_servers[2][1]+1
+		# list_servers[2][1] = list_servers[2][1]+1
 		return 2
 		# return list_servers[2][0]
 	else:
 		# group B
-		list_servers[1][1] = list_servers[1][1]+1
+		# list_servers[1][1] = list_servers[1][1]+1
 		return 1
 		# return list_servers[1][0]
 
