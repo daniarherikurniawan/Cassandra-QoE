@@ -32,12 +32,12 @@ sessions = [clusters[0].connect(), clusters[1].connect(), clusters[2].connect()]
 proxy   =   xmlrpc.client.ServerProxy("http://"+str(IPSelector)+":8000/")
 
 backend_latency_list = []
-df = pd.DataFrame()
 
 for session in sessions:
     session.execute('USE CassDB')
 
-for x in range(1,6):
+df = pd.DataFrame()
+for x in range(1,2):
     print('reading: data-users-'+str(x)+'.csv')
     temp = pd.read_csv('data-users-'+str(x)+'.csv',sep='|')
     temp = temp[['id']]
@@ -65,7 +65,7 @@ def sendBatchRequestPerSeconds(req_number, usingSelector):
 
 
 # Notes: Sending a single request to pc3000 took 0.25 ms 
-def sendRequestPerSeconds(req_number, usingSelector, loop_number):
+def sendRequestPerSeconds(req_number, usingSelector, loop_number, sleep_time):
     latency_per_req = 0.25
     max_request = 1000/latency_per_req #4000
     total_sleep_time = (max_request - req_number)*latency_per_req
@@ -83,6 +83,7 @@ def sendRequestPerSeconds(req_number, usingSelector, loop_number):
         if ((x%mod==0)):
             sendWriteRequest(latency, usingSelector)
         x=x+1
+        time.sleep(sleep_time)
         y=0
         while (y < loop_number):
             t=math.ceil(99999.2/43434)/00.4353
@@ -146,7 +147,8 @@ class PagedResultHandler(object):
 
 def info(backend_latency_list, start, req_number):
     exec_time = (time.time()-start)
-    print('finish sending async request in '+ str(exec_time*1000))
+    print('=== '+str(math.ceil(req_number/exec_time))+' RPS')
+    print('finish sending '+str(req_number)+' async request in '+ str(exec_time)+' s')
     while(True):
         if(len(backend_latency_list) < req_number):
             print('waiting '+str(math.ceil(len(backend_latency_list)/req_number*100))+'% ..')
@@ -157,7 +159,6 @@ def info(backend_latency_list, start, req_number):
             median=np.percentile(backend_latency_arr, 50)*1000
             total = np.sum(backend_latency_list)*1000
             nine=np.percentile(backend_latency_arr, 99.99)*1000
-            res.append([median, nine])
             print("median "+str(median)+ " ms")
             print("1th "+str(np.percentile(backend_latency_arr, 1)*1000)+ " ms")
             print("99th "+str(np.percentile(backend_latency_arr, 99)*1000)+ " ms")
@@ -177,16 +178,17 @@ median_array = []
 nine_array = []
 total_array = []
 batch_array = []
-multiply = 4000
+multiply = 1000
 usingSelector = False
-loop_number = 1000 
+sleep_time = 0.0001 
+loop_number = 0.0001 
 # 1000-25000
 # usingSelector = True
 for x in range(1,2):
     time.sleep(1)
     backend_latency_list=[]
     req_number = multiply*x
-    start, x = sendRequestPerSeconds(req_number, usingSelector, loop_number)
+    start, x = sendRequestPerSeconds(req_number, usingSelector, loop_number, sleep_time)
     stop = info(backend_latency_list, start, x)
     # if(stop):
         # break

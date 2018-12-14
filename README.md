@@ -7,15 +7,15 @@ git commit -m "minor update" -a
 git push origin master
 
 There is a front-end clients queue manager
-- client.cassandra-qoe.cs331-uc.emulab.net
+- client.cassandra-qoe.DeepEdgeVideo.emulab.net
 
 There is a replica selector
-- selector.cassandra-qoe.cs331-uc.emulab.net
+- selector.cassandra-qoe.DeepEdgeVideo.emulab.net
 
 There are 3 Cassandra nodes:
-- cass-1.cassandra-qoe.cs331-uc.emulab.net
-- cass-2.cassandra-qoe.cs331-uc.emulab.net
-- cass-3.cassandra-qoe.cs331-uc.emulab.net
+- cass-1.cassandra-qoe.DeepEdgeVideo.emulab.net
+- cass-2.cassandra-qoe.DeepEdgeVideo.emulab.net
+- cass-3.cassandra-qoe.DeepEdgeVideo.emulab.net
 
 Open 8 SSH terminal :
 - 2 cass-1 (for inserting the CSV data and running cassandra)
@@ -176,7 +176,7 @@ Open 8 SSH terminal :
 	python /tmp/Cassandra-QoE/rabbit-mq/receive.py
 
 
-> run in client for preparing sending request to replica selection
+> run in client for preparing sending request 
 
 	cd /tmp/
 	git clone https://github.com/daniarherikurniawan/Cassandra-QoE.git
@@ -203,7 +203,7 @@ Open 8 SSH terminal :
 
 	cd /tmp/Cassandra-QoE/dataset
 	python3
-	
+
 	// run rabbit-mq sender
 
 	python /tmp/Cassandra-QoE/rabbit-mq/send.py

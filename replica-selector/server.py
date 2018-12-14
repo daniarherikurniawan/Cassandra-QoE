@@ -6,9 +6,9 @@ import xmlrpclib
 from SimpleXMLRPCServer import SimpleXMLRPCServer
 import subprocess
 
-list_servers = [['cass-1.cassandra-qoe.cs331-uc.emulab.net',0],
-				['cass-2.cassandra-qoe.cs331-uc.emulab.net',0], 
-				['cass-3.cassandra-qoe.cs331-uc.emulab.net',0]]
+list_servers = [['cass-1.cassandra-qoe.DeepEdgeVideo.emulab.net',0],
+				['cass-2.cassandra-qoe.DeepEdgeVideo.emulab.net',0], 
+				['cass-3.cassandra-qoe.DeepEdgeVideo.emulab.net',0]]
 # instead of returning the IP address, it just return the id to prevent creating
 # multiple connection in the client
 
