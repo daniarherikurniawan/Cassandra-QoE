@@ -43,11 +43,11 @@ for x in range(1,6):
     temp = temp[['id']]
     df = pd.concat([df,temp]).reset_index(drop=True)
 
-
-def sendRequestPerSeconds(req_number, usingSelector):
-    if(req_number<10):
-        req_number = 10
-    samples = df.sample((req_number-math.ceil(req_number/10)), replace=True)
+def sendBatchRequestPerSeconds(req_number, usingSelector):
+    # if(req_number<10):
+    #     req_number = 10
+    # samples = df.sample((req_number-math.ceil(req_number/10)), replace=True)
+    samples = df.sample(req_number, replace=True)
     start = time.time()
     x=0
     for index, row in samples.iterrows():
@@ -55,9 +55,42 @@ def sendRequestPerSeconds(req_number, usingSelector):
         # latency=randint(400, 100000)
         sendReadRequest(latency, usingSelector, row['id'])
         # 10% of the request is writing
-        if (x%9==0):
+        # if (x%9==0):
+        # there are 100 writting requests
+        if ((req_number>=100) & (x%math.ceil(req_number*0.1)==0)):
             sendWriteRequest(latency, usingSelector)
         x=x+1
+    print(x)
+    return start, x
+
+
+# Notes: Sending a single request to pc3000 took 0.25 ms 
+def sendRequestPerSeconds(req_number, usingSelector, loop_number):
+    latency_per_req = 0.25
+    max_request = 1000/latency_per_req #4000
+    total_sleep_time = (max_request - req_number)*latency_per_req
+    # avg_sleep_time = total_sleep_time/1000/req_number
+    samples = df.sample(req_number, replace=True)
+    start = time.time()
+    x=0
+    latency=200
+    mod=math.ceil(req_number*0.1)
+    for index, row in samples.iterrows():
+        sendReadRequest(latency, usingSelector, row['id'])
+        # 10% of the request is writing
+        # if (x%9==0):
+        # there are 100 writting requests
+        if ((x%mod==0)):
+            sendWriteRequest(latency, usingSelector)
+        x=x+1
+        y=0
+        while (y < loop_number):
+            t=math.ceil(99999.2/43434)/00.4353
+            t=math.ceil(85932.42/4242.5)/32321.4353
+            t=math.ceil(9999.9/43.434)/34.4353
+            y=y*1+1
+        # if(x%10 == 0):
+        #     time.sleep(avg_sleep_time)
     print(x)
     return start, x
 
@@ -117,16 +150,18 @@ def info(backend_latency_list, start, req_number):
     while(True):
         if(len(backend_latency_list) < req_number):
             print('waiting '+str(math.ceil(len(backend_latency_list)/req_number*100))+'% ..')
-            time.sleep(0.5)
+            time.sleep(0.8)
         else:
             batch_time=(time.time()-start)*1000
             backend_latency_arr = np.array(backend_latency_list)
             median=np.percentile(backend_latency_arr, 50)*1000
             total = np.sum(backend_latency_list)*1000
-            nine=np.percentile(backend_latency_arr, 99)*1000
+            nine=np.percentile(backend_latency_arr, 99.99)*1000
             res.append([median, nine])
             print("median "+str(median)+ " ms")
-            print("99th "+str(nine)+ " ms")
+            print("1th "+str(np.percentile(backend_latency_arr, 1)*1000)+ " ms")
+            print("99th "+str(np.percentile(backend_latency_arr, 99)*1000)+ " ms")
+            print("99.99th "+str(nine)+ " ms")
             print("total "+str(total)+ " ms")
             print("batch exec "+str(batch_time)+ " ms")
             median_array.append(median)
@@ -142,14 +177,16 @@ median_array = []
 nine_array = []
 total_array = []
 batch_array = []
-multiply = 30
-usingSelector = True
+multiply = 4000
+usingSelector = False
+loop_number = 1000 
+# 1000-25000
 # usingSelector = True
-for x in range(2,70):
-    time.sleep(2)
+for x in range(1,2):
+    time.sleep(1)
     backend_latency_list=[]
     req_number = multiply*x
-    start, x = sendRequestPerSeconds(req_number, usingSelector)
+    start, x = sendRequestPerSeconds(req_number, usingSelector, loop_number)
     stop = info(backend_latency_list, start, x)
     # if(stop):
         # break
@@ -182,15 +219,15 @@ matplotlib.use("TkAgg")
 import matplotlib.pyplot as plt
 
 
-tes_t = pd.read_csv('selector_true_big')
+# tes_t = pd.read_csv('selector_true_big')
 tes_f = pd.read_csv('selector_false_big')
 
 ax = plt.subplot(111)
 
-ax.plot(tes_t['rps'], tes_t['nine'], "r-", label="99th-percentile", linestyle='dashed')
-ax.plot(tes_t['rps'], tes_t['median'], "g-", label="Median", linestyle='dashed')
-# ax.plot(tes_t['rps'], tes_t['total'], "b-", label="Total ", linestyle='dashed')
-ax.plot(tes_t['rps'], tes_t['batch'], "b-", label="Elapsed time per rps ", linestyle='dashed')
+# ax.plot(tes_t['rps'], tes_t['nine'], "r-", label="99th-percentile", linestyle='dashed')
+# ax.plot(tes_t['rps'], tes_t['median'], "g-", label="Median", linestyle='dashed')
+# # ax.plot(tes_t['rps'], tes_t['total'], "b-", label="Total ", linestyle='dashed')
+# ax.plot(tes_t['rps'], tes_t['batch'], "b-", label="Elapsed time per rps ", linestyle='dashed')
 
 ax.plot(tes_f['rps'], tes_f['nine'], "r-", label="99th-percentile")
 ax.plot(tes_f['rps'], tes_f['median'], "g-", label="Median")

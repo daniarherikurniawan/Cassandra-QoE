@@ -91,6 +91,7 @@ Open 8 SSH terminal :
 	chmod 777 cqlsh
 	./cqlsh $myIP
 
+
 ====================================================================================
 > Prepare the data and insert test data
 
@@ -170,13 +171,6 @@ Open 8 SSH terminal :
 	systemctl status rabbitmq-server.service
 
 	<!-- =================== -->
-	// if rabbit-mq is ready, then:
-
-	bash
-	export LC_ALL=C
-	pip install pika
-
-	<!-- =================== -->
 	// run rabbit-mq receiver
 	
 	python /tmp/Cassandra-QoE/rabbit-mq/receive.py
@@ -188,14 +182,28 @@ Open 8 SSH terminal :
 	git clone https://github.com/daniarherikurniawan/Cassandra-QoE.git
 	cd /tmp/Cassandra-QoE/
 	sudo apt-get update
-	printf 'Y' | sudo apt-get install python-pip
-	pip -V
+
 
 	bash
-	export LC_ALL=C
-	pip install cassandra-driver
-	pip install Faker
+	sudo apt-get update
+	sudo python3 get-pip.py
 
+
+ 
+	bash
+	export LC_ALL=C
+
+	sudo apt=get install python3-pip
+	pip3 install cassandra-driver
+	pip3 install Faker
+
+	pip3 install pandas
+	pip3 install matplotlib
+	pip3 install datetime
+
+	cd /tmp/Cassandra-QoE/dataset
+	python3
+	
 	// run rabbit-mq sender
 
 	python /tmp/Cassandra-QoE/rabbit-mq/send.py
@@ -210,22 +218,6 @@ Open 8 SSH terminal :
 > You just need to edit the send.py and the algorithm at server.py
 
 ====================================================================================
-> Installing pandas on client node
-
-	bash
-	export LC_ALL=C
-
-	sudo apt=get install python3-pip
-	pip3 install cassandra-driver
-	pip3 install Faker
-
-	pip3 install pandas
-	pip3 install matplotlib
-	pip3 install datetime
-
-	cd /tmp/Cassandra-QoE/dataset
-	python3
-
 > Python script for preparing the library
 
 	import pandas as pd
@@ -266,6 +258,8 @@ Open 8 SSH terminal :
 	SELECT * FROM users LIMIT 10;
 
 	SELECT COUNT(*) FROM users;
+
+	CONSISTENCY
 
 	exit
 
