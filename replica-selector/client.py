@@ -21,10 +21,10 @@ import math
 
 fake = Faker()
 
-IP=['cass-1.cassandra-qoe.cs331-uc.emulab.net',
-    'cass-2.cassandra-qoe.cs331-uc.emulab.net',
-    'cass-3.cassandra-qoe.cs331-uc.emulab.net']
-IPSelector='selector.cassandra-qoe.cs331-uc.emulab.net'
+IP=['cass-1.Cassandra.DeepEdgeVideo.emulab.net',
+    'cass-2.Cassandra.DeepEdgeVideo.emulab.net',
+    'cass-3.Cassandra.DeepEdgeVideo.emulab.net']
+IPSelector='selector.Cassandra.DeepEdgeVideo.emulab.net'
 
 
 clusters = [Cluster([str(IP[0])]), Cluster([str(IP[1])]), Cluster([str(IP[2])])]
@@ -37,39 +37,13 @@ for session in sessions:
     session.execute('USE CassDB')
 
 df = pd.DataFrame()
-for x in range(1,2):
+for x in range(1,11):
     print('reading: data-users-'+str(x)+'.csv')
     temp = pd.read_csv('data-users-'+str(x)+'.csv',sep='|')
     temp = temp[['id']]
     df = pd.concat([df,temp]).reset_index(drop=True)
 
-def sendBatchRequestPerSeconds(req_number, usingSelector):
-    # if(req_number<10):
-    #     req_number = 10
-    # samples = df.sample((req_number-math.ceil(req_number/10)), replace=True)
-    samples = df.sample(req_number, replace=True)
-    start = time.time()
-    x=0
-    for index, row in samples.iterrows():
-        latency=200
-        # latency=randint(400, 100000)
-        sendReadRequest(latency, usingSelector, row['id'])
-        # 10% of the request is writing
-        # if (x%9==0):
-        # there are 100 writting requests
-        if ((req_number>=100) & (x%math.ceil(req_number*0.1)==0)):
-            sendWriteRequest(latency, usingSelector)
-        x=x+1
-    print(x)
-    return start, x
-
-
-# Notes: Sending a single request to pc3000 took 0.25 ms 
-def sendRequestPerSeconds(req_number, usingSelector, loop_number, sleep_time):
-    latency_per_req = 0.25
-    max_request = 1000/latency_per_req #4000
-    total_sleep_time = (max_request - req_number)*latency_per_req
-    # avg_sleep_time = total_sleep_time/1000/req_number
+def sendRequestPerSeconds(req_number, usingSelector, sleep_time):
     samples = df.sample(req_number, replace=True)
     start = time.time()
     x=0
@@ -84,24 +58,10 @@ def sendRequestPerSeconds(req_number, usingSelector, loop_number, sleep_time):
             sendWriteRequest(latency, usingSelector)
         x=x+1
         time.sleep(sleep_time)
-        y=0
-        while (y < loop_number):
-            t=math.ceil(99999.2/43434)/00.4353
-            t=math.ceil(85932.42/4242.5)/32321.4353
-            t=math.ceil(9999.9/43.434)/34.4353
-            y=y*1+1
         # if(x%10 == 0):
         #     time.sleep(avg_sleep_time)
     print(x)
     return start, x
-
-def sendRequest(latency):
-    start_time=time.time()
-    # replicaAddress = proxy.getReplicaServer(latency)
-    replicaAddress=0
-    # print("send data to server - "+str(replicaAddress))
-    future = sessions[replicaAddress].execute_async("SELECT * FROM users LIMIT 1000")
-    handler = PagedResultHandler(future, replicaAddress, latency, start_time)
 
 def sendWriteRequest(latency,usingSelector):
     start_time=time.time()
@@ -140,6 +100,7 @@ class PagedResultHandler(object):
             self.future.start_fetching_next_page()
         else:
             latency=time.time()-self.start_time
+            # queue[replicaAddress]=queue[replicaAddress]-1
             backend_latency_list.append(latency)
     def handle_error(self, exc):
         self.error = exc
@@ -173,25 +134,21 @@ def info(backend_latency_list, start, req_number):
                 return True
             else:
                 return False
-
+#------------------------------------------------------------
 median_array = []
 nine_array = []
 total_array = []
 batch_array = []
 multiply = 1000
 usingSelector = False
-sleep_time = 0.0001 
-loop_number = 0.0001 
-# 1000-25000
-# usingSelector = True
+sleep_time = 0.0001
 for x in range(1,2):
     time.sleep(1)
     backend_latency_list=[]
     req_number = multiply*x
-    start, x = sendRequestPerSeconds(req_number, usingSelector, loop_number, sleep_time)
+    start, x = sendRequestPerSeconds(req_number, usingSelector, sleep_time)
     stop = info(backend_latency_list, start, x)
-    # if(stop):
-        # break
+
 
 tes = pd.DataFrame({'median':median_array})
 tes['nine'] = nine_array
@@ -200,6 +157,8 @@ tes['batch'] = batch_array
 tes['rps'] = (tes.index+2)*multiply
 tes.to_csv('selector_true_big')
 tes.to_csv('selector_false_big')
+
+# for local processing
 
 scp daniar@pc444.emulab.net:/tmp/Cassandra-QoE/dataset/selector_true_big ~/Documents/Project/Cassandra-QoE/dataset/
 scp daniar@pc444.emulab.net:/tmp/Cassandra-QoE/dataset/selector_false_big ~/Documents/Project/Cassandra-QoE/dataset/

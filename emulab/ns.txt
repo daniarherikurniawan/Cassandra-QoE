@@ -8,9 +8,9 @@ tb-set-node-os $client "UBUNTU16-64-STD"
 tb-set-hardware $client d710
 
 # Define the replica selector
-set selector [$ns node]
-tb-set-node-os $selector "UBUNTU16-64-STD"
-tb-set-hardware $selector d710
+# set selector [$ns node]
+# tb-set-node-os $selector "UBUNTU16-64-STD"
+# tb-set-hardware $selector d710
 
 # Connect the client and selector together.
 set client-lan [$ns make-lan "$client $selector" 1Gb 0ms]

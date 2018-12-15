@@ -182,18 +182,11 @@ Open 8 SSH terminal :
 	git clone https://github.com/daniarherikurniawan/Cassandra-QoE.git
 	cd /tmp/Cassandra-QoE/
 	sudo apt-get update
-
-
-	bash
-	sudo apt-get update
-	sudo python3 get-pip.py
-
-
  
 	bash
 	export LC_ALL=C
 
-	sudo apt=get install python3-pip
+	sudo apt-get install python3-pip
 	pip3 install cassandra-driver
 	pip3 install Faker
 
