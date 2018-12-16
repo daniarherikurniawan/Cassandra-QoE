@@ -29,6 +29,9 @@ IPSelector='selector.Cassandra.DeepEdgeVideo.emulab.net'
 
 clusters = [Cluster([str(IP[0])]), Cluster([str(IP[1])]), Cluster([str(IP[2])])]
 sessions = [clusters[0].connect(), clusters[1].connect(), clusters[2].connect()]
+
+clusters = [Cluster([str(IP[0])])]
+sessions = [clusters[0].connect()]
 proxy   =   xmlrpc.client.ServerProxy("http://"+str(IPSelector)+":8000/")
 
 backend_latency_list = []
@@ -37,7 +40,7 @@ for session in sessions:
     session.execute('USE CassDB')
 
 df = pd.DataFrame()
-for x in range(1,11):
+for x in range(1,2):
     print('reading: data-users-'+str(x)+'.csv')
     temp = pd.read_csv('data-users-'+str(x)+'.csv',sep='|')
     temp = temp[['id']]
@@ -117,6 +120,8 @@ def info(backend_latency_list, start, req_number):
         else:
             batch_time=(time.time()-start)*1000
             backend_latency_arr = np.array(backend_latency_list)
+            backend_latency_top_500 = np.array(backend_latency_list[0:500])
+            backend_latency_last_500 = np.array(backend_latency_list[(len(backend_latency_list)-500):(len(backend_latency_list)-1)])
             median=np.percentile(backend_latency_arr, 50)*1000
             total = np.sum(backend_latency_list)*1000
             nine=np.percentile(backend_latency_arr, 99.99)*1000
@@ -126,10 +131,17 @@ def info(backend_latency_list, start, req_number):
             print("99.99th "+str(nine)+ " ms")
             print("total "+str(total)+ " ms")
             print("batch exec "+str(batch_time)+ " ms")
+            print('First 500 requests median:', str(np.percentile(backend_latency_top_500, 50)*1000)+'ms' )
+            print('Last 500 requests median:', str(np.percentile(backend_latency_last_500, 50)*1000)+'ms' )
             median_array.append(median)
             nine_array.append(nine)
+            ninenine_array.append(np.percentile(backend_latency_arr, 99)*1000)
+            ninefive_array.append(np.percentile(backend_latency_arr, 95)*1000)
             batch_array.append(batch_time)
             total_array.append(total)
+            rps.append(math.ceil(req_number/exec_time))
+            median_first_seconds.append(np.percentile(backend_latency_top_500, 50)*1000)
+            median_last_seconds.append(np.percentile(backend_latency_last_500, 50)*1000)
             if (exec_time>1):
                 return True
             else:
@@ -137,17 +149,31 @@ def info(backend_latency_list, start, req_number):
 #------------------------------------------------------------
 median_array = []
 nine_array = []
+ninenine_array = []
+ninefive_array = []
 total_array = []
 batch_array = []
-multiply = 1000
+
+rps = []
+median_first_seconds = []
+median_last_seconds = []
+
+
+multiply = 10000
 usingSelector = False
-sleep_time = 0.0001
-for x in range(1,2):
-    time.sleep(1)
-    backend_latency_list=[]
-    req_number = multiply*x
-    start, x = sendRequestPerSeconds(req_number, usingSelector, sleep_time)
-    stop = info(backend_latency_list, start, x)
+sleep_time_set = [0.000004, 0.000008, 0.00001, 0.00002, 0.00004, 0.00008, 0.0001,0.0002,0.0004, 0.0008, 0.001, 0.002, 0.0025, 0.003, 0.004, 0.005, 0.006]
+
+sleep_time = 0.001
+
+for ii in range(0, len(sleep_time_set)):
+    for x in range(1,2):
+        time.sleep(1)
+        backend_latency_list=[]
+        req_number = multiply*x
+        sleep_time = sleep_time_set[ii]
+        start, x = sendRequestPerSeconds(req_number, usingSelector, sleep_time)
+        stop = info(backend_latency_list, start, x)
+
 
 
 tes = pd.DataFrame({'median':median_array})

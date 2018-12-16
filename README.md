@@ -275,6 +275,15 @@ Open 8 SSH terminal :
 	// reduce .git size
 	git reflog expire --all --expire=now
 	git gc --prune=now --aggressive
+	
+=======================================================================
+>Cpu/Memory/Space monitor
+    
+    sudo apt-get update
+    sudo apt-get install sysstat
+    top
+    iostat
+    mpstat
 
 
 
