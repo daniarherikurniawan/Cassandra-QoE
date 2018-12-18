@@ -2,8 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="85b947da-a28d-4d07-ad88-b73ff54058f9" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/dataset/add_payload.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/replica-selector/client.py" beforeDir="false" afterPath="$PROJECT_DIR$/replica-selector/client.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -47,8 +45,11 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/replica-selector/client.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="135">
-              <caret line="9" column="26" lean-forward="true" selection-start-line="9" selection-start-column="26" selection-end-line="9" selection-end-column="26" />
+            <state relative-caret-position="330">
+              <caret line="22" lean-forward="true" selection-start-line="22" selection-end-line="22" />
+              <folding>
+                <element signature="e#75#95#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -83,8 +84,8 @@
         <option value="$PROJECT_DIR$/emulab/ns.txt" />
         <option value="$PROJECT_DIR$/apache-cassandra-3.0.17/conf/cassandra2.yaml" />
         <option value="$PROJECT_DIR$/README.md" />
-        <option value="$PROJECT_DIR$/replica-selector/client.py" />
         <option value="$PROJECT_DIR$/dataset/add_payload.py" />
+        <option value="$PROJECT_DIR$/replica-selector/client.py" />
       </list>
     </option>
   </component>
@@ -191,12 +192,12 @@
       <workItem from="1544913512735" duration="7224000" />
       <workItem from="1544929659574" duration="5262000" />
       <workItem from="1545002727043" duration="19000" />
-      <workItem from="1545175615598" duration="1333000" />
+      <workItem from="1545175615598" duration="1387000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="19887000" />
+    <option name="totallyTimeSpent" value="19941000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1680" height="1050" extended-state="0" />
@@ -281,8 +282,11 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/replica-selector/client.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="135">
-          <caret line="9" column="26" lean-forward="true" selection-start-line="9" selection-start-column="26" selection-end-line="9" selection-end-column="26" />
+        <state relative-caret-position="330">
+          <caret line="22" lean-forward="true" selection-start-line="22" selection-end-line="22" />
+          <folding>
+            <element signature="e#75#95#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

@@ -21,8 +21,6 @@ import math
 
 fake = Faker()
 
-repeat_times = 20 #adjust size of read/write data
-
 IP=['cass-1.Cassandra.DeepEdgeVideo.emulab.net',
     'cass-2.Cassandra.DeepEdgeVideo.emulab.net',
     'cass-3.Cassandra.DeepEdgeVideo.emulab.net']
