@@ -21,6 +21,8 @@ import math
 
 fake = Faker()
 
+repeat_times = 20 #adjust size of read/write data
+
 IP=['cass-1.Cassandra.DeepEdgeVideo.emulab.net',
     'cass-2.Cassandra.DeepEdgeVideo.emulab.net',
     'cass-3.Cassandra.DeepEdgeVideo.emulab.net']
@@ -159,11 +161,15 @@ median_first_seconds = []
 median_last_seconds = []
 
 
+
 multiply = 10000
 usingSelector = False
-sleep_time_set = [0.000004, 0.000008, 0.00001, 0.00002, 0.00004, 0.00008, 0.0001,0.0002,0.0004, 0.0008, 0.001, 0.002, 0.0025, 0.003, 0.004, 0.005, 0.006]
+# sleep_time_set = [0.000004, 0.000008, 0.00001, 0.00002, 0.00004, 0.00008, 0.0001,0.0002,0.0004, 0.0008, 0.001, 0.002, 0.0025, 0.003, 0.004, 0.005, 0.006]
+sleep_time_set = [0.00001, 0.00004, 0.0001, 0.0004, 0.0008, 0.001, 0.002, 0.004, 0.005, 0.006]
 
 sleep_time = 0.001
+
+tes = pd.DataFrame({'ind':[0]*multiply})
 
 for ii in range(0, len(sleep_time_set)):
     for x in range(1,2):
@@ -173,7 +179,9 @@ for ii in range(0, len(sleep_time_set)):
         sleep_time = sleep_time_set[ii]
         start, x = sendRequestPerSeconds(req_number, usingSelector, sleep_time)
         stop = info(backend_latency_list, start, x)
+        tes[str(ii)] = backend_latency_list.copy()
 
+tes.to_csv('/tmp/Cassandra-QoE/dataset/data.csv', index = False)
 
 
 tes = pd.DataFrame({'median':median_array})
