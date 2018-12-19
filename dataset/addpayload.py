@@ -12,7 +12,7 @@ def change_pay_load(file_name, payload, top_num):
     newphone = []
     row_num = len(df)
     for i in range(0, row_num):
-        newstring = ''.join(random.choices(string.ascii_letters + string.digits, k=payload))
+        newstring = ''.join([random.choice(string.ascii_letters + string.digits) for nn in range(payload)])
         newphone.append(newstring)
 
     new_df = pd.DataFrame({'phone': newphone})
