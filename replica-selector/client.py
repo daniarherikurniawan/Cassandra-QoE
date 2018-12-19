@@ -26,6 +26,7 @@ IP=['cass-1.Cassandra.DeepEdgeVideo.emulab.net',
     'cass-3.Cassandra.DeepEdgeVideo.emulab.net']
 IPSelector='selector.Cassandra.DeepEdgeVideo.emulab.net'
 
+payload = 1000 #The payload of insert
 
 clusters = [Cluster([str(IP[0])]), Cluster([str(IP[1])]), Cluster([str(IP[2])])]
 sessions = [clusters[0].connect(), clusters[1].connect(), clusters[2].connect()]
