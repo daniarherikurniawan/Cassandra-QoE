@@ -86,7 +86,7 @@ port = 9042
 
 [csv]
 ;; The size limit for parsed fields
-; field_size_limit = 131072
+; field_size_limit = 1310720000
 
 
 
