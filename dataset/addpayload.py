@@ -2,8 +2,8 @@ import pandas as pd
 import random
 import string
 
-payload = 2000  #1000 - 1K; 1000000 - 1M
-top_num = min(60000, int(1000000000/payload))
+payload = 200000  #1000 - 1K; 1000000 - 1M
+top_num = min(6000, int(500000000/payload))
 
 def change_pay_load(file_name, payload, top_num):
 

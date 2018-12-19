@@ -123,6 +123,10 @@ Open 8 SSH terminal :
 
 
 ====================================================================================
+> Modify data payload of each item
+  
+    cd /tmp/Cassandra-QoE/dataset/
+    python3 addpayload.py
 > Insert dataset from CSV
 	
 	./cqlsh $myIP

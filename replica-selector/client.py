@@ -43,7 +43,7 @@ for session in sessions:
     session.execute('USE CassDB')
 
 df = pd.DataFrame()
-for x in range(1,2):
+for x in range(1,11):
     print('reading: data-users-'+str(x)+'.csv')
     temp = pd.read_csv('data-users-'+str(x)+'.csv',sep='|')
     temp = temp[['id']]
@@ -74,7 +74,7 @@ def sendWriteRequest(latency,usingSelector):
     replicaAddress=0
     if(usingSelector):
         replicaAddress = proxy.getReplicaServer(latency)
-    randomstring = ''.join(random.choices(string.ascii_letters + string.digits, k=payload))
+    randomstring = ''.join([random.choice(string.ascii_letters + string.digits) for nn in range(payload)])
     future = sessions[replicaAddress].execute_async(
         """
         INSERT INTO users (id, name, address, salary, phone)
@@ -168,8 +168,9 @@ multiply = 10000
 usingSelector = False
 # sleep_time_set = [0.000004, 0.000008, 0.00001, 0.00002, 0.00004, 0.00008, 0.0001,0.0002,0.0004, 0.0008, 0.001, 0.002, 0.0025, 0.003, 0.004, 0.005, 0.006]
 sleep_time_set = [0.00001, 0.00004, 0.0001, 0.0004, 0.0008, 0.001, 0.002, 0.004, 0.005, 0.006]
+sleep_time_set.sort()
 
-sleep_time = 0.001
+sleep_time = 0.0
 
 tes = pd.DataFrame({'ind':[0]*multiply})
 
