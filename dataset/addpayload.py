@@ -3,7 +3,7 @@ import random
 import string
 
 payload = 300  #1000 - 1K; 1000000 - 1M
-top_num = 1000
+top_num = min(60000, int(1000000000/payload))
 
 def change_pay_load(file_name, payload, top_num):
 
