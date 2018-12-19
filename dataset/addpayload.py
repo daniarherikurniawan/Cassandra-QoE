@@ -2,7 +2,7 @@ import pandas as pd
 import random
 import string
 
-payload = 300  #1000 - 1K; 1000000 - 1M
+payload = 2000  #1000 - 1K; 1000000 - 1M
 top_num = min(60000, int(1000000000/payload))
 
 def change_pay_load(file_name, payload, top_num):
@@ -20,7 +20,7 @@ def change_pay_load(file_name, payload, top_num):
     df.to_csv(filename, sep = '|', index=False)
     return 0
 
-
-for i in range(1, 2):
-    filename = 'data-users-' + str(i) + '.csv'
-    change_pay_load(filename, payload, top_num)
+if __name__ == '__main__':
+    for i in range(1, 11):
+        filename = 'data-users-' + str(i) + '.csv'
+        change_pay_load(filename, payload, top_num)

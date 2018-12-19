@@ -18,6 +18,8 @@ from datetime import timedelta
 from datetime import datetime
 import time
 import math
+import string
+import random
 
 fake = Faker()
 
@@ -26,7 +28,7 @@ IP=['cass-1.Cassandra.DeepEdgeVideo.emulab.net',
     'cass-3.Cassandra.DeepEdgeVideo.emulab.net']
 IPSelector='selector.Cassandra.DeepEdgeVideo.emulab.net'
 
-payload = 1000 #The payload of insert
+payload = 2000 #The payload of insert
 
 clusters = [Cluster([str(IP[0])]), Cluster([str(IP[1])]), Cluster([str(IP[2])])]
 sessions = [clusters[0].connect(), clusters[1].connect(), clusters[2].connect()]
@@ -72,12 +74,13 @@ def sendWriteRequest(latency,usingSelector):
     replicaAddress=0
     if(usingSelector):
         replicaAddress = proxy.getReplicaServer(latency)
+    randomstring = ''.join(random.choices(string.ascii_letters + string.digits, k=payload))
     future = sessions[replicaAddress].execute_async(
         """
         INSERT INTO users (id, name, address, salary, phone)
         VALUES (%s, %s, %s, %s, %s)
         """,
-        (uuid.uuid1(), "Any Name", "Any Address", "4000", "3214566352")
+        (uuid.uuid1(), "Any Name", "Any Address", "4000", randomstring)
     )
     handler = PagedResultHandler(future, replicaAddress, latency, start_time)
 
