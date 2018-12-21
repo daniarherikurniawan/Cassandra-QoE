@@ -23,10 +23,10 @@ import random
 
 fake = Faker()
 
-IP=['cass-1.Cassandra.DeepEdgeVideo.emulab.net',
-    'cass-2.Cassandra.DeepEdgeVideo.emulab.net',
-    'cass-3.Cassandra.DeepEdgeVideo.emulab.net']
-IPSelector='selector.Cassandra.DeepEdgeVideo.emulab.net'
+IP=['cass-1.CassandraLowSetting.DeepEdgeVideo.emulab.net',
+    'cass-2.CassandraLowSetting.DeepEdgeVideo.emulab.net',
+    'cass-3.CassandraLowSetting.DeepEdgeVideo.emulab.net']
+IPSelector='selector.CassandraLowSetting.DeepEdgeVideo.emulab.net'
 
 payload = 2000 #The payload of insert
 
