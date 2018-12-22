@@ -3,12 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="85b947da-a28d-4d07-ad88-b73ff54058f9" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apache-cassandra-3.0.17/conf/cassandra1.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/apache-cassandra-3.0.17/conf/cassandra1.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apache-cassandra-3.0.17/conf/cassandra2.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/apache-cassandra-3.0.17/conf/cassandra2.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apache-cassandra-3.0.17/conf/cassandra3.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/apache-cassandra-3.0.17/conf/cassandra3.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/emulab/ns.txt" beforeDir="false" afterPath="$PROJECT_DIR$/emulab/ns.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/replica-selector/client.py" beforeDir="false" afterPath="$PROJECT_DIR$/replica-selector/client.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/replica-selector/server.py" beforeDir="false" afterPath="$PROJECT_DIR$/replica-selector/server.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -21,8 +17,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/replica-selector/client.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3375">
-              <caret line="225" column="8" selection-start-line="225" selection-start-column="8" selection-end-line="225" selection-end-column="8" />
+            <state relative-caret-position="1410">
+              <caret line="94" lean-forward="true" selection-start-line="94" selection-end-line="94" />
               <folding>
                 <element signature="e#75#95#0" expanded="true" />
               </folding>
@@ -30,29 +26,14 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/apache-cassandra-3.0.17/conf/cassandra1.yaml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="194">
-              <caret line="343" column="25" selection-start-line="343" selection-start-column="20" selection-end-line="343" selection-end-column="25" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/apache-cassandra-3.0.17/conf/cassandra2.yaml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="194">
-              <caret line="343" column="25" selection-start-line="343" selection-start-column="20" selection-end-line="343" selection-end-column="25" />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/apache-cassandra-3.0.17/conf/cassandra3.yaml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="194">
-              <caret line="343" column="46" selection-start-line="343" selection-start-column="46" selection-end-line="343" selection-end-column="46" />
+        <entry file="file://$PROJECT_DIR$/README.md">
+          <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+            <state split_layout="SPLIT">
+              <first_editor relative-caret-position="397">
+                <caret line="313" selection-start-line="313" selection-end-line="313" />
+              </first_editor>
+              <second_editor />
             </state>
           </provider>
         </entry>
@@ -77,7 +58,11 @@
       <find>row</find>
       <find>rpc</find>
       <find>seeds</find>
+      <find>host</find>
       <find>cass-</find>
+      <find>heap</find>
+      <find>max</find>
+      <find>memory</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -87,15 +72,15 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/dataset/add_payload.py" />
-        <option value="$PROJECT_DIR$/README.md" />
         <option value="$PROJECT_DIR$/dataset/addpayload.py" />
         <option value="$PROJECT_DIR$/apache-cassandra-3.0.17/conf/cqlshrc.sample" />
-        <option value="$PROJECT_DIR$/replica-selector/client.py" />
         <option value="$PROJECT_DIR$/replica-selector/server.py" />
         <option value="$PROJECT_DIR$/emulab/ns.txt" />
         <option value="$PROJECT_DIR$/apache-cassandra-3.0.17/conf/cassandra1.yaml" />
         <option value="$PROJECT_DIR$/apache-cassandra-3.0.17/conf/cassandra2.yaml" />
         <option value="$PROJECT_DIR$/apache-cassandra-3.0.17/conf/cassandra3.yaml" />
+        <option value="$PROJECT_DIR$/replica-selector/client.py" />
+        <option value="$PROJECT_DIR$/README.md" />
       </list>
     </option>
   </component>
@@ -127,7 +112,25 @@
               <item name="Cassandra-QoE" type="b2602c69:ProjectViewProjectNode" />
               <item name="Cassandra-QoE" type="462c0819:PsiDirectoryNode" />
               <item name="apache-cassandra-3.0.17" type="462c0819:PsiDirectoryNode" />
-              <item name="conf" type="462c0819:PsiDirectoryNode" />
+              <item name="doc" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Cassandra-QoE" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Cassandra-QoE" type="462c0819:PsiDirectoryNode" />
+              <item name="apache-cassandra-3.0.17" type="462c0819:PsiDirectoryNode" />
+              <item name="interface" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Cassandra-QoE" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Cassandra-QoE" type="462c0819:PsiDirectoryNode" />
+              <item name="apache-cassandra-3.0.17" type="462c0819:PsiDirectoryNode" />
+              <item name="lib" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Cassandra-QoE" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Cassandra-QoE" type="462c0819:PsiDirectoryNode" />
+              <item name="apache-cassandra-3.0.17" type="462c0819:PsiDirectoryNode" />
+              <item name="pylib" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="Cassandra-QoE" type="b2602c69:ProjectViewProjectNode" />
@@ -215,12 +218,13 @@
       <workItem from="1545002727043" duration="19000" />
       <workItem from="1545175615598" duration="11170000" />
       <workItem from="1545370018642" duration="128000" />
-      <workItem from="1545412533135" duration="1547000" />
+      <workItem from="1545412533135" duration="3881000" />
+      <workItem from="1545521479506" duration="993000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="31399000" />
+    <option name="totallyTimeSpent" value="34726000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -235,7 +239,7 @@
     <frame x="0" y="0" width="1680" height="1050" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.2741148" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.2771673" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -247,9 +251,9 @@
       <window_info anchor="bottom" id="TODO" order="6" weight="0.32959184" />
       <window_info anchor="bottom" id="Database Changes" order="7" />
       <window_info anchor="bottom" id="Version Control" order="8" weight="0.32959184" />
-      <window_info anchor="bottom" id="Terminal" order="9" visible="true" weight="0.32959184" />
+      <window_info anchor="bottom" id="Terminal" order="9" weight="0.32959184" />
       <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
-      <window_info anchor="bottom" id="Python Console" order="11" />
+      <window_info anchor="bottom" id="Python Console" order="11" visible="true" weight="0.32959184" />
       <window_info anchor="bottom" id="Docker" order="12" show_stripe_button="false" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -265,16 +269,6 @@
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/dataset/add_payload.py" />
-    <entry file="file://$PROJECT_DIR$/README.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="SPLIT">
-          <first_editor relative-caret-position="178">
-            <caret line="128" column="25" selection-start-line="128" selection-start-column="25" selection-end-line="128" selection-end-column="25" />
-          </first_editor>
-          <second_editor />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/apache-cassandra-3.0.17/conf/cqlshrc.sample">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="216">
@@ -289,16 +283,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/dataset/addpayload.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="165">
-          <caret line="11" column="17" lean-forward="true" selection-start-line="11" selection-start-column="17" selection-end-line="11" selection-end-column="17" />
-          <folding>
-            <element signature="e#0#19#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/apache-cassandra-3.0.17/.idea/apache-cassandra-3.0.17.iml">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -310,11 +294,6 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/apache-cassandra-3.0.17/.idea/workspace.xml">
       <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/apache-cassandra-3.0.17/bin/cassandra">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1187" />
-      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/scripts/getIP.sh">
       <provider selected="true" editor-type-id="text-editor" />
@@ -369,41 +348,86 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/apache-cassandra-3.0.17/bin/cassandra">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1255" />
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/apache-cassandra-3.0.17/conf/cassandra.yaml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="7695">
-          <caret line="513" column="24" selection-start-line="513" selection-start-column="21" selection-end-line="513" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/replica-selector/client.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3375">
-          <caret line="225" column="8" selection-start-line="225" selection-start-column="8" selection-end-line="225" selection-end-column="8" />
-          <folding>
-            <element signature="e#75#95#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/apache-cassandra-3.0.17/conf/cassandra2.yaml">
-      <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="194">
-          <caret line="343" column="25" selection-start-line="343" selection-start-column="20" selection-end-line="343" selection-end-column="25" />
+          <caret line="51" column="53" selection-start-line="51" selection-start-column="49" selection-end-line="51" selection-end-column="53" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/apache-cassandra-3.0.17/conf/cassandra1.yaml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="194">
-          <caret line="343" column="25" selection-start-line="343" selection-start-column="20" selection-end-line="343" selection-end-column="25" />
+          <caret line="552" column="18" selection-start-line="552" selection-start-column="13" selection-end-line="552" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/apache-cassandra-3.0.17/conf/cassandra2.yaml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="194">
+          <caret line="552" column="18" selection-start-line="552" selection-start-column="13" selection-end-line="552" selection-end-column="18" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/apache-cassandra-3.0.17/conf/cassandra3.yaml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="194">
-          <caret line="343" column="46" selection-start-line="343" selection-start-column="46" selection-end-line="343" selection-end-column="46" />
+          <caret line="343" column="25" selection-start-line="343" selection-start-column="20" selection-end-line="343" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dataset/addpayload.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="225">
+          <caret line="15" column="34" lean-forward="true" selection-start-line="15" selection-start-column="34" selection-end-line="15" selection-end-column="34" />
+          <folding>
+            <element signature="e#0#19#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/apache-cassandra-3.0.17/bin/cassandra.in.sh">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/apache-cassandra-3.0.17/conf/jvm.options">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="405">
+          <caret line="27" column="40" selection-start-line="27" selection-start-column="34" selection-end-line="27" selection-end-column="40" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/apache-cassandra-3.0.17/conf/cassandra-env.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="86">
+          <caret line="51" column="13" selection-start-line="51" selection-start-column="10" selection-end-line="51" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/up.sh">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/replica-selector/client.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1410">
+          <caret line="94" lean-forward="true" selection-start-line="94" selection-end-line="94" />
+          <folding>
+            <element signature="e#75#95#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/README.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor relative-caret-position="397">
+            <caret line="313" selection-start-line="313" selection-end-line="313" />
+          </first_editor>
+          <second_editor />
         </state>
       </provider>
     </entry>

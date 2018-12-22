@@ -288,6 +288,37 @@ Open 8 SSH terminal :
     top
     iostat
     mpstat
+    
+======================================================================
+>YCSB Usage
+    
+    cd /tmp
+    curl -O --location https://github.com/brianfrankcooper/YCSB/releases/download/0.15.0/ycsb-0.15.0.tar.gz
+    tar xfvz ycsb-0.15.0.tar.gz
+    cd ycsb-0.15.0
+    
+>Create YCSB Tables
+    
+    create keyspace ycsb with replication = {'class':'SimpleStrategy', 'replication_factor':1};
+    use ycsb;
+    create table usertable (y_id varchar primary key,field0 varchar,field1 varchar,field2 varchar,field3 varchar,field4 varchar,field5 varchar,field6 varchar,field7 varchar,field8 varchar,field9 varchar);
+    
+>Create Database from client
+    
+    ./bin/ycsb run cassandra-cql -P workloads/workloadb-test -p hosts=IP -threads 10
+    
+>Run workload from client
+
+    ./bin/ycsb load cassandra-cql -P workloads/workloadb-test -p hosts=IP -threads 10
+
+>Clear Old database
+
+    use ycsb;
+    truncate usetable;
+
+>Delete Snapshots
+    
+
 
 
 
