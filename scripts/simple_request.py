@@ -12,7 +12,7 @@ def is_address_accepted(host):
 
 filter_policy = HostFilterPolicy(
     child_policy=RoundRobinPolicy(),
-    predicate=address_is_accepted
+    predicate=is_address_accepted
 )
 
 cluster = Cluster(
