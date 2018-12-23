@@ -378,7 +378,7 @@ public abstract class ReadCommand extends MonitorableImpl implements ReadQuery
                                   // iterators created inside the try as long as we do close the original resultIterator), or by closing the result.
     public UnfilteredPartitionIterator executeLocally(ReadExecutionController executionController)
     {
-        logger.debug("executing command: {} in {}", toCQLString(), FBUtilities.getLocalAddress());
+        logger.debug("@@muhtar executing command: {} in {}", toCQLString(), FBUtilities.getLocalAddress());
         long startTimeNanos = System.nanoTime();
 
         ColumnFamilyStore cfs = Keyspace.openAndGetStore(metadata());
