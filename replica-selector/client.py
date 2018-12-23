@@ -23,12 +23,13 @@ import random
 
 fake = Faker()
 
-IP=['cass-1.CassandraLowSetting.DeepEdgeVideo.emulab.net',
-    'cass-2.CassandraLowSetting.DeepEdgeVideo.emulab.net',
-    'cass-3.CassandraLowSetting.DeepEdgeVideo.emulab.net']
-IPSelector='selector.CassandraLowSetting.DeepEdgeVideo.emulab.net'
+IP=['cass-1.CassandraVerySlow.DeepEdgeVideo.emulab.net',
+    'cass-2.CassandraVerySlow.DeepEdgeVideo.emulab.net',
+    'cass-3.CassandraVerySlow.DeepEdgeVideo.emulab.net']
 
-payload = 2000 #The payload of insert
+IPSelector='selector.CassandraVerySlow.DeepEdgeVideo.emulab.net'
+
+payload = 100000 #The payload of insert
 
 clusters = [Cluster([str(IP[0])]), Cluster([str(IP[1])]), Cluster([str(IP[2])])]
 sessions = [clusters[0].connect(), clusters[1].connect(), clusters[2].connect()]
@@ -38,6 +39,10 @@ sessions = [clusters[0].connect()]
 proxy   =   xmlrpc.client.ServerProxy("http://"+str(IPSelector)+":8000/")
 
 backend_latency_list = []
+
+extra_workload = 30
+sleep_interval = 0.05 #seconds
+extra_req_num = int(extra_workload/(1.0/sleep_interval))
 
 for session in sessions:
     session.execute('USE CassDB')
@@ -63,10 +68,10 @@ def sendRequestPerSeconds(req_number, usingSelector, sleep_time):
         if ((x%mod==0)):
             sendWriteRequest(latency, usingSelector)
         x=x+1
-        time.sleep(sleep_time)
+        # time.sleep(sleep_time)
         # if(x%10 == 0):
         #     time.sleep(avg_sleep_time)
-    print(x)
+    # print(x)
     return start, x
 
 def sendWriteRequest(latency,usingSelector):
@@ -164,25 +169,25 @@ median_last_seconds = []
 
 
 
-multiply = 10000
 usingSelector = False
 # sleep_time_set = [0.000004, 0.000008, 0.00001, 0.00002, 0.00004, 0.00008, 0.0001,0.0002,0.0004, 0.0008, 0.001, 0.002, 0.0025, 0.003, 0.004, 0.005, 0.006]
-sleep_time_set = [0.000005, 0.00001, 0.00002, 0.00004, 0.0001, 0.0004, 0.0008, 0.001, 0.002, 0.004, 0.005, 0.006]
-sleep_time_set.sort()
-
+# sleep_time_set = [0.000005, 0.00001, 0.00002, 0.00004, 0.0001, 0.0004, 0.0008, 0.001, 0.002, 0.004, 0.005, 0.006]
 sleep_time = 0.0
+# tes = pd.DataFrame({'ind':[0]*multiply})
 
-tes = pd.DataFrame({'ind':[0]*multiply})
+# for ii in range(0, len(sleep_time_set)):
 
-for ii in range(0, len(sleep_time_set)):
-    for x in range(1,2):
-        time.sleep(1)
-        backend_latency_list=[]
-        req_number = multiply*x
-        sleep_time = sleep_time_set[ii]
-        start, x = sendRequestPerSeconds(req_number, usingSelector, sleep_time)
-        stop = info(backend_latency_list, start, x)
-        tes[str(ii)] = backend_latency_list.copy()
+# multiply = 10000
+
+while True:
+    time.sleep(sleep_interval)
+    backend_latency_list=[]
+    req_number = extra_req_num
+    # req_number = multiply*x
+    # sleep_time = sleep_time_set[ii]
+    start, x = sendRequestPerSeconds(req_number, usingSelector, sleep_time)
+    # stop = info(backend_latency_list, start, x)
+    # tes[str(ii)] = backend_latency_list.copy()
 
 tes.to_csv('/tmp/Cassandra-QoE/dataset/data.csv', index = False)
 

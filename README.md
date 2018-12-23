@@ -317,6 +317,10 @@ Open 8 SSH terminal :
     truncate usetable;
 
 >Delete Snapshots
+
+>Ubuntu Script to Bash
+
+    sudo dpkg-reconfigure dash  
     
 
 
