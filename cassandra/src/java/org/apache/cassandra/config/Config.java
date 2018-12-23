@@ -64,6 +64,9 @@ public class Config
     public volatile int credentials_cache_max_entries = 1000;
     public volatile int credentials_update_interval_in_ms = -1;
 
+    /* Read from local only*/
+    public boolean read_from_local_only = false;
+
     /* Hashing strategy Random or OPHF */
     public String partitioner;
 

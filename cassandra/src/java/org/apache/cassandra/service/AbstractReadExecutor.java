@@ -29,6 +29,7 @@ import org.slf4j.LoggerFactory;
 
 import org.apache.cassandra.concurrent.Stage;
 import org.apache.cassandra.concurrent.StageManager;
+import org.apache.cassandra.config.DatabaseDescriptor;
 import org.apache.cassandra.config.ReadRepairDecision;
 import org.apache.cassandra.db.ColumnFamilyStore;
 import org.apache.cassandra.db.ConsistencyLevel;
@@ -163,10 +164,9 @@ public abstract class AbstractReadExecutor
                                             : command.metadata().newReadRepairDecision();
         List<InetAddress> targetReplicas = consistencyLevel.filterForQuery(keyspace, allReplicas, repairDecision);
         logReplicasAddress(targetReplicas, "System choosen target replicas");
-        boolean readFromLocalOnly = true;
 
         // override target replica with local address
-        if (readFromLocalOnly)
+        if (DatabaseDescriptor.isReadFromLocalOnly())
         {
             List<InetAddress> myTargetReplicas = new ArrayList<>();
             myTargetReplicas.add(FBUtilities.getBroadcastAddress());
@@ -229,7 +229,7 @@ public abstract class AbstractReadExecutor
         String replicaStr = "";
         for (InetAddress replica : replicas)
         {
-            replicaStr += replica.toString();
+            replicaStr += replica.toString() + ", ";
         }
         logger.debug("@@muhtar {} replicas: {}",  message, replicaStr);
     }

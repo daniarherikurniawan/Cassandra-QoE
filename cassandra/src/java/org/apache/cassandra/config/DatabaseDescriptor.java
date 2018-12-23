@@ -68,6 +68,12 @@ public class DatabaseDescriptor
      */
     private static final int MAX_NUM_TOKENS = 1536;
 
+    /**
+     * Read from local only
+     * if true, storage proxy won't send the request to other replica
+     */
+    private static boolean readFromLocalOnly;
+
     private static IEndpointSnitch snitch;
     private static InetAddress listenAddress; // leave null so we can fall through to getLocalHost
     private static InetAddress broadcastAddress;
@@ -186,6 +192,7 @@ public class DatabaseDescriptor
         rpcAddress = null;
         broadcastAddress = null;
         broadcastRpcAddress = null;
+        readFromLocalOnly = config.read_from_local_only;
 
         /* Local IP, hostname or interface to bind services to */
         if (config.listen_address != null && config.listen_interface != null)
@@ -273,6 +280,11 @@ public class DatabaseDescriptor
                 throw new ConfigurationException("If rpc_address is set to a wildcard address (" + config.rpc_address + "), then " +
                                                  "you must set broadcast_rpc_address to a value other than " + config.rpc_address, false);
         }
+    }
+
+    public static boolean isReadFromLocalOnly()
+    {
+        return readFromLocalOnly;
     }
 
     public static void applyConfig(Config config) throws ConfigurationException
