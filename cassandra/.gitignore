@@ -1,8 +1,8 @@
 # C*
 logs/
 data/
-conf/hotspot_compiler
 conf/cassandra.yaml
+conf/hotspot_compiler
 doc/cql3/CQL.html
 
 # C* debs
