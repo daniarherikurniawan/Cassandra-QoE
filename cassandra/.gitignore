@@ -1,7 +1,4 @@
 # C*
-build/
-src/gen-java/
-src/resources/org/apache/cassandra/config/
 logs/
 data/
 conf/hotspot_compiler
@@ -68,8 +65,6 @@ lib/jsr223/jruby/ruby
 lib/jsr223/jython/*.jar
 lib/jsr223/jython/cachedir
 lib/jsr223/scala/*.jar
-
-/.ant-targets-build.xml
 
 # Generated files from the documentation
 doc/source/configuration/cassandra_config_file.rst
