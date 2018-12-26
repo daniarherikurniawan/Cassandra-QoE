@@ -322,8 +322,7 @@ Open 8 SSH terminal :
 
     sudo dpkg-reconfigure dash  
     
->Read request from local only
-	
+### Read request from local only
 See [this](read-from-local.md)
 
 
