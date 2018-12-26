@@ -18,7 +18,7 @@ read_from_local_only: true
 ### Client request
 Python cassandra driver from datastax has load balancer by default. You have to override the default policy. This is the example
 
-```
+```python
 # whitelist host should be IP address, if it is an url it won't work.
 whitelist_host = ['127.0.0.1']
 def is_address_accepted(host):
