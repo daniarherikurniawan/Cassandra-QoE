@@ -11,7 +11,7 @@ ant
 ```
 
 ### Config: Read from local only
-Read from local only feature is turned off by default. To run read request in coordinator replica only, you have to add this following line in `config/cassandra.yaml` :
+Read from local only feature is turned off by default. To run read request in coordinator replica only, you have to add this following line in `conf/cassandra.yaml` :
 ```
 read_from_local_only: true
 ```
@@ -30,7 +30,7 @@ filter_policy = HostFilterPolicy(
     predicate=is_address_accepted
 )
 
-primary_host = ['localhost'];
+primary_host = ['127.0.0.1'];
 cluster = Cluster(
     primary_host,
     load_balancing_policy=filter_policy,
