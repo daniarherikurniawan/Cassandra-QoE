@@ -4,6 +4,7 @@ git checkout cass-read-from-local
 ```
 
 ### Compiling cassandra
+This is optional, this repository already has compiled classes in `build` folder. You can run cassandra without recompile the source code.
 ```
 cd cassandra
 ant
