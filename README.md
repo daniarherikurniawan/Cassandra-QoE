@@ -322,6 +322,45 @@ Open 8 SSH terminal :
 
     sudo dpkg-reconfigure dash  
     
+    
+    
+==========================================================================================================
+>Install RabbitMQ
+	
+	apt-key adv --keyserver "hkps.pool.sks-keyservers.net" --recv-keys "0x6B73A36E6026DFCA"
+
+	sudo tee /etc/apt/sources.list.d/bintray.rabbitmq.list <<EOF
+	deb https://dl.bintray.com/rabbitmq-erlang/debian xenial erlang
+	deb https://dl.bintray.com/rabbitmq/debian xenial main
+	EOF
+
+	sudo apt-get update
+	sudo apt-get install rabbitmq-server
+	
+>Install Pika
+
+	sudo apt-get update
+	sudo apt-get install python3-pip
+	sudo apt-get install pika
+	
+>Start & Stop & Reset RabbitMQ service
+	
+	sudo invoke-rc.d rabbitmq-server start
+	sudo invoke-rc.d rabbitmq-server stop
+	sudo invoke-rc.d rabbitmq-server restart
+	
+>Set users
+
+	sudo rabbitmqctl add_user test1 test1
+	sudo rabbitmqctl set_user_tags test1 administrator
+	sudo rabbitmqctl set_permissions -p / test1 ".*" ".*" ".*"
+	
+>Reset all things
+
+	sudo rabbitmqctl stop
+	sudo rabbitmqctl reset
+	
+    
 
 
 
