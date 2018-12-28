@@ -341,7 +341,7 @@ Open 8 SSH terminal :
 
 	sudo apt-get update
 	sudo apt-get install python3-pip
-	sudo apt-get install pika
+	pip3 install pika
 	
 >Start & Stop & Reset RabbitMQ service
 	
