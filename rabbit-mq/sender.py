@@ -7,8 +7,9 @@ import string
 import sys
 
 
-payload = 4000000  #1000 - 1K; 1000000 - 1M
-message_num = 50000
+payload = PACKETLENGTH  #1000 - 1K; 1000000 - 1M
+message_num = MSGNUM
+
 connection = pika.BlockingConnection(pika.ConnectionParameters('localhost'))
 channel = connection.channel()
 channel.queue_declare(queue='TestQueue', durable=False)
