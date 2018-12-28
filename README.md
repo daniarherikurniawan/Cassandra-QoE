@@ -360,6 +360,9 @@ Open 8 SSH terminal :
 	sudo rabbitmqctl stop
 	sudo rabbitmqctl reset
 	
+>Clear logs
+
+	sudo rabbitmqctl rotate_logs
     
 
 
