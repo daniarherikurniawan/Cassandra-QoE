@@ -31,6 +31,7 @@ def callback(ch, method, properties, body):
     if now_time - start_time > 1.00:
         print('Throughput:', counter, 'Total Time Consumption:', now_time - start_time)
         counter = 0
+    ch.basic_ack(delivery_tag = method.delivery_tag)
     print('[*] Received Message', counter, 'Time Consumption:', now_time-last_time, 'Message Length:', sys.getsizeof(body))
 
 
