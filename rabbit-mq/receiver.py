@@ -10,7 +10,7 @@ pika_credentials = pika.PlainCredentials('test1', 'test1')
 connection = pika.BlockingConnection(pika.ConnectionParameters(host='192.168.0.2', credentials=pika_credentials))
 channel = connection.channel()
 
-channel.queue_declare(queue='TestQueue', durable=False)
+channel.queue_declare(queue='TestQueue', durable=True)
 
 counter = 0
 start_time = 0.0
@@ -36,7 +36,7 @@ def callback(ch, method, properties, body):
 
 channel.basic_consume(callback,
                       queue='TestQueue',
-                      no_ack=True)
+                      no_ack=False)
 
 print(' [*] Waiting for messages. To exit press CTRL+C')
 channel.start_consuming()
