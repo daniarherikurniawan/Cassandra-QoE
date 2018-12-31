@@ -364,8 +364,9 @@ Open 8 SSH terminal :
 
 	sudo rabbitmqctl rotate_logs
     
+>Sync Internet Time
 
-
+	sudo ntpdate -u time.nist.gov
 
 
 
