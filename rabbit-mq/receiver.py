@@ -11,9 +11,9 @@ connection = pika.BlockingConnection(pika.ConnectionParameters(host='192.168.0.2
 channel = connection.channel()
 
 
-max_priority = 250
-properties = dict()
-properties['x-max-priority'] = max_priority
+max_priority_num = 250
+c_properties = dict()
+c_properties['x-max-priority'] = max_priority_num
 
 channel = connection.channel()
 
