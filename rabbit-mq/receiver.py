@@ -15,8 +15,6 @@ max_priority_num = 250
 c_properties = dict()
 c_properties['x-max-priority'] = max_priority_num
 
-channel = connection.channel()
-
 channel.queue_declare(queue='TestQueue', durable=True, exclusive=False, auto_delete=True,arguments=c_properties)
 
 counter = 0
