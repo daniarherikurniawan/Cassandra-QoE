@@ -34,7 +34,7 @@ def callback(ch, method, properties, body):
     ch.basic_ack(delivery_tag = method.delivery_tag)
     print('[*] Received Message', counter, 'Time Consumption:', now_time-last_time, 'Message Length:', sys.getsizeof(body))
 
-
+channel.basic_qos(prefetch_count = 1)
 channel.basic_consume(callback,
                       queue='TestQueue',
                       no_ack=False)
