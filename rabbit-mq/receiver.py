@@ -10,7 +10,7 @@ pika_credentials = pika.PlainCredentials('test1', 'test1')
 connection = pika.BlockingConnection(pika.ConnectionParameters(host='192.168.0.2', credentials=pika_credentials))
 channel = connection.channel()
 
-channel.queue_declare(queue='TestQueue', durable=True)
+channel.queue_declare(queue='TestQueue', durable=True, exclusive=False, auto_delete=True)
 
 counter = 0
 start_time = 0.0
