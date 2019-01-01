@@ -367,6 +367,8 @@ Open 8 SSH terminal :
 >Sync Internet Time
 
 	sudo ntpdate -u time.nist.gov
+	sudo timedatectl set-ntp on
+
 
 
 
