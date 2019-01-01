@@ -15,7 +15,13 @@ max_priority_num = 250
 c_properties = dict()
 c_properties['x-max-priority'] = max_priority_num
 
-channel.queue_declare(queue='TestQueue', durable=True, exclusive=False, auto_delete=True,arguments=c_properties)
+channel.exchange_declare(exchange='logs',
+                         exchange_type='direct')
+
+result = channel.queue_declare(queue='TestQueue', durable=True, exclusive=False, auto_delete=True, arguments = c_properties)
+queue_name = result.method.queue
+channel.queue_bind(exchange='logs',
+                   queue=queue_name)
 
 counter = 0
 start_time = 0.0
