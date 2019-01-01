@@ -30,11 +30,11 @@ def on_channel_open(channel):
     for x in range(0, message_num):
         random_num = random.random()
         if random_num <= threshold:
-            channel.basic_publish(exchange='', routing_key='TestQueue', body=str(1) + ' ' + string_load,
+            channel.basic_publish(exchange='', routing_key='TestQueue', body=str(0) + ' ' + string_load,
                                   properties=pika.BasicProperties(content_type='text/plain', delivery_mode=2,
                                                                   priority=0))
         else:
-            channel.basic_publish(exchange='', routing_key='TestQueue', body=str(0) + ' ' + string_load,
+            channel.basic_publish(exchange='', routing_key='TestQueue', body=str(1) + ' ' + string_load,
                                   properties=pika.BasicProperties(content_type='text/plain', delivery_mode=2,
                                                                   priority=1))
         print('[*] Send Successfully! Msg Num:', str(x))
