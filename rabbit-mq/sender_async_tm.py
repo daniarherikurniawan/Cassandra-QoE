@@ -7,7 +7,6 @@ import time
 
 
 class RabbitMQTest(object):
-
     EXCHANGE = 'logs'
     EXCHANGE_TYPE = 'direct'
     PUBLISH_INTERVAL = 1
@@ -38,6 +37,10 @@ class RabbitMQTest(object):
         self._dislamba = dis_lambda
         self._probthreshold = threshold
 
+
+        self._lasttime = 0
+        self._currenttime = 0
+
     def connect(self):
         """This method connects to RabbitMQ, returning the connection handle.
         When the connection is established, the on_connection_open method
@@ -55,8 +58,8 @@ class RabbitMQTest(object):
         case we need it, but in this case, we'll just mark it unused.
         :type unused_connection: pika.SelectConnection
         """
+        print('Connection is established!!')
         self.open_channel()
-
 
     def on_connection_closed(self, connection, reason, reply_txt):
         """This method is invoked by pika when the connection to RabbitMQ is
@@ -134,6 +137,7 @@ class RabbitMQTest(object):
         :param pika.Frame.Method unused_frame: Exchange.DeclareOk response frame
 
         """
+        print('Exchange is established!')
         self.setup_queue(self.QUEUE)
 
     def setup_queue(self, queue_name):
@@ -147,7 +151,8 @@ class RabbitMQTest(object):
         max_priority_num = 250
         c_properties = dict()
         c_properties['x-max-priority'] = max_priority_num
-        self._channel.queue_declare(queue=queue_name, callback = self.on_queue_declareok, durable=True, exclusive=False, auto_delete=True, arguments=c_properties)
+        self._channel.queue_declare(queue=queue_name, callback=self.on_queue_declareok, durable=True, exclusive=False,
+                                    auto_delete=True, arguments=c_properties)
 
     def on_queue_declareok(self, method_frame):
         """Method invoked by pika when the Queue.Declare RPC call made in
@@ -159,6 +164,7 @@ class RabbitMQTest(object):
         :param pika.frame.Method method_frame: The Queue.DeclareOk frame
 
         """
+        print('Queue is established!')
         self._channel.queue_bind(self.on_bindok, self.QUEUE, self.EXCHANGE, self.ROUTING_KEY)
 
     def on_bindok(self, unused_frame):
@@ -232,10 +238,14 @@ class RabbitMQTest(object):
         if self._channel is None or not self._channel.is_open:
             return
 
+        self._currenttime = time.time()
+        print('Real time interval', int(round((self._currenttime  - self._lasttime)*1000)))
+        self._lasttime = self._currenttime
         r_num = random.random()
 
         properties = None
         message = None
+
         if r_num < self._probthreshold:
             properties = pika.BasicProperties(content_type='text/plain', delivery_mode=2, priority=0)
             message = str(0) + ' ' + self._string_load
@@ -247,15 +257,18 @@ class RabbitMQTest(object):
         self._message_number += 1
         self._deliveries.append(self._message_number)
 
+        print('[*] Messaage', self._message_number, 'sent!')
         if self._message_number < self._message_totalnum:
             self.PUBLISH_INTERVAL = random.expovariate(self._dislamba)
+            print('Published Interval Setting:', round(self.PUBLISH_INTERVAL * 1000), 'ms')
             self.schedule_next_message()
         else:
-            print('Task Complete!')
+            print('Mission Complete!')
 
     def run(self):
 
         random.seed(time.time())
+
         while not self._stopping:
             self._connection = None
             self._acked = 0
@@ -299,10 +312,10 @@ class RabbitMQTest(object):
             self._connection.close()
 
 
-def main():
+def main(PACKETLENGTH, MSGNUM, THROUGHPUT, PROBABILITY):
     payload = PACKETLENGTH  # Unit: Byte
     message_num = MSGNUM
-    dis_lambda = THROUGHPUT # Request per second
+    dis_lambda = THROUGHPUT  # Request per second
     threshold = PROBABILITY
 
     our_tester = RabbitMQTest(payload, message_num, dis_lambda, threshold)
@@ -311,4 +324,8 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    payload = int(sys.argv[1])
+    msgnum = int(sys.argv[2])
+    dis_lambda = int(sys.argv[3])
+    probability = float(sys.argv[4])
+    main(PACKETLENGTH=payload, MSGNUM=msgnum, THROUGHPUT=dis_lambda, PROBABILITY=probability)
