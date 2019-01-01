@@ -261,6 +261,7 @@ class RabbitMQTest(object):
         if self._message_number < self._message_totalnum:
             self.PUBLISH_INTERVAL = random.expovariate(self._dislamba)
             print('Published Interval Setting:', round(self.PUBLISH_INTERVAL * 1000), 'ms')
+            self.PUBLISH_INTERVAL = max(0, self.PUBLISH_INTERVAL - 2)
             self.schedule_next_message()
         else:
             print('Mission Complete!')
