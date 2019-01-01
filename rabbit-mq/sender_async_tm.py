@@ -238,9 +238,9 @@ class RabbitMQTest(object):
         if self._channel is None or not self._channel.is_open:
             return
 
-        self._currenttime = time.time()
-        print('Real time interval', int(round((self._currenttime  - self._lasttime)*1000)), 'ms')
-        self._lasttime = self._currenttime
+        # self._currenttime = time.time()
+        # print('Real time interval', int(round((self._currenttime  - self._lasttime)*1000)), 'ms')
+        # self._lasttime = self._currenttime
         r_num = random.random()
 
         properties = None
@@ -260,8 +260,9 @@ class RabbitMQTest(object):
         print('[*] Messaage', self._message_number, 'sent!')
         if self._message_number < self._message_totalnum:
             self.PUBLISH_INTERVAL = random.expovariate(self._dislamba)
-            print('Published Interval Setting:', round(self.PUBLISH_INTERVAL * 1000), 'ms')
+            # print('Published Interval Setting:', round(self.PUBLISH_INTERVAL * 1000), 'ms')
             self.PUBLISH_INTERVAL = max(0, self.PUBLISH_INTERVAL - 0.002)
+            self.PUBLISH_INTERVAL = 0
             self.schedule_next_message()
         else:
             print('Mission Complete!')
