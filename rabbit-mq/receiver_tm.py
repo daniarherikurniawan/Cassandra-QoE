@@ -14,8 +14,13 @@ c_properties['x-max-priority'] = max_priority_num
 connection = pika.BlockingConnection(pika.ConnectionParameters(host='192.168.0.2', credentials=pika_credentials))
 channel = connection.channel()
 
-channel.queue_declare(queue='TestQueue', durable=True, exclusive=False, auto_delete=True, arguments = c_properties)
+channel.exchange_declare(exchange='logs',
+                         exchange_type='direct')
 
+result = channel.queue_declare(queue='TestQueue', durable=True, exclusive=False, auto_delete=True, arguments = c_properties)
+queue_name = result.method.queue
+channel.queue_bind(exchange='logs',
+                   queue=queue_name)
 
 def callback(ch, method, properties, body):
 
@@ -24,7 +29,6 @@ def callback(ch, method, properties, body):
     ch.basic_ack(delivery_tag=method.delivery_tag)
 
 
-channel.basic_qos(prefetch_count = 1)
 channel.basic_consume(callback,
                       queue='TestQueue',
                       no_ack=False)
