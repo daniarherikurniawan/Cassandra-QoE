@@ -368,6 +368,8 @@ Open 8 SSH terminal :
 
 	sudo ntpdate -u time.nist.gov
 	sudo timedatectl set-ntp on
+	sudo apt install chrony
+
 
 
 
