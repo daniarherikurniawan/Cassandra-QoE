@@ -28,7 +28,8 @@ def callback(ch, method, properties, body):
     msgarray[0] = msgarray[0].strip('b\'')
     old_time = int(msgarray[0])
     new_time = int(round(time.time()*1000))
-    print('[*] Received Message.', 'Time consumption:',  new_time - old_time, 'ms')
+    msg_pri = int(msgarray[1])
+    print('[*] Received Message.', 'Time consumption:',  new_time - old_time, 'ms.', 'Msg priority:', msg_pri)
     ch.basic_ack(delivery_tag=method.delivery_tag)
 
 channel.basic_qos(prefetch_count = 1)

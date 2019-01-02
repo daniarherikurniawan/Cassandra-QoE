@@ -246,13 +246,15 @@ class RabbitMQTest(object):
 
         properties = None
 
-        # message format: current_time + ' ' + a long string
-        message = str(int(round(time.time() * 1000))) + ' ' + self._string_load
+        # message format: current_time + ' ' + priority + ' ' + a long string
+        message = str(int(round(time.time() * 1000))) + ' '
 
         if r_num < self._probthreshold:
             properties = pika.BasicProperties(content_type='text/plain', delivery_mode=2, priority=0)
+            message = message + str(0) + ' ' + self._string_load
         else:
             properties = pika.BasicProperties(content_type='text/plain', delivery_mode=2, priority=1)
+            message = message + str(1) + ' ' + self._string_load
 
         self._channel.basic_publish(self.EXCHANGE, self.ROUTING_KEY, message, properties)
         self._message_number += 1
