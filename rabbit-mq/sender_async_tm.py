@@ -178,7 +178,7 @@ class RabbitMQTest(object):
         first message to be sent to RabbitMQ
         """
         print('Start publishing rehslishre')
-        self.enable_delivery_confirmations()
+        #self.enable_delivery_confirmations()
         self.schedule_next_message()
 
     def enable_delivery_confirmations(self):
@@ -258,7 +258,7 @@ class RabbitMQTest(object):
 
         self._channel.basic_publish(self.EXCHANGE, self.ROUTING_KEY, message, properties)
         self._message_number += 1
-        self._deliveries.append(self._message_number)
+        #self._deliveries.append(self._message_number)
 
         print('[*] Messaage', self._message_number, 'sent!')
 
