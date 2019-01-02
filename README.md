@@ -367,6 +367,7 @@ Open 8 SSH terminal :
 >Sync Internet Time (ops.emulab.net)
 
 	sudo ntpdate -u 155.98.33.74
+	
 
 
 

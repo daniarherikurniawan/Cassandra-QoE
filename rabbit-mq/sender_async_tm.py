@@ -13,7 +13,7 @@ class RabbitMQTest(object):
     QUEUE = 'TestQueue'
     ROUTING_KEY = 'TestQueue'
 
-    def __init__(self, payload, message_num, dis_lambda, threshold):
+    def __init__(self, payload, message_num, dis_lambda, priority):
         """Setup our publisher object, passing in the URL we will use
         to connect to RabbitMQ.
 
@@ -35,8 +35,7 @@ class RabbitMQTest(object):
         self._string_load = ''.join([random.choice(string.ascii_letters + string.digits) for nn in range(payload)])
         self._message_totalnum = message_num
         self._dislamba = dis_lambda
-        self._probthreshold = threshold
-
+        self._preprecent = (10 - priority)/10.0
 
         self._lasttime = 0
         self._currenttime = 0
@@ -151,7 +150,7 @@ class RabbitMQTest(object):
         max_priority_num = 250
         c_properties = dict()
         c_properties['x-max-priority'] = max_priority_num
-        c_properties['x-message-ttl'] = 1000000
+        c_properties['x-message-ttl'] = 10000000
         self._channel.queue_declare(queue=queue_name, callback=self.on_queue_declareok, durable=True, exclusive=False,
                                     auto_delete=True, arguments=c_properties)
 
@@ -250,9 +249,12 @@ class RabbitMQTest(object):
         # message format: current_time + ' ' + priority + ' ' + a long string
         message = str(int(round(time.time() * 1000))) + ' '
 
-        if r_num < self._probthreshold:
-            properties = pika.BasicProperties(content_type='text/plain', delivery_mode=2, priority=0)
-            message = message + str(0) + ' ' + self._string_load
+        if r_num <= self._preprecent:
+            properties = pika.BasicProperties(content_type='text/plain', delivery_mode=2, priority=3)
+            message = message + str(3) + ' ' + self._string_load
+        elif r_num > self._preprecent and r_num < self._preprecent + 0.1:
+            properties = pika.BasicProperties(content_type='text/plain', delivery_mode=2, priority=2)
+            message = message + str(2) + ' ' + self._string_load
         else:
             properties = pika.BasicProperties(content_type='text/plain', delivery_mode=2, priority=1)
             message = message + str(1) + ' ' + self._string_load
@@ -304,8 +306,8 @@ class RabbitMQTest(object):
         invoked by the Try/Catch below when KeyboardInterrupt is caught.
         Starting the IOLoop again will allow the publisher to cleanly
         disconnect from RabbitMQ.
-
         """
+
         self._stopping = True
         self.close_channel()
         self.close_connection()
@@ -313,7 +315,6 @@ class RabbitMQTest(object):
     def close_channel(self):
         """Invoke this command to close the channel with RabbitMQ by sending
         the Channel.Close RPC command.
-
         """
         if self._channel is not None:
             self._channel.close()
@@ -324,13 +325,21 @@ class RabbitMQTest(object):
             self._connection.close()
 
 
-def main(PACKETLENGTH, MSGNUM, THROUGHPUT, PROBABILITY):
-    payload = PACKETLENGTH  # Unit: Byte
+def main(PACKETLENGTH, MSGNUM, THROUGHPUT, PRIORITY):
+    '''
+    Total priority level = 10
+    :param PACKETLENGTH: message size in bytes
+    :param MSGNUM: total number of messages needs to send
+    :param THROUGHPUT: requests per second, poisson arrival
+    :param PRIORITY: priority of tested quests (1 - 10, 10 is the highest)
+    :return:
+    '''
+    payload = PACKETLENGTH
     message_num = MSGNUM
-    dis_lambda = THROUGHPUT  # Request per second
-    threshold = PROBABILITY
+    dis_lambda = THROUGHPUT
+    pri = PRIORITY
 
-    our_tester = RabbitMQTest(payload, message_num, dis_lambda, threshold)
+    our_tester = RabbitMQTest(payload, message_num, dis_lambda, pri)
     print('Pre-setting is OK')
     our_tester.run()
 

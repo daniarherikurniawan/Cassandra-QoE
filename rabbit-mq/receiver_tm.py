@@ -10,7 +10,7 @@ pika_credentials = pika.PlainCredentials('test1', 'test1')
 max_priority_num = 250
 c_properties  = dict()
 c_properties['x-max-priority'] = max_priority_num
-c_properties['x-message-ttl'] = 1000000
+c_properties['x-message-ttl'] = 10000000
 
 connection = pika.BlockingConnection(pika.ConnectionParameters(host='192.168.1.2', credentials=pika_credentials))
 channel = connection.channel()
@@ -30,7 +30,8 @@ def callback(ch, method, properties, body):
     old_time = int(msgarray[0])
     new_time = int(round(time.time()*1000))
     msg_pri = int(msgarray[1])
-    print('[*] Received Message.', 'Time consumption:',  new_time - old_time, 'ms.', 'Msg priority:', msg_pri)
+    if msg_pri == 2:
+        print('[*] Received Message.', 'Time consumption:',  new_time - old_time, 'ms.', 'Msg priority:', msg_pri)
     #ch.basic_ack(delivery_tag=method.delivery_tag)
 
 channel.basic_qos(prefetch_count = 1)

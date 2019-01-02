@@ -14,7 +14,7 @@ channel = connection.channel()
 max_priority_num = 250
 c_properties = dict()
 c_properties['x-max-priority'] = max_priority_num
-c_properties['x-message-ttl'] = 1000000
+c_properties['x-message-ttl'] = 10000000
 
 
 channel.exchange_declare(exchange='logs',
