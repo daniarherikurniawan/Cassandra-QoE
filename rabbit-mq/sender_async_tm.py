@@ -178,7 +178,7 @@ class RabbitMQTest(object):
         """This method will enable delivery confirmations and schedule the
         first message to be sent to RabbitMQ
         """
-        print('Start publishing rehslishre')
+        print('Start publishing messages!')
         #self.enable_delivery_confirmations()
         self.schedule_next_message()
 
