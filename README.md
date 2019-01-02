@@ -364,11 +364,9 @@ Open 8 SSH terminal :
 
 	sudo rabbitmqctl rotate_logs
     
->Sync Internet Time
+>Sync Internet Time (ops.emulab.net)
 
-	sudo ntpdate -u time.nist.gov
-	sudo timedatectl set-ntp on
-	sudo apt install chrony
+	sudo ntpdate -u 155.98.33.74
 
 
 

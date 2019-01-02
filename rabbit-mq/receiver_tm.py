@@ -10,6 +10,7 @@ pika_credentials = pika.PlainCredentials('test1', 'test1')
 max_priority_num = 250
 c_properties  = dict()
 c_properties['x-max-priority'] = max_priority_num
+c_properties['x-message-ttl'] = 1000000
 
 connection = pika.BlockingConnection(pika.ConnectionParameters(host='192.168.1.2', credentials=pika_credentials))
 channel = connection.channel()

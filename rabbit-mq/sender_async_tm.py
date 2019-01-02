@@ -151,6 +151,7 @@ class RabbitMQTest(object):
         max_priority_num = 250
         c_properties = dict()
         c_properties['x-max-priority'] = max_priority_num
+        c_properties['x-message-ttl'] = 1000000
         self._channel.queue_declare(queue=queue_name, callback=self.on_queue_declareok, durable=True, exclusive=False,
                                     auto_delete=True, arguments=c_properties)
 
