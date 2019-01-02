@@ -1,5 +1,6 @@
 #!/bin/bash
 
+mkdir results
 for prio in '10' '9'
 do
     for wkl in '10' '50'
