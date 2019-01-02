@@ -25,7 +25,10 @@ channel.queue_bind(exchange='logs',
 def callback(ch, method, properties, body):
 
     msgarray = str(body).split()
-    print('[*] Received Message', msgarray[0])
+    msgarray[0] = msgarray[0].strip('b\'')
+    old_time = int(msgarray[0])
+    new_time = int(round(time.time()*1000))
+    print('[*] Received Message.', 'Time consumption:',  new_time - old_time, 'ms')
     ch.basic_ack(delivery_tag=method.delivery_tag)
 
 channel.basic_qos(prefetch_count = 1)

@@ -177,6 +177,7 @@ class RabbitMQTest(object):
         """This method will enable delivery confirmations and schedule the
         first message to be sent to RabbitMQ
         """
+        print('Start publishing rehslishre')
         self.enable_delivery_confirmations()
         self.schedule_next_message()
 
@@ -244,28 +245,33 @@ class RabbitMQTest(object):
         r_num = random.random()
 
         properties = None
-        message = None
+
+        # message format: current_time + ' ' + a long string
+        message = str(int(round(time.time() * 1000))) + ' ' + self._string_load
 
         if r_num < self._probthreshold:
             properties = pika.BasicProperties(content_type='text/plain', delivery_mode=2, priority=0)
-            message = str(0) + ' ' + self._string_load
         else:
             properties = pika.BasicProperties(content_type='text/plain', delivery_mode=2, priority=1)
-            message = str(1) + ' ' + self._string_load
 
         self._channel.basic_publish(self.EXCHANGE, self.ROUTING_KEY, message, properties)
         self._message_number += 1
         self._deliveries.append(self._message_number)
 
         print('[*] Messaage', self._message_number, 'sent!')
+
         if self._message_number < self._message_totalnum:
             self.PUBLISH_INTERVAL = random.expovariate(self._dislamba)
-            # print('Published Interval Setting:', round(self.PUBLISH_INTERVAL * 1000), 'ms')
+            #print('Published Interval Setting:', round(self.PUBLISH_INTERVAL * 1000), 'ms')
             self.PUBLISH_INTERVAL = max(0, self.PUBLISH_INTERVAL - 0.002)
-            self.PUBLISH_INTERVAL = 0
             self.schedule_next_message()
         else:
             print('Mission Complete!')
+            if self._stopping:
+                self._connection.ioloop.stop()
+            else:
+                self._connection.ioloop.add_timeout(5, self._connection.ioloop.stop)
+
 
     def run(self):
 
