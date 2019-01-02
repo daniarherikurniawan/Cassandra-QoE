@@ -348,5 +348,5 @@ if __name__ == '__main__':
     payload = int(sys.argv[1])
     msgnum = int(sys.argv[2])
     dis_lambda = int(sys.argv[3])
-    probability = float(sys.argv[4])
-    main(PACKETLENGTH=payload, MSGNUM=msgnum, THROUGHPUT=dis_lambda, PROBABILITY=probability)
+    priority = float(sys.argv[4])
+    main(PACKETLENGTH=payload, MSGNUM=msgnum, THROUGHPUT=dis_lambda, PRIORITY=priority)
