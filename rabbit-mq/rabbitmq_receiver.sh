@@ -8,6 +8,6 @@ do
         echo 'Start listen priority $prio workload $wkl'
         python3 receiver_tm.py > 'results/prio_'$prio'_workload_'$wkl.txt
         sleep 2s
-        echo 'Start Next!'
+        echo 'Start Next.....'
     done
 done

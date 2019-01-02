@@ -6,6 +6,7 @@ do
     do
         echo 'Start priority $prio workload $wkl'
         python 50000 15000 $wkl $prio >> senderfile_temp.txt
+        echo 'Send Complete!'
         sleep 1m
     done
 done
