@@ -22,8 +22,9 @@ result = channel.queue_declare(queue='TestQueue', durable=True, exclusive=False,
 queue_name = result.method.queue
 channel.queue_bind(exchange='logs',
                    queue=queue_name)
+
 msg_counter = 0
-msg_thres = 10000
+msg_thres = 15000
 
 def callback(ch, method, properties, body):
 
