@@ -11,7 +11,7 @@ max_priority_num = 250
 c_properties  = dict()
 c_properties['x-max-priority'] = max_priority_num
 
-connection = pika.BlockingConnection(pika.ConnectionParameters(host='192.168.0.2', credentials=pika_credentials))
+connection = pika.BlockingConnection(pika.ConnectionParameters(host='192.168.1.2', credentials=pika_credentials))
 channel = connection.channel()
 
 channel.exchange_declare(exchange='logs',
