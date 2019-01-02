@@ -44,7 +44,7 @@ def callback(ch, method, properties, body):
     if now_time - start_time > 1.00:
         print('Throughput:', counter, 'Total Time Consumption:', now_time - start_time)
         counter = 0
-    ch.basic_ack(delivery_tag = method.delivery_tag)
+    #ch.basic_ack(delivery_tag = method.delivery_tag)
     #msgarray = str(body).split()
     #print('[*] Received Message', msgarray[0])
     #print('[*] Received Message', counter, 'Time Consumption:', now_time-last_time, 'Message Length:', sys.getsizeof(body))
@@ -52,7 +52,7 @@ def callback(ch, method, properties, body):
 channel.basic_qos(prefetch_count = 1)
 channel.basic_consume(callback,
                       queue='TestQueue',
-                      no_ack=False)
+                      no_ack=True)
 
 print(' [*] Waiting for messages. To exit press CTRL+C')
 channel.start_consuming()
