@@ -268,11 +268,12 @@ class RabbitMQTest(object):
             self.PUBLISH_INTERVAL = max(0, self.PUBLISH_INTERVAL - 0.002)
             self.schedule_next_message()
         else:
-            print('Mission Complete!')
-            if self._stopping:
-                self._connection.ioloop.stop()
-            else:
-                self._connection.ioloop.add_timeout(5, self._connection.ioloop.stop)
+            print('Mission Complete! Program Exit.')
+            self.stop()
+            if (self._connection is not None and
+                    not self._connection.is_closed):
+                # Finish closing
+                self._connection.ioloop.start()
 
 
     def run(self):
