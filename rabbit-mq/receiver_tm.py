@@ -24,7 +24,7 @@ channel.queue_bind(exchange='logs',
                    queue=queue_name)
 
 msg_counter = 0
-msg_thres = 2000
+msg_thres = 1500
 
 def callback(ch, method, properties, body):
 
