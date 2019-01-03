@@ -243,7 +243,7 @@ class RabbitMQTest(object):
         # print('Real time interval', int(round((self._currenttime  - self._lasttime)*1000)), 'ms')
         # self._lasttime = self._currenttime
         r_num = random.random()
-        r_priority = math.floor(r_num*10)
+        r_priority = int(math.floor(r_num*10))
 
         # message format: current_time + ' ' + priority + ' ' + a long string
         message = str(int(round(time.time() * 1000))) + ' ' + str(r_priority) + ' ' + self._string_load
