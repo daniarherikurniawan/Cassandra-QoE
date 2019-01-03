@@ -17,13 +17,16 @@ c_properties['x-max-priority'] = max_priority_num
 c_properties['x-message-ttl'] = 10000000
 
 
-channel.exchange_declare(exchange='logs',
-                         exchange_type='direct')
+# channel.exchange_declare(exchange='logs',
+#                          exchange_type='direct')
+#
+# result = channel.queue_declare(queue='TestQueue', durable=True, exclusive=False, auto_delete=True, arguments = c_properties)
+# queue_name = result.method.queue
+# channel.queue_bind(exchange='logs',
+#                    queue=queue_name)
 
-result = channel.queue_declare(queue='TestQueue', durable=True, exclusive=False, auto_delete=True, arguments = c_properties)
-queue_name = result.method.queue
-channel.queue_bind(exchange='logs',
-                   queue=queue_name)
+channel.queue_declare(queue='TestQueue', durable=True, exclusive=False, auto_delete=True,
+                      arguments=c_properties)
 
 counter = 0
 start_time = 0.0
