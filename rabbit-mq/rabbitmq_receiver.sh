@@ -9,4 +9,5 @@ do
     sleep 2s
     echo 'Start listening to next workload .....'
 done
-zip results.zip results
+zip -r results.zip results
+echo 'All the things are finished'
