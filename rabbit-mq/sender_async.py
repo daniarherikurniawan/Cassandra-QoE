@@ -26,7 +26,7 @@ def on_channel_open(channel):
     channel.exchange_declare(exchange='logs',
                              exchange_type='direct')
 
-    result = channel.queue_declare(queue='TestQueue', durable=True, exclusive=False, auto_delete=True,
+    result = channel.queue_declare(callback = on_queue_declareok, queue='TestQueue', durable=True, exclusive=False, auto_delete=True,
                                    arguments=c_properties)
     queue_name = result.method.queue
     channel.queue_bind(exchange='logs',
