@@ -21,16 +21,25 @@ def on_channel_open(channel):
     max_priority_num = 250
     c_properties = dict()
     c_properties['x-max-priority'] = max_priority_num
-    channel.queue_declare(callback = on_queue_declareok, queue='TestQueue', durable=True, exclusive=False, auto_delete=True, arguments=c_properties)
+    c_properties['x-message-ttl'] = 10000000
+
+    channel.exchange_declare(exchange='logs',
+                             exchange_type='direct')
+
+    result = channel.queue_declare(queue='TestQueue', durable=True, exclusive=False, auto_delete=True,
+                                   arguments=c_properties)
+    queue_name = result.method.queue
+    channel.queue_bind(exchange='logs',
+                       queue=queue_name)
     #channel.confirm_delivery()
     for x in range(0, message_num):
         r_num = random.random()
         if r_num < 0.5:
-            channel.basic_publish(exchange='', routing_key='TestQueue', body=str(1) + ' ' + string_load,
+            channel.basic_publish(exchange='logs', routing_key='TestQueue', body=str(1) + ' ' + string_load,
                                   properties=pika.BasicProperties(content_type='text/plain', delivery_mode=2,
                                                                   priority=1))
         else:
-            channel.basic_publish(exchange='', routing_key='TestQueue', body=str(0) + ' ' + string_load,
+            channel.basic_publish(exchange='logs', routing_key='TestQueue', body=str(0) + ' ' + string_load,
                                   properties=pika.BasicProperties(content_type='text/plain', delivery_mode=2,
                                                                   priority=0))
     print('Send Successfully!')
