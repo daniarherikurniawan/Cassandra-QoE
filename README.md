@@ -369,7 +369,11 @@ Open 8 SSH terminal :
 	sudo ntpdate -u 155.98.33.74
 	
 
+=========================================================================================
+>Copy file to windows system
 
+	sudo apt-get install lrzsz
+	sz <filename>
 
 
 
