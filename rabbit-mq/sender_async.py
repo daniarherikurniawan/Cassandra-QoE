@@ -23,13 +23,13 @@ def on_channel_open(channel):
     c_properties['x-max-priority'] = max_priority_num
     c_properties['x-message-ttl'] = 10000000
 
-    channel.exchange_declare(exchange='logs',
-                             exchange_type='direct')
+    # channel.exchange_declare(exchange='logs',
+    #                          exchange_type='direct')
 
     channel.queue_declare(callback = on_queue_declareok, queue='TestQueue', durable=True, exclusive=False, auto_delete=True,
                                    arguments=c_properties)
-    channel.queue_bind(exchange='logs',
-                       queue='TestQueue')
+    # channel.queue_bind(exchange='logs',
+    #                    queue='TestQueue')
     #channel.confirm_delivery()
     for x in range(0, message_num):
         r_num = random.random()
