@@ -253,12 +253,12 @@ class RabbitMQTest(object):
         self._message_number += 1
         #self._deliveries.append(self._message_number)
 
-        print('[*] Messaage', self._message_number, 'sent!')
+        # print('[*] Messaage', self._message_number, 'sent!')
 
         if self._message_number < self._message_totalnum:
             self.PUBLISH_INTERVAL = random.expovariate(self._dislamba)
             print('Published Interval Setting:', round(self.PUBLISH_INTERVAL * 1000000), 'us')
-            # self.PUBLISH_INTERVAL = max(0, self.PUBLISH_INTERVAL - 0.001)
+            self.PUBLISH_INTERVAL = max(0, self.PUBLISH_INTERVAL - 0.00065)
             self.schedule_next_message()
         else:
             print('Mission Complete! Program Exit.')
