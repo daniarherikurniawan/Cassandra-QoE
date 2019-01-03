@@ -1,9 +1,9 @@
 #!/bin/bash
 
-for wkl in '90' '120' '150' '180' '190' '200' '210' '220' '225' '230' '235' '240' '245' '250' '255' '260'
+for wkl in '30' '35' '40' '45' '50' '55' '60' '65' '70'
 do
     echo 'Start workload '$wkl'rps'
-    python sender_async_tm.py 50000 12000 $wkl >> senderfile_temp.txt
+    python sender_async_tm.py 200000 2000 $wkl >> senderfile_temp.txt
     echo 'Send Complete!'
     sleep 1m
 done

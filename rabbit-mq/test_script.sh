@@ -1,11 +1,26 @@
 #!/bin/bash
 
+-----------50K Msg Size------------
 mkdir results
-for prio in '10' '9'
-do
-    for wkl in '10' '50'
-    do
-        echo 'testhaha' > 'results/prio_'$prio'_workload_'$wkl.txt
-    done
 
+for wkl in '90' '120' '150' '180' '190' '200' '210' '220' '225' '230' '235' '240' '245' '250' '255' '260'
+do
+    echo 'Start listen workload '$wkl'rps'
+    python3 receiver_tm.py > 'results/workload_'$wkl.txt
+    sleep 2s
+    echo 'Start listening to next workload .....'
 done
+zip -r results.zip results
+echo 'All the things are finished'
+
+------------------------------------
+for wkl in '90' '120' '150' '180' '190' '200' '210' '220' '225' '230' '235' '240' '245' '250' '255' '260'
+do
+    echo 'Start workload '$wkl'rps'
+    python sender_async_tm.py 50000 12000 $wkl >> senderfile_temp.txt
+    echo 'Send Complete!'
+    sleep 1m
+done
+rm senderfile_temp.txt
+
+-----------50K Msg Size------------
