@@ -315,7 +315,7 @@ class RabbitMQTest(object):
             self._connection.close()
 
 
-def main(PACKETLENGTH, MSGNUM, THROUGHPUT, PRIORITY):
+def main(PACKETLENGTH, MSGNUM, THROUGHPUT):
     '''
     Total priority level = 10
     :param PACKETLENGTH: message size in bytes
