@@ -36,8 +36,8 @@ def callback(ch, method, properties, body):
     old_time = int(msgarray[0])
     new_time = int(round(time.time()*1000))
     msg_pri = int(msgarray[1])
-    #print(msg_pri, new_time - old_time)
-    print('[*] Received Message.', 'Time consumption:',  new_time - old_time, 'ms.', 'Msg priority:', msg_pri)
+    print(msg_pri, new_time - old_time)
+    #print('[*] Received Message.', 'Time consumption:',  new_time - old_time, 'ms.', 'Msg priority:', msg_pri)
     if msg_counter >= msg_thres:
         exit()
     #ch.basic_ack(delivery_tag=method.delivery_tag)
