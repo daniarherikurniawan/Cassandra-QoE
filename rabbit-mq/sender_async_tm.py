@@ -253,7 +253,7 @@ class RabbitMQTest(object):
         self._message_number += 1
         #self._deliveries.append(self._message_number)
 
-        print('[*] Messaage', self._message_number, 'sent!')
+        # print('[*] Messaage', self._message_number, 'sent!')
 
         if self._message_number < self._message_totalnum:
             self.PUBLISH_INTERVAL = random.expovariate(self._dislamba)
