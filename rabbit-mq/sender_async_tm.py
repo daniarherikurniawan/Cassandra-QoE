@@ -4,6 +4,7 @@ import random
 import string
 import sys
 import time
+import math
 
 
 class RabbitMQTest(object):
@@ -13,7 +14,7 @@ class RabbitMQTest(object):
     QUEUE = 'TestQueue'
     ROUTING_KEY = 'TestQueue'
 
-    def __init__(self, payload, message_num, dis_lambda, priority):
+    def __init__(self, payload, message_num, dis_lambda):
         """Setup our publisher object, passing in the URL we will use
         to connect to RabbitMQ.
 
@@ -35,7 +36,6 @@ class RabbitMQTest(object):
         self._string_load = ''.join([random.choice(string.ascii_letters + string.digits) for nn in range(payload)])
         self._message_totalnum = message_num
         self._dislamba = dis_lambda
-        self._preprecent = (10 - priority)/10.0
 
         self._lasttime = 0
         self._currenttime = 0
@@ -243,21 +243,11 @@ class RabbitMQTest(object):
         # print('Real time interval', int(round((self._currenttime  - self._lasttime)*1000)), 'ms')
         # self._lasttime = self._currenttime
         r_num = random.random()
-
-        properties = None
+        r_priority = math.floor(r_num*10)
 
         # message format: current_time + ' ' + priority + ' ' + a long string
-        message = str(int(round(time.time() * 1000))) + ' '
-
-        if r_num <= self._preprecent:
-            properties = pika.BasicProperties(content_type='text/plain', delivery_mode=2, priority=3)
-            message = message + str(3) + ' ' + self._string_load
-        elif r_num > self._preprecent and r_num < self._preprecent + 0.1:
-            properties = pika.BasicProperties(content_type='text/plain', delivery_mode=2, priority=2)
-            message = message + str(2) + ' ' + self._string_load
-        else:
-            properties = pika.BasicProperties(content_type='text/plain', delivery_mode=2, priority=1)
-            message = message + str(1) + ' ' + self._string_load
+        message = str(int(round(time.time() * 1000))) + ' ' + str(r_priority) + ' ' + self._string_load
+        properties = pika.BasicProperties(content_type='text/plain', delivery_mode=2, priority=r_priority)
 
         self._channel.basic_publish(self.EXCHANGE, self.ROUTING_KEY, message, properties)
         self._message_number += 1
@@ -337,9 +327,8 @@ def main(PACKETLENGTH, MSGNUM, THROUGHPUT, PRIORITY):
     payload = PACKETLENGTH
     message_num = MSGNUM
     dis_lambda = THROUGHPUT
-    pri = PRIORITY
 
-    our_tester = RabbitMQTest(payload, message_num, dis_lambda, pri)
+    our_tester = RabbitMQTest(payload, message_num, dis_lambda)
     print('Pre-setting is OK')
     our_tester.run()
 
@@ -348,5 +337,4 @@ if __name__ == '__main__':
     payload = int(sys.argv[1])
     msgnum = int(sys.argv[2])
     dis_lambda = int(sys.argv[3])
-    priority = float(sys.argv[4])
-    main(PACKETLENGTH=payload, MSGNUM=msgnum, THROUGHPUT=dis_lambda, PRIORITY=priority)
+    main(PACKETLENGTH=payload, MSGNUM=msgnum, THROUGHPUT=dis_lambda)
