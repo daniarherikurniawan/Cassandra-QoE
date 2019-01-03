@@ -244,9 +244,9 @@ class RabbitMQTest(object):
         self._lasttime = self._currenttime
         r_num = random.random()
         r_priority = int(math.floor(r_num*10))
-        # -------------------------------------
+        # -------------------------------------FIFO
         r_priority = 0
-        # --------------------------------------
+        # -------------------------------------FIFO
         # message format: current_time + ' ' + priority + ' ' + a long string
         message = str(int(round(time.time() * 1000))) + ' ' + str(r_priority) + ' ' + self._string_load
         properties = pika.BasicProperties(content_type='text/plain', delivery_mode=2, priority=r_priority)
