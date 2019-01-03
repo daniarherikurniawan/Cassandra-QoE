@@ -22,7 +22,7 @@ def on_channel_open(channel):
     c_properties = dict()
     c_properties['x-max-priority'] = max_priority_num
     channel.queue_declare(callback = on_queue_declareok, queue='TestQueue', durable=True, exclusive=False, auto_delete=True, arguments=c_properties)
-    channel.confirm_delivery()
+    #channel.confirm_delivery()
     for x in range(0, message_num):
         r_num = random.random()
         if r_num < 0.5:
