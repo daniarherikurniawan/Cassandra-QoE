@@ -36,7 +36,7 @@ class RabbitMQTest(object):
         self._string_load = ''.join([random.choice(string.ascii_letters + string.digits) for nn in range(payload)])
         self._message_totalnum = message_num
         self._dislamba = dis_lambda
-        self._max_priority = 100
+        self._max_priority = 10
 
         self._lasttime = 0
         self._currenttime = 0
