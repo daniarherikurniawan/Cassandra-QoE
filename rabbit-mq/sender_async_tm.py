@@ -249,7 +249,7 @@ class RabbitMQTest(object):
         '''
         For FIFO debug - all 
         '''
-        r_priority = 0
+        r_priority = 100
         '''
         For FIFO debug
         '''
