@@ -36,6 +36,7 @@ class RabbitMQTest(object):
         self._string_load = ''.join([random.choice(string.ascii_letters + string.digits) for nn in range(payload)])
         self._message_totalnum = message_num
         self._dislamba = dis_lambda
+        self._max_priority = 100
 
         self._lasttime = 0
         self._currenttime = 0
@@ -240,13 +241,18 @@ class RabbitMQTest(object):
             return
 
         self._currenttime = time.time()
-        print('Real time interval', int(round((self._currenttime  - self._lasttime)*1000000)), 'us')
+        print('Real time interval', int(round((self._currenttime - self._lasttime)*1000000)), 'us')
         self._lasttime = self._currenttime
         r_num = random.random()
-        r_priority = int(math.floor(r_num*10))
-        # -------------------------------------FIFO
-        r_priority = 0
-        # -------------------------------------FIFO
+        r_priority = int(math.floor(r_num*self._max_priority))
+
+        '''
+        For FIFO debug - all 
+        '''
+        # r_priority = 0
+        '''
+        For FIFO debug
+        '''
         # message format: current_time + ' ' + priority + ' ' + a long string
         message = str(int(round(time.time() * 1000))) + ' ' + str(r_priority) + ' ' + self._string_load
         properties = pika.BasicProperties(content_type='text/plain', delivery_mode=2, priority=r_priority)
