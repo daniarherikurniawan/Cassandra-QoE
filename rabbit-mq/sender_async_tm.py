@@ -249,9 +249,9 @@ class RabbitMQTest(object):
         if self._channel is None or not self._channel.is_open:
             return
 
-        self._currenttime = time.time()
-        print('Real time interval', int(round((self._currenttime - self._lasttime)*1000000)), 'us')
-        self._lasttime = self._currenttime
+        #self._currenttime = time.time()
+        #print('Real time interval', int(round((self._currenttime - self._lasttime)*1000000)), 'us')
+        #self._lasttime = self._currenttime
         r_num = random.random()
         r_priority = int(math.floor(r_num*self._max_priority))
 
@@ -263,7 +263,10 @@ class RabbitMQTest(object):
         For FIFO debug
         '''
         # message format: current_time + ' ' + priority + ' ' + a long string
+        temp_time1 = time.time()
         message = str(int(round(time.time() * 1000))) + ' ' + str(r_priority) + ' ' + self._string_load
+        print('Consum Time:', (time.time() - temp_time1) * 1000)
+
         properties = pika.BasicProperties(content_type='text/plain', delivery_mode=2, priority=r_priority)
 
         self._channel.basic_publish(self.EXCHANGE, self.ROUTING_KEY, message, properties)
@@ -275,8 +278,8 @@ class RabbitMQTest(object):
         if self._message_number < self._message_totalnum:
             #self.PUBLISH_INTERVAL = random.expovariate(self._dislamba)
             self.PUBLISH_INTERVAL = self._timeinterval[self._message_number]/1000.0
-            print('Published Interval Setting:', round(self.PUBLISH_INTERVAL * 1000000), 'us')
-            self.PUBLISH_INTERVAL = max(0.000001, self.PUBLISH_INTERVAL - 0.0008) # original 0.001
+            #print('Published Interval Setting:', round(self.PUBLISH_INTERVAL * 1000000), 'us')
+            self.PUBLISH_INTERVAL = max(0.000001, self.PUBLISH_INTERVAL - 0.001) # original 0.001
             self.schedule_next_message()
         else:
             print('Mission Complete! Program Exit.')
