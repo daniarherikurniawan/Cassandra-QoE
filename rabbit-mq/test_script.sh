@@ -53,3 +53,8 @@ rm senderfile_temp.txt
 
 
 ------------200K Msg Size---------------
+
+
+ONERF WORKLOAD
+
+for wkl in '90' '95' '100' '105' '110' '115' '118' '119' '120'
