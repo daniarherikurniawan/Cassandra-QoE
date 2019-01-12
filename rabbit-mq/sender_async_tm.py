@@ -263,9 +263,11 @@ class RabbitMQTest(object):
         For FIFO debug
         '''
         # message format: current_time + ' ' + priority + ' ' + a long string
-        temp_time1 = time.time()
-        message = str(int(round(time.time() * 1000))) + ' ' + str(r_priority) + ' ' + self._string_load
-        print('Consum Time:', (time.time() - temp_time1) * 1000)
+        t_time = time.time()
+        message = str(int(round(time.time() * 1000))) + ' ' + str(r_priority)
+        print('time consumption', (time.time() - t_time)*1000)
+        time.sleep(0.008)
+
 
         properties = pika.BasicProperties(content_type='text/plain', delivery_mode=2, priority=r_priority)
 
