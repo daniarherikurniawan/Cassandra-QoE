@@ -5,6 +5,7 @@ import string
 import sys
 import time
 import math
+import numpy as np
 
 
 class RabbitMQTest(object):
@@ -13,6 +14,8 @@ class RabbitMQTest(object):
     PUBLISH_INTERVAL = 1
     QUEUE = 'TestQueue'
     ROUTING_KEY = 'TestQueue'
+    ORI_THROUGHPUT = 87.965737345304
+    FILENAME = 'time_invervals.txt'
 
     def __init__(self, payload, message_num, dis_lambda):
         """Setup our publisher object, passing in the URL we will use
@@ -34,12 +37,15 @@ class RabbitMQTest(object):
         self._stopping = False
 
         self._string_load = ''.join([random.choice(string.ascii_letters + string.digits) for nn in range(payload)])
-        self._message_totalnum = message_num
+        self._message_totalnum = 80000
         self._dislamba = dis_lambda
         self._max_priority = 100
 
         self._lasttime = 0
         self._currenttime = 0
+        self._timeinterval = np.loadtxt('time_invervals.txt')
+        self._timeinterval = self._timeinterval * (87.965737345304/self._dislamba)
+
 
     def connect(self):
         """This method connects to RabbitMQ, returning the connection handle.
@@ -264,9 +270,10 @@ class RabbitMQTest(object):
         # print('[*] Messaage', self._message_number, 'sent!')
 
         if self._message_number < self._message_totalnum:
-            self.PUBLISH_INTERVAL = random.expovariate(self._dislamba)
+            #self.PUBLISH_INTERVAL = random.expovariate(self._dislamba)
+            self.PUBLISH_INTERVAL = self._timeinterval[self._message_number]
             print('Published Interval Setting:', round(self.PUBLISH_INTERVAL * 1000000), 'us')
-            self.PUBLISH_INTERVAL = max(0, self.PUBLISH_INTERVAL - 0.001)
+            self.PUBLISH_INTERVAL = max(0, self.PUBLISH_INTERVAL - 0.0008) # original 0.001
             self.schedule_next_message()
         else:
             print('Mission Complete! Program Exit.')
@@ -343,6 +350,6 @@ def main(PACKETLENGTH, MSGNUM, THROUGHPUT):
 
 if __name__ == '__main__':
     payload = int(sys.argv[1])
-    msgnum = int(sys.argv[2])
+    msgnum = 80000
     dis_lambda = int(sys.argv[3])
     main(PACKETLENGTH=payload, MSGNUM=msgnum, THROUGHPUT=dis_lambda)

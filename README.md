@@ -337,11 +337,12 @@ Open 8 SSH terminal :
 	sudo apt-get update
 	sudo apt-get install rabbitmq-server
 	
->Install Pika
+>Install Pika & Numpy
 
 	sudo apt-get update
 	sudo apt-get install python3-pip
 	pip3 install pika
+	pip3 install numpy
 	
 >Start & Stop & Reset RabbitMQ service
 	
