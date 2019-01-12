@@ -2,7 +2,7 @@
 
 mkdir results
 
-for wkl in '120'
+for wkl in '100' '120'
 do
     echo 'Start listen workload '$wkl'rps'
     python3 receiver_tm.py > 'results/workload_'$wkl.txt
