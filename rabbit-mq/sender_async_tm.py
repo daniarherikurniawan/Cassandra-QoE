@@ -264,7 +264,7 @@ class RabbitMQTest(object):
         '''
         # message format: current_time + ' ' + priority + ' ' + a long string
         t_time = time.time()
-        message = str(int(round(time.time() * 1000))) + ' ' + str(r_priority)
+        message = str(int(round(time.time() * 1000))) + ' ' + str(r_priority) + ' '
         print('time consumption', (time.time() - t_time)*1000)
         time.sleep(0.008)
 
