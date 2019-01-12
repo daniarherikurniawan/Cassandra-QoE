@@ -37,13 +37,14 @@ class RabbitMQTest(object):
         self._stopping = False
 
         self._string_load = ''.join([random.choice(string.ascii_letters + string.digits) for nn in range(payload)])
-        self._message_totalnum = 80000
         self._dislamba = dis_lambda
         self._max_priority = 100
 
         self._lasttime = 0
         self._currenttime = 0
         self._timeinterval = np.loadtxt('time_invervals.txt')
+        self._message_totalnum = 5000
+        self._timeinterval = self._timeinterval[0:5000]
         self._timeinterval = self._timeinterval * (87.965737345304/self._dislamba)
 
 
