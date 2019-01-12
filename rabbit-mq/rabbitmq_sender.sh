@@ -7,4 +7,3 @@ do
     echo 'Send Complete!'
     sleep 1m
 done
-rm senderfile_temp.txt
