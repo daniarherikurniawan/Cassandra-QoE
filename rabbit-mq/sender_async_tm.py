@@ -46,7 +46,6 @@ class RabbitMQTest(object):
         self._message_totalnum = 5000
         self._timeinterval = self._timeinterval[0:5000]
         self._timeinterval = self._timeinterval * (82.5395/self._dislamba)
-
         self._is_fifo = is_fifo
 
 
@@ -231,10 +230,7 @@ class RabbitMQTest(object):
         message to be delivered in PUBLISH_INTERVAL seconds.
 
         """
-        if self.PUBLISH_INTERVAL < 0.001:
-            self.publish_message()
-        else:
-            self._connection.ioloop.add_timeout(self.PUBLISH_INTERVAL, self.publish_message)
+        self._connection.ioloop.add_timeout(self.PUBLISH_INTERVAL, self.publish_message)
 
     def publish_message(self):
         """If the class is not stopping, publish a message to RabbitMQ,
@@ -284,7 +280,7 @@ class RabbitMQTest(object):
             #self.PUBLISH_INTERVAL = random.expovariate(self._dislamba)
             self.PUBLISH_INTERVAL = self._timeinterval[self._message_number]/1000.0
             print('Published Interval Setting:', round(self.PUBLISH_INTERVAL * 1000000), 'us')
-            self.PUBLISH_INTERVAL = max(0.0, self.PUBLISH_INTERVAL - 0.0014) # original 0.001
+            self.PUBLISH_INTERVAL = max(0.0, self.PUBLISH_INTERVAL) # original 0.001
             ####### for debug
             #self.PUBLISH_INTERVAL = 0.0
             ####### for debug
