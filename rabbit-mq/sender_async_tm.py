@@ -270,7 +270,7 @@ class RabbitMQTest(object):
         #print('time consumption', (time.time() - t_time)*1000)
 
 
-        properties = pika.BasicProperties(content_type='text/plain', delivery_mode=1, priority=r_priority)
+        properties = pika.BasicProperties(content_type='text/plain', delivery_mode=2, priority=r_priority)
 
         self._channel.basic_publish(self.EXCHANGE, self.ROUTING_KEY, message, properties)
         self._message_number += 1
