@@ -261,7 +261,7 @@ class RabbitMQTest(object):
         For FIFO debug - all 
         '''
         if self._is_fifo == 1:
-            r_priority = 200
+            r_priority = 0
         '''
         For FIFO debug
         '''
