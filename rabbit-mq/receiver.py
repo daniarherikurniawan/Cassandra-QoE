@@ -49,6 +49,7 @@ def callback(ch, method, properties, body):
         print('Throughput:', counter, 'Total Time Consumption:', now_time - start_time)
         counter = 0
     ch.basic_ack(delivery_tag = method.delivery_tag)
+    time.sleep(0.00015)
     #msgarray = str(body).split()
     #print('[*] Received Message', msgarray[0])
     #print('[*] Received Message', counter, 'Time Consumption:', now_time-last_time, 'Message Length:', sys.getsizeof(body))
