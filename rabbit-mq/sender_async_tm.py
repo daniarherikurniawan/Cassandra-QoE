@@ -14,7 +14,7 @@ class RabbitMQTest(object):
     PUBLISH_INTERVAL = 1
     QUEUE = 'TestQueue'
     ROUTING_KEY = 'TestQueue'
-    ORI_THROUGHPUT = 87.965737345304
+    ORI_THROUGHPUT = 82.5395
     FILENAME = 'time_invervals.txt'
 
     def __init__(self, payload, is_fifo, dis_lambda):
@@ -45,7 +45,7 @@ class RabbitMQTest(object):
         self._timeinterval = np.loadtxt('time_invervals.txt')
         self._message_totalnum = 5000
         self._timeinterval = self._timeinterval[0:5000]
-        self._timeinterval = self._timeinterval * (87.965737345304/self._dislamba)
+        self._timeinterval = self._timeinterval * (82.5395/self._dislamba)
 
         self._is_fifo = is_fifo
 
