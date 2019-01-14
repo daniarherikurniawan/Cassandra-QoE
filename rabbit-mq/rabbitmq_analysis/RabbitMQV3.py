@@ -22,7 +22,7 @@ ori_data_original = bipart.filterData(ori_data_original)
 # pages = ['SearchResults', 'Apps/Games PDP', 'PDP', 'SFW Category Page Template', 'RefineList']
 pagetype = 'Apps/Games PDP' # note that we also need to modify this in biparititegraph.py.
 
-r_times = 80
+r_times = 50
 
 repeat_times = 15
 exp_times = 30
@@ -51,7 +51,7 @@ def get_pri_slope(cluster_table, nbk):
     for i in range(0, len(cluster_table)):
         if abs(nbk - cluster_table[i]) < min_distance:
             min_distance = abs(nbk - cluster_table[i])
-            pri_level = int(math.floor(i/4))
+            pri_level = int(math.floor(i/(classify_num/max_priority)))
 
     return pri_level+1
 
@@ -73,6 +73,7 @@ def GreedySLOPE(make_table_data, nbk_delay, qoecurve, latencycurve):
 
 def get_pri_level(match_table, make_t_data, priority_y, nbk):
     pri_level = 0
+
     min_distance = 200000000
 
     for i in range(0, len(make_t_data)):
@@ -172,7 +173,7 @@ if __name__ == '__main__':
     #workloads =[90, 110, 120, 125, 126, 127, 128, 129, 130]
     #workloads = [90, 95, 100, 105, 110, 115, 118, 119, 120]
     # workloads = [120, 125, 128, 129, 130]
-    workloads = [90, 95, 100, 105, 110, 115, 120]
+    workloads = [ 110, 115, 120]
     for workload in workloads:
 
         print('------------------------------')
