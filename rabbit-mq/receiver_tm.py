@@ -11,6 +11,8 @@ max_priority_num = 250
 c_properties  = dict()
 c_properties['x-max-priority'] = max_priority_num
 c_properties['x-message-ttl'] = 10000000
+c_properties['x-max-length'] = 10000000
+
 
 connection = pika.BlockingConnection(pika.ConnectionParameters(host='155.98.39.140', credentials=pika_credentials))
 channel = connection.channel()
