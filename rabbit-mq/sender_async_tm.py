@@ -17,7 +17,7 @@ class RabbitMQTest(object):
     ORI_THROUGHPUT = 87.965737345304
     FILENAME = 'time_invervals.txt'
 
-    def __init__(self, payload, message_num, dis_lambda):
+    def __init__(self, payload, is_fifo, dis_lambda):
         """Setup our publisher object, passing in the URL we will use
         to connect to RabbitMQ.
 
@@ -46,6 +46,8 @@ class RabbitMQTest(object):
         self._message_totalnum = 5000
         self._timeinterval = self._timeinterval[0:5000]
         self._timeinterval = self._timeinterval * (87.965737345304/self._dislamba)
+
+        self._is_fifo = is_fifo
 
 
     def connect(self):
@@ -258,7 +260,8 @@ class RabbitMQTest(object):
         '''
         For FIFO debug - all 
         '''
-        #r_priority = 100
+        if self._is_fifo == 1:
+            r_priority = 200
         '''
         For FIFO debug
         '''
@@ -280,7 +283,7 @@ class RabbitMQTest(object):
             #self.PUBLISH_INTERVAL = random.expovariate(self._dislamba)
             self.PUBLISH_INTERVAL = self._timeinterval[self._message_number]/1000.0
             #print('Published Interval Setting:', round(self.PUBLISH_INTERVAL * 1000000), 'us')
-            self.PUBLISH_INTERVAL = max(0.000001, self.PUBLISH_INTERVAL - 0.001) # original 0.001
+            self.PUBLISH_INTERVAL = max(0.0, self.PUBLISH_INTERVAL - 0.001) # original 0.001
             self.schedule_next_message()
         else:
             print('Mission Complete! Program Exit.')
@@ -337,7 +340,7 @@ class RabbitMQTest(object):
             self._connection.close()
 
 
-def main(PACKETLENGTH, MSGNUM, THROUGHPUT):
+def main(PACKETLENGTH, IS_FIFO, THROUGHPUT):
     '''
     Total priority level = 10
     :param PACKETLENGTH: message size in bytes
@@ -347,16 +350,16 @@ def main(PACKETLENGTH, MSGNUM, THROUGHPUT):
     :return:
     '''
     payload = PACKETLENGTH
-    message_num = MSGNUM
+    fifo_or_not = IS_FIFO
     dis_lambda = THROUGHPUT
 
-    our_tester = RabbitMQTest(payload, message_num, dis_lambda)
+    our_tester = RabbitMQTest(payload, fifo_or_not, dis_lambda)
     print('Pre-setting is OK')
     our_tester.run()
 
 
 if __name__ == '__main__':
     payload = int(sys.argv[1])
-    msgnum = 80000
+    is_fifo = int(sys.argv[2])
     dis_lambda = int(sys.argv[3])
-    main(PACKETLENGTH=payload, MSGNUM=msgnum, THROUGHPUT=dis_lambda)
+    main(PACKETLENGTH=payload, IS_FIFO=is_fifo, THROUGHPUT=dis_lambda)
