@@ -360,6 +360,7 @@ def main(PACKETLENGTH, IS_FIFO, THROUGHPUT):
 
 
 if __name__ == '__main__':
+    sys.setrecursionlimit(1000000)
     payload = int(sys.argv[1])
     is_fifo = int(sys.argv[2])
     dis_lambda = int(sys.argv[3])
