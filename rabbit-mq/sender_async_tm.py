@@ -156,7 +156,7 @@ class RabbitMQTest(object):
         :param str|unicode queue_name: The name of the queue to declare.
 
         """
-        max_priority_num = 250
+        max_priority_num = 30
         c_properties = dict()
         c_properties['x-max-priority'] = max_priority_num
         c_properties['x-message-ttl'] = 10000000

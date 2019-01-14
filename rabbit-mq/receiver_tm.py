@@ -7,7 +7,7 @@ import sys
 
 pika_credentials = pika.PlainCredentials('test1', 'test1')
 
-max_priority_num = 250
+max_priority_num = 30
 c_properties  = dict()
 c_properties['x-max-priority'] = max_priority_num
 c_properties['x-message-ttl'] = 10000000
@@ -40,7 +40,7 @@ def callback(ch, method, properties, body):
     msg_pri = int(msgarray[1])
     print(msg_pri, new_time - old_time)
     ch.basic_ack(delivery_tag=method.delivery_tag)
-    time.sleep(0.005)
+    time.sleep(0.006)
     #print('[*] Received Message.', 'Time consumption:',  new_time - old_time, 'ms.', 'Msg priority:', msg_pri)
 
     if msg_counter >= msg_thres:
