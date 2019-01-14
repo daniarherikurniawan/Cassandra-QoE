@@ -250,9 +250,9 @@ class RabbitMQTest(object):
         if self._channel is None or not self._channel.is_open:
             return
 
-        self._currenttime = time.time()
-        print('Real time interval', int(round((self._currenttime - self._lasttime)*1000000)), 'us')
-        self._lasttime = self._currenttime
+        # self._currenttime = time.time()
+        # print('Real time interval', int(round((self._currenttime - self._lasttime)*1000000)), 'us')
+        # self._lasttime = self._currenttime
         r_num = random.random()
         r_priority = int(math.floor(r_num*self._max_priority))
 
@@ -281,10 +281,10 @@ class RabbitMQTest(object):
         if self._message_number < self._message_totalnum:
             #self.PUBLISH_INTERVAL = random.expovariate(self._dislamba)
             self.PUBLISH_INTERVAL = self._timeinterval[self._message_number]/1000.0
-            print('Published Interval Setting:', round(self.PUBLISH_INTERVAL * 1000000), 'us')
+            # print('Published Interval Setting:', round(self.PUBLISH_INTERVAL * 1000000), 'us')
             self.PUBLISH_INTERVAL = max(0.0, self.PUBLISH_INTERVAL - 0.0014) # original 0.001
             ####### for debug
-            self.PUBLISH_INTERVAL = 0.0
+            #self.PUBLISH_INTERVAL = 0.0
             ####### for debug
             self.schedule_next_message()
         else:
