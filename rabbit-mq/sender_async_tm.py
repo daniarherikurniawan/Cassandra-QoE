@@ -224,7 +224,7 @@ class RabbitMQTest(object):
             self._acked += 1
         elif confirmation_type == 'nack':
             self._nacked += 1
-        self._deliveries.remove(method_frame.method.delivery_tag)
+        #self._deliveries.remove(method_frame.method.delivery_tag)
 
     def schedule_next_message(self):
         """If we are not closing our connection to RabbitMQ, schedule another
