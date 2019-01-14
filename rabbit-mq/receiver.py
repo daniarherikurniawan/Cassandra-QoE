@@ -46,10 +46,11 @@ def callback(ch, method, properties, body):
     last_time = now_time
     now_time = time.time()
     if now_time - start_time > 1.00:
-        print('Throughput:', counter, 'Total Time Consumption:', now_time - start_time)
+        # print('Throughput:', counter, 'Total Time Consumption:', now_time - start_time)
+        print(counter, ',')
         counter = 0
     ch.basic_ack(delivery_tag = method.delivery_tag)
-    time.sleep(0.002)
+    time.sleep(0.0025)
     #msgarray = str(body).split()
     #print('[*] Received Message', msgarray[0])
     #print('[*] Received Message', counter, 'Time Consumption:', now_time-last_time, 'Message Length:', sys.getsizeof(body))
