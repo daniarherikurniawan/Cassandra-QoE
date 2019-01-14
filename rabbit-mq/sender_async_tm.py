@@ -283,7 +283,10 @@ class RabbitMQTest(object):
             #self.PUBLISH_INTERVAL = random.expovariate(self._dislamba)
             self.PUBLISH_INTERVAL = self._timeinterval[self._message_number]/1000.0
             print('Published Interval Setting:', round(self.PUBLISH_INTERVAL * 1000000), 'us')
-            self.PUBLISH_INTERVAL = max(0.0, self.PUBLISH_INTERVAL - 0.0008) # original 0.001
+            self.PUBLISH_INTERVAL = max(0.0, self.PUBLISH_INTERVAL - 0.0014) # original 0.001
+            ####### for debug
+            self.PUBLISH_INTERVAL = 0.0
+            ####### for debug
             self.schedule_next_message()
         else:
             print('Mission Complete! Program Exit.')
