@@ -231,8 +231,10 @@ class RabbitMQTest(object):
         message to be delivered in PUBLISH_INTERVAL seconds.
 
         """
-        # self.publish_message()
-        self._connection.ioloop.add_timeout(self.PUBLISH_INTERVAL, self.publish_message)
+        if self.PUBLISH_INTERVAL < 0.001:
+            self.publish_message()
+        else:
+            self._connection.ioloop.add_timeout(self.PUBLISH_INTERVAL, self.publish_message)
 
     def publish_message(self):
         """If the class is not stopping, publish a message to RabbitMQ,
