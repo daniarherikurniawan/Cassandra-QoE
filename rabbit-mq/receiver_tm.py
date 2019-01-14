@@ -39,7 +39,7 @@ def callback(ch, method, properties, body):
     new_time = int(round(time.time()*1000))
     msg_pri = int(msgarray[1])
     print(msg_pri, new_time - old_time)
-    ch.basic_ack(delivery_tag=method.delivery_tag)
+    #ch.basic_ack(delivery_tag=method.delivery_tag)
     time.sleep(0.008)
     #print('[*] Received Message.', 'Time consumption:',  new_time - old_time, 'ms.', 'Msg priority:', msg_pri)
 
@@ -49,7 +49,7 @@ def callback(ch, method, properties, body):
 channel.basic_qos(prefetch_count = 1)
 channel.basic_consume(callback,
                       queue='TestQueue',
-                      no_ack=False)
+                      no_ack=True)
 
 # print(' [*] Waiting for messages. To exit press CTRL+C')
 channel.start_consuming()
