@@ -38,7 +38,7 @@ class RabbitMQTest(object):
 
         self._string_load = ''.join([random.choice(string.ascii_letters + string.digits) for nn in range(payload)])
         self._dislamba = dis_lambda
-        self._max_priority = 100
+        self._max_priority = 20
 
         self._lasttime = 0
         self._currenttime = 0
@@ -283,7 +283,7 @@ class RabbitMQTest(object):
             #self.PUBLISH_INTERVAL = random.expovariate(self._dislamba)
             self.PUBLISH_INTERVAL = self._timeinterval[self._message_number]/1000.0
             #print('Published Interval Setting:', round(self.PUBLISH_INTERVAL * 1000000), 'us')
-            self.PUBLISH_INTERVAL = max(0.0, self.PUBLISH_INTERVAL - 0.001) # original 0.001
+            self.PUBLISH_INTERVAL = max(0.0, self.PUBLISH_INTERVAL - 0.0008) # original 0.001
             self.schedule_next_message()
         else:
             print('Mission Complete! Program Exit.')

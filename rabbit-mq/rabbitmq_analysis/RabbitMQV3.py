@@ -12,7 +12,7 @@ import priority_latency as pl
 Third version of Priority Selection: Get per-request latency - FIFO/SLOPE/MATCH
 '''
 
-max_priority = 100
+max_priority = 20
 qoe_curve_filename = 'qoe_bins'
 
 file = 'AM_12'
