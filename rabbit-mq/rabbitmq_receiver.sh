@@ -28,6 +28,7 @@ echo 'Start Analyzing Data'
 ssh zhangbjb@pc725.emulab.net  > /dev/null 2>&1 << EOF
 cd /tmp/Cassandra-QoE/rabbit-mq/rabbitmq_analysis
 sh rabbitmq_controller.sh
+exit
 EOF
 
 scp zhangbjb@pc725.emulab.net:/tmp/Cassandra-QoE/rabbit-mq/rabbitmq_analysis/final_results.txt ./
