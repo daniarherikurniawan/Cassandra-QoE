@@ -191,6 +191,8 @@ if __name__ == '__main__':
     # workloads = [120, 125, 128, 129, 130]
     # workloads = [90, 95, 100, 105, 110, 115, 120, 125, 130, 135]
     workloads = [90, 95, 100, 105, 110, 115, 120, 125, 130, 135]
+    slope_gains = []
+    match_gains = []
     workloads.reverse()
     for workload in workloads:
 
@@ -229,9 +231,15 @@ if __name__ == '__main__':
             t_qoe_match = t_qoe_match/r_times
             match_qoe += t_qoe_match
             slope_qoe += t_qoe_slope
-
+        slope_gains.append(slope_qoe/fifo_qoe - 1)
+        match_gains.append(match_qoe/fifo_qoe - 1)
         # print('Throughput:', workload, 'rps')
         print('FIFO:', fifo_qoe, 'Slope:', slope_qoe, 'Match:', match_qoe)
         print('Slope Gain:', slope_qoe/fifo_qoe - 1, 'Match Gain:', match_qoe/fifo_qoe - 1)
-
+    workloads = np.array(workloads)
+    slope_gains = np.array(slope_gains)
+    match_gains = np.array(match_gains)
+    data_to_save = np.array([workloads, slope_gains, match_gains])
+    data_to_save = data_to_save.transpose()
+    np.savetxt('final_results.txt', data_to_save)
 
