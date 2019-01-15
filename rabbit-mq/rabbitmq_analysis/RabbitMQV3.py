@@ -58,7 +58,7 @@ def get_pri_slope(cluster_table, nbk):
 def GreedySLOPE(make_table_data, nbk_delay, qoecurve, latencycurve):
 
     make_table_data_copy = make_table_data.copy()
-    make_table_data_copy.sort(key = lambda ele: gs.QoESlope(ele, qoe_curve), reverse = True)
+    make_table_data_copy.sort(key = lambda ele: gs.QoESlope(ele, qoe_curve))
 
     answer_qoe = 0.0
 
@@ -68,6 +68,22 @@ def GreedySLOPE(make_table_data, nbk_delay, qoecurve, latencycurve):
         answer_qoe += gs.QoECurve(nbk_delay[i] + bk_delay, qoecurve)
 
     # print('answer_qoe:', answer_qoe)
+    return answer_qoe
+
+
+def GreedySLOPE_test(bk_priority, nbk_delay, qoecurve, latencycurve):
+
+    bk_priority_copy = bk_priority.copy()
+    nbk_delay_copy = nbk_delay.copy()
+    nbk_delay_copy.sort(key = lambda ele: gs.QoESlope(ele, qoe_curve), reverse = True)
+    bk_priority_copy.sort(reverse = True)
+
+    answer_qoe = 0.0
+
+    for i in range(0, len(nbk_delay_copy)):
+        bk_delay = pl.get_random(bk_priority_copy[i], latencycurve)
+        answer_qoe += gs.QoECurve(nbk_delay_copy[i] + bk_delay, qoecurve)
+
     return answer_qoe
 
 
@@ -173,7 +189,9 @@ if __name__ == '__main__':
     #workloads =[90, 110, 120, 125, 126, 127, 128, 129, 130]
     #workloads = [90, 95, 100, 105, 110, 115, 118, 119, 120]
     # workloads = [120, 125, 128, 129, 130]
-    workloads = [ 110, 115, 120]
+    # workloads = [90, 95, 100, 105, 110, 115, 120, 125, 130, 135]
+    workloads = [90, 95, 100, 105, 110, 115, 120, 125, 130, 135]
+    workloads.reverse()
     for workload in workloads:
 
         print('------------------------------')
@@ -206,6 +224,7 @@ if __name__ == '__main__':
             for rrr in range(0, r_times):
                 t_qoe_match += cal_real_qoe(match_table=table_match, make_table_data = make_table_data, nb_delay=nb_delay, priority_y=priority_table, priority_curve=latencydata_priority, qoe_curve=qoe_curve)
                 t_qoe_slope += GreedySLOPE(make_table_data = make_table_data, nbk_delay=nb_delay, latencycurve=latencydata_priority, qoecurve=qoe_curve)
+                # t_qoe_slope += GreedySLOPE_test(bk_priority=priority_table, nbk_delay=nb_delay, latencycurve=latencydata_priority, qoecurve=qoe_curve)
             t_qoe_slope = t_qoe_slope/r_times
             t_qoe_match = t_qoe_match/r_times
             match_qoe += t_qoe_match
@@ -213,6 +232,6 @@ if __name__ == '__main__':
 
         # print('Throughput:', workload, 'rps')
         print('FIFO:', fifo_qoe, 'Slope:', slope_qoe, 'Match:', match_qoe)
-        print('Slope Gain:', slope_qoe/fifo_qoe -1, 'Match Gain:', match_qoe/fifo_qoe -1)
+        print('Slope Gain:', slope_qoe/fifo_qoe - 1, 'Match Gain:', match_qoe/fifo_qoe - 1)
 
 

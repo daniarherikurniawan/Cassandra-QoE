@@ -9,8 +9,8 @@ folder_name = 'rabbitmqdata/'
 
 def FIFO_file_processing():
 
-    throughput = [90, 95, 100, 105, 110, 115, 120]
-    per_req_msec = 30
+    throughput = [90, 95, 100, 105, 110, 115, 120, 125, 130, 135]
+    per_req_msec = 40
 
     filename_array = []
 
@@ -23,6 +23,7 @@ def FIFO_file_processing():
         t_data = np.loadtxt(filename)
         data_use = t_data[:, 1]
         min_value = data_use.min()
+
         min_value = per_req_msec - min_value
         data_use = data_use + min_value
         save_filename = folder_name + 'workload_' + str(throughput[index]) + '_fifo.txt'
@@ -32,7 +33,7 @@ def FIFO_file_processing():
 
 def Pri_file_processing():
 
-    throughput = [90, 95, 100, 105, 110, 115, 120]
+    throughput = [90, 95, 100, 105, 110, 115, 120, 125, 130, 135]
     per_req_msec = 10
 
     filename_array = []
@@ -49,8 +50,9 @@ def Pri_file_processing():
 
         t_file_data = file_data[:, 1]
         min_value = t_file_data.min()
+        # print(min_value)
         min_value = per_req_msec - min_value
-
+        # print(min_value)
         for priority in range(0, max_pri + 1):
             id_filter = np.where(file_data[:, 0] == priority)
             data_filter = file_data[id_filter]
@@ -62,9 +64,21 @@ def Pri_file_processing():
 
     return 0
 
+def analyze_througput():
+    times = np.loadtxt('time_invervals.txt')
+    times = times[0:5000]
+    sum_time = 0.0
+    print(len(times))
+
+    for i in range(0, len(times)):
+        sum_time += times[i]
+    print(sum_time)
+    print('throughput: ', 5000/sum_time * 1000)
+    return 0
 
 if __name__ == '__main__':
     print('Hello, file processing begins')
     FIFO_file_processing()
     Pri_file_processing()
     print('File processing ends.')
+    # analyze_througput()
