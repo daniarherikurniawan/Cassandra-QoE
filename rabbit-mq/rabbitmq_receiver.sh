@@ -31,5 +31,5 @@ sh rabbitmq_controller.sh
 EOF
 
 scp zhangbjb@pc725.emulab.net:/tmp/Cassandra-QoE/rabbit-mq/rabbitmq_analysis/final_results.txt ./
-echo 'Experiment Finish'
+echo 'All EXP Finish, results are in final_results.txt'
 
