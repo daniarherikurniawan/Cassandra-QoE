@@ -34,6 +34,11 @@ Open 8 SSH terminal :
 	printf "\n" | sudo add-apt-repository ppa:webupd8team/java
 	sudo apt-get update
 	sudo apt-get install oracle-java8-set-default
+	
+	or
+	
+	sudo apt-get update
+	sudo apt install default-jdk
 
 ====================================================================================
 >run in cass-1
