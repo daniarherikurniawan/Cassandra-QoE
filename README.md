@@ -38,6 +38,7 @@ Open 8 SSH terminal :
 	or
 	
 	sudo apt-get update
+	printf "Y" | sudo apt-get install software-properties-common
 	sudo apt install default-jdk
 
 ====================================================================================
