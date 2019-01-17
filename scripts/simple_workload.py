@@ -6,12 +6,12 @@ def next_host():
     return hosts[0]
 
 
-hosts = ['127.0.0.1', '127.0.0.2'];
+hosts = ['127.0.0.1', '127.0.0.2']
 sender = ClientSender(hosts)
-numRequest = 1000;
-interval = 0.001; #interval in second
+numRequest = 1000
+interval = 0 #interval in second
 startTime = time.time()
-latencies = sender.sendMultipleReadRequest(numRequest, interval, next_host)
+latencies = sender.sendMultipleReadRequestNonBlock(numRequest, interval, next_host)
 elapsedTime = time.time() - startTime
 
 with open('result.txt', 'w') as filehandle:
