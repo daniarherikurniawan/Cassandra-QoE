@@ -1,7 +1,6 @@
 from cassandra.cluster import Cluster
 from  cassandra.policies import HostFilterPolicy
 from  cassandra.policies import RoundRobinPolicy
-import random
 import random_id
 import time
 
@@ -47,36 +46,3 @@ class Sender:
         row = future.result()[0];
         return time.time() - start_time
 
-
-class ClientSender:
-
-    def __init__(self, hosts):
-        self.senders = {}
-        self.hosts = hosts
-        for host in hosts:
-            self.senders[host] = Sender(host)
-
-
-    def sendReadRequest(self, host):
-        self.senders[host].sendReadRequest()
-
-
-    def getReadLatency(self, host):
-        self.senders[host].getReadLatency()
-
-
-    def sendMultipleReadRequest(self, num_request, interval, next_policy = None):
-        next_host =  next_policy if next_policy != None else self.defaultNextPolicy
-        latencies = []
-        num_requested = 0
-        while num_requested < num_request:
-            host = next_host()
-            latency = self.getReadLatency(host)
-            time.sleep(interval)
-            latencies.append(latency)
-            num_requested = num_requested + 1
-        return latencies
-
-
-    def defaultNextPolicy(self):
-        return random.sample(self.hosts, 1)[0]
