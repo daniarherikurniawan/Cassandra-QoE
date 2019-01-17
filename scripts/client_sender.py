@@ -2,6 +2,7 @@ import random
 import time
 from sender import Sender
 
+
 class ClientSender:
 
     def __init__(self, hosts):
@@ -12,11 +13,21 @@ class ClientSender:
 
 
     def sendReadRequest(self, host):
-        return self.senders[host].sendReadRequest()
+        if host in self.hosts:
+            return self.senders[host].sendReadRequest()
 
 
     def getReadLatency(self, host):
-        return self.senders[host].getReadLatency()
+        if host in self.hosts:
+            return self.senders[host].getReadLatency()
+
+
+    def getHosts(self):
+        return self.hosts
+
+
+    def getSenders(self):
+        return self.senders
 
 
     def sendMultipleReadRequest(self, num_request, interval, next_host_policy = None):

@@ -4,6 +4,7 @@ from  cassandra.policies import RoundRobinPolicy
 import random_id
 import time
 
+
 class Sender:
 
     def __init__(self, host_address):

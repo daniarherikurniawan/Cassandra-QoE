@@ -1,5 +1,6 @@
 import random
 
+
 ids = [
     '0a8a0072-fc0d-11e8-9b56-4a0006dd1f80',
     'a519e37e-fc0c-11e8-9b56-4a0006dd1f80',
@@ -31,6 +32,7 @@ ids = [
     'af102e74-fc0c-11e8-9b56-4a0006dd1f80',
     '526f74b2-fc0d-11e8-9b56-4a0006dd1f80'
 ]
+
 
 def getRandomId():
     return random.sample(ids, 3)[1]

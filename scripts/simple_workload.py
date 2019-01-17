@@ -1,11 +1,17 @@
 import time
 from client_sender import ClientSender
 
-sender = ClientSender(['127.0.0.1'])
+
+def next_host():
+    return hosts[0]
+
+
+hosts = ['127.0.0.1', '127.0.0.2'];
+sender = ClientSender(hosts)
 numRequest = 1000;
 interval = 0.001; #interval in second
 startTime = time.time()
-latencies = sender.sendMultipleReadRequest(numRequest, interval)
+latencies = sender.sendMultipleReadRequest(numRequest, interval, next_host)
 elapsedTime = time.time() - startTime
 
 with open('result.txt', 'w') as filehandle:
