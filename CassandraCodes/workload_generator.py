@@ -31,7 +31,7 @@ def sys_main(row_size):
 
     df.to_csv('cassdataset.csv', sep=',', index=0)
     ids = df['y_id']
-    ids.to_csv('y_id.csv', sep=',', index=0)
+    ids.to_csv('y_id.csv', sep=',', index=0, header=True)
 
     return 0
 
