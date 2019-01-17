@@ -6,10 +6,10 @@ def next_host():
     return hosts[0]
 
 
-hosts = ['127.0.0.1', '127.0.0.2'];
+hosts = ['127.0.0.1', '127.0.0.2']
 sender = ClientSender(hosts)
-numRequest = 1000;
-interval = 0.00001; #interval in second
+numRequest = 1000
+interval = 0.000001 #interval in second
 startTime = time.time()
 latencies, operation_time = sender.sendMultipleReadRequestNonBlock(numRequest, interval, next_host)
 elapsedTime = time.time() - startTime
