@@ -46,28 +46,36 @@ class ClientSender:
         next_host =  next_host_policy if next_host_policy != None else self.defaultNextPolicy
         self.clearLatencyTable()
         num_requested = 0
+        consumed_time = 0
         while num_requested < num_request:
+            start_time = time.time()
             host = next_host()
             latency = self.getReadLatency(host)
-            time.sleep(interval)
             self.latencies.append(latency)
             num_requested = num_requested + 1
-        return self.latencies
+            consumed_time = consumed_time + time.time() - start_time
+            time.sleep(interval)
+        return self.latencies, consumed_time
 
 
     def sendMultipleReadRequestNonBlock(self, num_request, interval, next_host_policy = None):
         next_host =  next_host_policy if next_host_policy != None else self.defaultNextPolicy
         self.clearLatencyTable()
         num_requested = 0
+        consumed_time = 0
         while num_requested < num_request:
+            start_time = time.time()
             host = next_host()
             latency = self.getReadLatencyNonBlock(host)
-            time.sleep(interval)
             num_requested = num_requested + 1
-        
+            consumed_time = consumed_time + time.time() - start_time
+            time.sleep(interval)
+
+        start_time = time.time()
         while len(self.latencies) < num_request:
-            time.sleep(0)
-        return self.latencies
+            time.sleep(0.00001)
+        consumed_time = consumed_time + time.time() - start_time
+        return self.latencies, consumed_time
 
 
     def defaultNextPolicy(self):
