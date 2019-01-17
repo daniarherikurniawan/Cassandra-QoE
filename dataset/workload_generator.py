@@ -15,7 +15,7 @@ def sys_main(row_size):
     field_size = int(row_size / 10)
 
     # creat 10 cols
-    for i in range(1, 11):
+    for i in range(0, 10):
         field_name = 'field' + str(i)
         col_name.append(field_name)
 
