@@ -1,6 +1,6 @@
+from cassandra import ProtocolVersion
 from cassandra.cluster import Cluster
-from  cassandra.policies import HostFilterPolicy
-from  cassandra.policies import RoundRobinPolicy
+from  cassandra.policies import (HostFilterPolicy, RoundRobinPolicy, HostDistance)
 import random_id
 import time
 
@@ -9,17 +9,17 @@ class Sender:
 
     def __init__(self, host_address):
         self.host_address = host_address
-        self.session = self.generateSession()
+        self.cluster = self.generateCluster()
+        self.session = self.cluster.connect()
         self.session.set_keyspace('cassdb')
         self.session.execute('use cassdb')
-        self.read_prepare_stmt = self.session.prepare('select * from users where id=?')
 
 
     def isAddressAccepted(self, host):
         return host.address == self.host_address
 
 
-    def generateSession(self):
+    def generateCluster(self):
         filter_policy = HostFilterPolicy(
             child_policy=RoundRobinPolicy(),
             predicate=self.isAddressAccepted
@@ -28,8 +28,11 @@ class Sender:
         cluster = Cluster(
             [self.host_address],
             load_balancing_policy = filter_policy,
+            protocol_version=ProtocolVersion.V3
         )
-        return cluster.connect()
+        # cluster.set_max_requests_per_connection(HostDistance.LOCAL, 10)
+        # cluster.set_core_connections_per_host(HostDistance.LOCAL, 2)
+        return cluster
 
 
     def getSession(self):
@@ -38,18 +41,23 @@ class Sender:
 
     def sendReadRequest(self):
         user_id = random_id.getRandomId()
-        return self.session.execute_async('select * from users where id=' + user_id)
+        return self.session.execute('select * from users where id=' + user_id)
+
 
     def getReadLatencyNonBlock(self, callback):
         user_id = random_id.getRandomId()
         future = self.session.execute_async('select * from users where id=' + user_id)
         ResultHandler(future, callback, time.time())
 
+
     def getReadLatency(self):
         start_time = time.time()
-        future = self.sendReadRequest()
-        row = future.result()[0]
+        row = self.sendReadRequest()
         return time.time() - start_time
+
+
+    def shutdown(self):
+        self.cluster.shutdown()
 
 
 class ResultHandler:

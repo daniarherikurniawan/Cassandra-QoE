@@ -84,3 +84,7 @@ class ClientSender:
 
     def clearLatencyTable(self):
         self.latencies = []
+
+    def shutdown(self):
+        for host in self.hosts:
+            self.senders[host].shutdown()
