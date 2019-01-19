@@ -107,6 +107,7 @@ class PagedResultHandler(object):
         self.future.add_callbacks(
             callback=self.handle_page,
             errback=self.handle_error)
+
     def handle_page(self, rows):
         if self.future.has_more_pages:
             self.future.start_fetching_next_page()

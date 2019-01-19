@@ -81,6 +81,7 @@ def sendUpdateRequest(key, replica_addr):
     )
     handler = PagedResultHandler(future=future, replica_addr=replica_addr, start_time=start_time, op_type='UPDATE')
 
+    return 0
 
 
 def get_id_list():
@@ -89,6 +90,7 @@ def get_id_list():
     df = pd.read_csv('y_id.csv')
     id_list = list(df['y_id'])
     return 0
+
 
 def sys_main():
 
