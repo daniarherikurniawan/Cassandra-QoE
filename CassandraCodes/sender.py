@@ -5,24 +5,26 @@ import time
 import sys
 import os
 
+
 class Sender:
 
     def __init__(self, host_address):
         self.host_address = host_address
-        self.session = self.generateSession()
+        self.session = self.generate_session()
         self.session.set_keyspace('ycsb')
         self.session.execute('use ycsb')
         self.read_prepare_stmt = self.session.prepare('select * from usertable where y_id=?')
         self.scan_prepare_stmt = self.session.prepare('select * from usertable where y_id>? limit 100')
-        self.update_prepare_stmt = self.session.prepare('update usertable set filed0=?, filed1=?, filed2=?, filed3=?, filed4=?, filed5=?, filed6=?, filed7=?, filed8=?, filed9=? where y_id=? if exists')
+        self.update_prepare_stmt = self.session.prepare(
+            'update usertable set filed0=?, filed1=?, filed2=?, filed3=?, filed4=?, filed5=?, filed6=?, filed7=?, filed8=?, filed9=? where y_id=? if exists')
 
-    def isAddressAccepted(self, host):
+    def is_address_accepted(self, host):
         return host.address == self.host_address
 
-    def generateSession(self):
+    def generate_session(self):
         filter_policy = HostFilterPolicy(
             child_policy=RoundRobinPolicy(),
-            predicate=self.isAddressAccepted
+            predicate=self.is_address_accepted()
         )
 
         cluster = Cluster(
@@ -31,21 +33,27 @@ class Sender:
         )
         return cluster.connect()
 
-    def getSession(self):
+    def get_session(self):
         return self.session
 
-    def sendReadRequest(self, user_id):
-        return self.session.execute_async('select * from users where id=' + user_id)
+    def get_read_latency_no_block(self, callback, user_id):
+        read_stmt = self.read_prepare_stmt.bind((user_id))
+        starting_time = time.time()
+        future = self.session.execute_async(read_stmt)
+        ResultHandler(future, callback, starting_time)
 
-    def getReadLatencyNonBlock(self, callback):
-        future = self.session.execute_async('select * from users where id=' + user_id)
-        ResultHandler(future, callback, time.time())
+    def get_scan_latency_no_block(self, callback, user_id):
+        scan_stmt = self.scan_prepare_stmt.bind((user_id))
+        starting_time = time.time()
+        future = self.session.execute_async(scan_stmt)
+        ResultHandler(future, callback, starting_time)
 
-    def getReadLatency(self):
-        start_time = time.time()
-        future = self.sendReadRequest()
-        row = future.result()[0]
-        return time.time() - start_time
+    def get_update_latency_no_block(self, callback, user_id, fields):
+        update_stmt = self.update_prepare_stmt.bind((fields[0], fields[1], fields[2], fields[3], fields[4], fields[5],
+                                                     fields[6], fields[7], fields[8], fields[9], user_id))
+        starting_time = time.time()
+        future = self.session.execute_async(update_stmt)
+        ResultHandler(future, callback, starting_time)
 
 
 class ResultHandler:
@@ -56,16 +64,15 @@ class ResultHandler:
         self.start_time = start_time
         self.future.add_callbacks(callback=self.handle_success, errback=self.handle_error)
 
-    def read_from_rows(self, rows):
+    def handle_success(self, rows):
+
+        results = []
         for row in rows:
+            results.append(row)
             counter = 0
             for i in range(0, 100):
                 counter += 1
-        return 0
 
-    def handle_success(self, rows):
-
-        self.read_from_rows(rows=rows)
         if self.future.has_more_pages:
             self.future.start_fetching_next_page()
         else:
