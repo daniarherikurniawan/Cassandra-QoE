@@ -8,7 +8,6 @@ import string
 
 system_size = 4000000000
 
-
 def sys_main(row_size):
     row_num = int(system_size / row_size)
     col_name = ['y_id']
