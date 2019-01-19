@@ -37,7 +37,6 @@ def sys_main(row_size):
 
 if __name__ == '__main__':
     print('workload generator starts.')
-    sys.setrecursionlimit(1000000)
     row_size = int(sys.argv[1])
     sys_main(row_size=row_size)
     print('workload is finished!')
