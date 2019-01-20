@@ -33,6 +33,7 @@ def get_id_list():
     df = pd.read_csv('y_id.csv')
     id_list = list(df['y_id'])
     id_list.sort()
+    print('y_id process finished!')
     return 0
 
 
