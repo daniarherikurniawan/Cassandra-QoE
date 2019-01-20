@@ -4,6 +4,7 @@ import numpy as np
 import time
 import random
 import string
+import sys
 from client_sender import ClientSender
 
 hosts = ['cass-1.CassandraTest.DeepEdgeVideo.emulab.net', 'cass-2.CassandraTest.DeepEdgeVideo.emulab.net', 'cass-3.CassandraTest.DeepEdgeVideo.emulab.net']
@@ -25,8 +26,6 @@ total_req_num = 5000
 
 read_prob = 0.9 # write_prob = 1 - read_prob
 
-sleep_period = 0.001
-
 def get_id_list():
 
     global id_list
@@ -37,7 +36,9 @@ def get_id_list():
     return 0
 
 
-def sys_main():
+def sys_main(target_throughput):
+
+    sleep_period = 1.0/target_throughput
 
     random.seed(time.time())
     get_id_list()
@@ -47,7 +48,7 @@ def sys_main():
         payload = ''.join([random.choice(string.ascii_letters) for nn in range(field_size)])
         payloads.append(payload)
 
-    req_sender = ClientSender(hosts)
+    req_sender = ClientSender(hosts, total_req_num, time.time())
     read_count = 0
     for times in range(0, total_req_num):
         user_id = random.sample(id_list, 1)[0]
@@ -58,22 +59,23 @@ def sys_main():
         else:
             random.shuffle(payloads)
             req_sender.get_update_latency_non_block(host=hosts[0], user_id=user_id, fields=payloads)
-        time.sleep(0.05)
+        time.sleep(sleep_period)
 
-    while (len(req_sender.read_latencies) < read_count):
-        print(read_count, len(req_sender.read_latencies))
-        time.sleep(1)
-
-    results = req_sender.read_latencies
-    results = np.array(results)
-    results = results * 1000
-    np.savetxt('cassandra_latency.txt', results, delimiter=',')
+    time.sleep(100)
+    # while (len(req_sender.read_latencies) < read_count):
+    #     print(read_count, len(req_sender.read_latencies))
+    #     time.sleep(1)
+    #
+    # results = req_sender.read_latencies
+    # results = np.array(results)
+    # results = results * 1000
+    # np.savetxt('cassandra_latency.txt', results, delimiter=',')
     return 0
 
 
 if __name__ == '__main__':
     print('Cassandra Client Start')
-    st_time = time.time()
-    sys_main()
-    end_time = time.time()
-    print('throughput', total_req_num/(end_time - st_time))
+    target_throughput = int(sys.argv[1])
+    print('Target throughput is: ', target_throughput, 'rps')
+    sys_main(target_throughput)
+
