@@ -13,7 +13,7 @@ class Sender:
         self.session = self.generate_session()
         self.session.set_keyspace('ycsb')
         self.session.execute('use ycsb')
-        self.session.default_timeout = 3000
+        self.session.default_timeout = 6000
         self.read_prepare_stmt = self.session.prepare('select * from usertable where y_id=?')
         self.update_prepare_stmt = self.session.prepare(
             'update usertable set field0=?, field1=?, field2=?, field3=?, field4=?, field5=?, field6=?, field7=?, field8=?, field9=? where y_id=? if exists')
