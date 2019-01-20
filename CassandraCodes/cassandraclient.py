@@ -23,8 +23,10 @@ row_size = 5000  # unit: Byte
 field_size = int(row_size / 10)
 
 total_req_num = 5000
-
 read_prob = 0.9 # write_prob = 1 - read_prob
+
+file_time_interval = 'new_intervals_cassandra.txt'
+
 
 def get_id_list():
 
@@ -35,13 +37,20 @@ def get_id_list():
     print('y_id process finished!')
     return 0
 
+def get_time_interval(target_throughput):
+
+    time_interval = np.loadtxt(file_time_interval)
+    total_interval = np.sum(time_interval)
+    ori_throughput = total_interval/len(time_interval)*1000
+    time_interval = time_interval * (ori_throughput/target_throughput)
+    return time_interval
 
 def sys_main(target_throughput):
 
-    sleep_period = 1.0/target_throughput
-
     random.seed(time.time())
     get_id_list()
+    time_intervals = get_time_interval(target_throughput)
+
     payloads = []
     for i in range(0, 10):
         # payload = ''.join([random.choice(string.ascii_letters + string.digits) for nn in range(field_size)])
@@ -59,17 +68,10 @@ def sys_main(target_throughput):
         else:
             random.shuffle(payloads)
             req_sender.get_update_latency_non_block(host=hosts[0], user_id=user_id, fields=payloads)
-        time.sleep(sleep_period)
+        time.sleep(time_intervals[times]/1000)
 
     time.sleep(100)
-    # while (len(req_sender.read_latencies) < read_count):
-    #     print(read_count, len(req_sender.read_latencies))
-    #     time.sleep(1)
-    #
-    # results = req_sender.read_latencies
-    # results = np.array(results)
-    # results = results * 1000
-    # np.savetxt('cassandra_latency.txt', results, delimiter=',')
+
     return 0
 
 
