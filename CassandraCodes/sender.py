@@ -13,9 +13,9 @@ class Sender:
         self.session = self.generate_session()
         self.session.set_keyspace('ycsb')
         self.session.execute('use ycsb')
-        self.read_prepare_stmt = self.session.prepare('select * from usertable where token(y_id)=token(?)')
+        self.read_prepare_stmt = self.session.prepare('select * from usertable where y_id=?')
         self.update_prepare_stmt = self.session.prepare(
-            'update usertable set field0=?, field1=?, field2=?, field3=?, field4=?, field5=?, field6=?, field7=?, field8=?, field9=? where token(y_id)=token(?) if exists')
+            'update usertable set field0=?, field1=?, field2=?, field3=?, field4=?, field5=?, field6=?, field7=?, field8=?, field9=? where y_id=? if exists')
         self.scan_prepare_stmt = self.session.prepare('select * from usertable where token(y_id)>token(?) limit 100')
 
 
