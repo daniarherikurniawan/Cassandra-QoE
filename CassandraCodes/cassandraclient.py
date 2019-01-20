@@ -60,8 +60,8 @@ def sys_main(target_throughput):
     req_sender = ClientSender(hosts, total_req_num, time.time())
     read_count = 0
     for times in range(0, total_req_num):
-        if (times % 100 ==0):
-            print('have finished', times, 'requests')
+        # if (times % 100 ==0):
+        #     print('have finished', times, 'requests')
         user_id = random.sample(id_list, 1)[0]
         roller = random.random()
         if roller < read_prob:
@@ -70,7 +70,6 @@ def sys_main(target_throughput):
         else:
             random.shuffle(payloads)
             req_sender.get_update_latency_non_block(host=hosts[0], user_id=user_id, fields=payloads)
-        print('sleeping time', time_intervals[times]/1000)
         time.sleep(time_intervals[times]/1000)
 
     time.sleep(100)
