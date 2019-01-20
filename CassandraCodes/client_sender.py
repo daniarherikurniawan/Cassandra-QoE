@@ -24,7 +24,7 @@ class ClientSender:
 
     def get_update_latency_non_block(self, host, user_id, fields):
         if host in self.hosts:
-            return self.senders[host].get_read_latency_no_block(self.update_nonblock_callback, user_id, fields)
+            return self.senders[host].get_update_latency_no_block(self.update_nonblock_callback, user_id, fields)
 
     def update_nonblock_callback(self, exe_time):
         self.update_latencies.append(exe_time)
@@ -32,7 +32,7 @@ class ClientSender:
 
     def get_scan_latency_non_block(self, host, user_id):
         if host in self.hosts:
-            return self.senders[host].get_read_latency_no_block(self.scan_nonblock_callback, user_id)
+            return self.senders[host].get_scan_latency_no_block(self.scan_nonblock_callback, user_id)
 
     def scan_nonblock_callback(self, exe_time):
         self.scan_latencies.append(exe_time)
