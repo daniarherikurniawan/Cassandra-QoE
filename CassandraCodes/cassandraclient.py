@@ -48,16 +48,21 @@ def sys_main():
         payloads.append(payload)
 
     req_sender = ClientSender(hosts)
-
+    read_count = 0
     for times in range(0, total_req_num):
         user_id = random.sample(id_list, 1)[0]
         roller = random.random()
         if roller < read_prob:
             req_sender.get_read_latency_non_block(host=hosts[0], user_id=user_id)
+            read_count += 1
         else:
             random.shuffle(payloads)
             req_sender.get_update_latency_non_block(host=hosts[0], user_id=user_id, fields=payloads)
         time.sleep(0.0001)
+
+    while (len(req_sender.read_latencies) < read_count):
+        time.sleep(1)
+
     results = req_sender.read_latencies
     results = np.array(results)
     results = results * 1000
