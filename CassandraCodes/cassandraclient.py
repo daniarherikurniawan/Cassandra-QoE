@@ -60,6 +60,8 @@ def sys_main(target_throughput):
     req_sender = ClientSender(hosts, total_req_num, time.time())
     read_count = 0
     for times in range(0, total_req_num):
+        if (times % 100 ==0):
+            print('have finished', times, 'requests')
         user_id = random.sample(id_list, 1)[0]
         roller = random.random()
         if roller < read_prob:
