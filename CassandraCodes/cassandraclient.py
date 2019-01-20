@@ -41,7 +41,7 @@ def get_time_interval(target_throughput):
 
     time_interval = np.loadtxt(file_time_interval)
     total_interval = np.sum(time_interval)
-    ori_throughput = total_interval/len(time_interval)*1000
+    ori_throughput =len(time_interval)/total_interval*1000
     print('throughput', ori_throughput)
     time_interval = time_interval * (ori_throughput/target_throughput)
     return time_interval
