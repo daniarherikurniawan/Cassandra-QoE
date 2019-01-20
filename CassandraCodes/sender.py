@@ -39,13 +39,13 @@ class Sender:
 
     def get_read_latency_no_block(self, callback, user_id):
 
-        read_stmt = self.read_prepare_stmt.bind((str(user_id)))
+        read_stmt = self.read_prepare_stmt.bind((user_id,))
         starting_time = time.time()
         future = self.session.execute_async(read_stmt)
         ResultHandler(future, callback, starting_time)
 
     def get_scan_latency_no_block(self, callback, user_id):
-        scan_stmt = self.scan_prepare_stmt.bind((str(user_id)))
+        scan_stmt = self.scan_prepare_stmt.bind((user_id,))
         starting_time = time.time()
         future = self.session.execute_async(scan_stmt)
         ResultHandler(future, callback, starting_time)
