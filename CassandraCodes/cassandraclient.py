@@ -19,7 +19,7 @@ For debug, just use only 1 replica
 
 id_list = []
 
-row_size = 5000  # unit: Byte
+row_size = 1000  # unit: Byte
 field_size = int(row_size / 10)
 
 total_req_num = 5000
