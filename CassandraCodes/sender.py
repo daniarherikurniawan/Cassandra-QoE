@@ -13,9 +13,9 @@ class Sender:
         self.session = self.generate_session()
         self.session.set_keyspace('ycsb')
         self.session.execute('use ycsb')
-        self.read_prepare_stmt = self.session.prepare('select * from usertable where y_id=?')
+        self.read_prepare_stmt = self.session.prepare('select * from usertable where token(y_id)=token(?)')
         self.update_prepare_stmt = self.session.prepare(
-            'update usertable set field0=?, field1=?, field2=?, field3=?, field4=?, field5=?, field6=?, field7=?, field8=?, field9=? where y_id=? if exists')
+            'update usertable set field0=?, field1=?, field2=?, field3=?, field4=?, field5=?, field6=?, field7=?, field8=?, field9=? where token(y_id)=token(?) if exists')
         self.scan_prepare_stmt = self.session.prepare('select * from usertable where token(y_id)>token(?) limit 100')
 
 
@@ -38,13 +38,13 @@ class Sender:
         return self.session
 
     def get_read_latency_no_block(self, callback, user_id):
-        read_stmt = self.read_prepare_stmt.bind((user_id))
+        read_stmt = self.read_prepare_stmt.bind(user_id)
         starting_time = time.time()
         future = self.session.execute_async(read_stmt)
         ResultHandler(future, callback, starting_time)
 
     def get_scan_latency_no_block(self, callback, user_id):
-        scan_stmt = self.scan_prepare_stmt.bind((user_id))
+        scan_stmt = self.scan_prepare_stmt.bind(user_id)
         starting_time = time.time()
         future = self.session.execute_async(scan_stmt)
         ResultHandler(future, callback, starting_time)
