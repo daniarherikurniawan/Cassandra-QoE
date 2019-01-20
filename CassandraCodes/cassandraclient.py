@@ -61,6 +61,7 @@ def sys_main():
         time.sleep(0.0001)
 
     while (len(req_sender.read_latencies) < read_count):
+        print(read_count, len(req_sender.read_latencies))
         time.sleep(1)
 
     results = req_sender.read_latencies
