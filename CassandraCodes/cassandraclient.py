@@ -43,7 +43,8 @@ def sys_main():
     get_id_list()
     payloads = []
     for i in range(0, 10):
-        payload = ''.join([random.choice(string.ascii_letters + string.digits) for nn in range(field_size)])
+        # payload = ''.join([random.choice(string.ascii_letters + string.digits) for nn in range(field_size)])
+        payload = ''.join([random.choice(string.ascii_letters) for nn in range(field_size)])
         payloads.append(payload)
 
     req_sender = ClientSender(hosts)
