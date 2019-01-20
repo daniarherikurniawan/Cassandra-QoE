@@ -38,6 +38,7 @@ class Sender:
         return self.session
 
     def get_read_latency_no_block(self, callback, user_id):
+        print(len(user_id))
         read_stmt = self.read_prepare_stmt.bind(user_id)
         starting_time = time.time()
         future = self.session.execute_async(read_stmt)
