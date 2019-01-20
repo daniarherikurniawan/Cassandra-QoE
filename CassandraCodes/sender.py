@@ -24,7 +24,7 @@ class Sender:
     def generate_session(self):
         filter_policy = HostFilterPolicy(
             child_policy=RoundRobinPolicy(),
-            predicate=self.is_address_accepted()
+            predicate=self.is_address_accepted
         )
 
         cluster = Cluster(
