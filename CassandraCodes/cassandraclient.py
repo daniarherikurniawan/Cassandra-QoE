@@ -11,7 +11,7 @@ hosts = ['cass-1.CassandraTest.DeepEdgeVideo.emulab.net', 'cass-2.CassandraTest.
 '''
 For debug, just use only 1 replica
 '''
-hosts = ['cass-1.CassandraTest.DeepEdgeVideo.emulab.net']
+hosts = ['155.98.39.52']
 '''
 For debug, just use only 1 replica
 '''
