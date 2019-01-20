@@ -56,7 +56,7 @@ def sys_main():
             req_sender.get_read_latency_non_block(host=hosts[0], user_id=user_id)
         else:
             random.shuffle(payloads)
-            req_sender.get_update_latency_non_block(host=hosts[0], user_id=user_id, fields=roller)
+            req_sender.get_update_latency_non_block(host=hosts[0], user_id=user_id, fields=payloads)
         time.sleep(0.001)
     results = req_sender.read_latencies
     results = np.array(results)

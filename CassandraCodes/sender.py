@@ -51,8 +51,7 @@ class Sender:
         ResultHandler(future, callback, starting_time)
 
     def get_update_latency_no_block(self, callback, user_id, fields):
-        for i in range(0, len(fields)):
-            fields[i] = str(fields[i])
+
         update_stmt = self.update_prepare_stmt.bind((fields[0], fields[1], fields[2], fields[3], fields[4], fields[5],
                                                      fields[6], fields[7], fields[8], fields[9], user_id))
         starting_time = time.time()
