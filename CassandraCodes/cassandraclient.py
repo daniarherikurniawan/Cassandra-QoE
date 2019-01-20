@@ -32,6 +32,7 @@ def get_id_list():
     global id_list
     df = pd.read_csv('y_id.csv')
     id_list = list(df['y_id'])
+    id_list.sort()
     return 0
 
 
@@ -39,7 +40,6 @@ def sys_main():
 
     random.seed(time.time())
     get_id_list()
-    id_list.sort()
     payloads = []
     for i in range(0, 10):
         payload = ''.join([random.choice(string.ascii_letters + string.digits) for nn in range(field_size)])
@@ -54,8 +54,8 @@ def sys_main():
             req_sender.get_read_latency_non_block(host=hosts[0], user_id=user_id)
         else:
             random.shuffle(payloads)
-            req_sender.get_update_latency_non_block(host=hosts[0], user_id=user_id,fields=roller)
-
+            req_sender.get_update_latency_non_block(host=hosts[0], user_id=user_id, fields=roller)
+        time.sleep(0.001)
     results = req_sender.read_latencies
     results = np.array(results)
     results = results * 1000
@@ -65,4 +65,7 @@ def sys_main():
 
 if __name__ == '__main__':
     print('Cassandra Client Start')
+    st_time = time.time()
     sys_main()
+    end_time = time.time()
+    print('throughput', total_req_num/(end_time - st_time))
