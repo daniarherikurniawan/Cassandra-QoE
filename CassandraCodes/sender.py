@@ -13,6 +13,7 @@ class Sender:
         self.session = self.generate_session()
         self.session.set_keyspace('ycsb')
         self.session.execute('use ycsb')
+        self.session.default_timeout = 3000
         # self.read_prepare_stmt = self.session.prepare('select * from usertable where y_id=?')
         # self.update_prepare_stmt = self.session.prepare(
         #     'update usertable set field0=?, field1=?, field2=?, field3=?, field4=?, field5=?, field6=?, field7=?, field8=?, field9=? where y_id=? if exists')
@@ -38,34 +39,34 @@ class Sender:
         return self.session
 
     def get_read_latency_no_block(self, callback, user_id):
-        # read_stmt = self.read_prepare_stmt.bind((user_id,))
+        read_stmt = self.read_prepare_stmt.bind((user_id,))
         starting_time = time.time()
-        # future = self.session.execute_async(read_stmt)
-        future = self.session.execute_async('''
-        select * from ycsb.usertable where y_id=%s
-        ''', (user_id,))
+        future = self.session.execute_async(read_stmt)
+        # future = self.session.execute_async('''
+        # select * from ycsb.usertable where y_id=%s
+        # ''', (user_id,))
         ResultHandler(future, callback, starting_time)
 
     def get_scan_latency_no_block(self, callback, user_id):
-        # scan_stmt = self.scan_prepare_stmt.bind((user_id,))
+        scan_stmt = self.scan_prepare_stmt.bind((user_id,))
         starting_time = time.time()
-        # future = self.session.execute_async(scan_stmt)
-        future = self.session.execute_async(
-            '''
-            select * from usertable where token(y_id)>token(%s) limit 100
-            ''', (user_id,)
-        )
+        future = self.session.execute_async(scan_stmt)
+        # future = self.session.execute_async(
+        #     '''
+        #     select * from usertable where token(y_id)>token(%s) limit 100
+        #     ''', (user_id,)
+        # )
         ResultHandler(future, callback, starting_time)
 
     def get_update_latency_no_block(self, callback, user_id, fields):
 
-        # # update_stmt = self.update_prepare_stmt.bind((fields[0], fields[1], fields[2], fields[3], fields[4], fields[5],
-        #                                              fields[6], fields[7], fields[8], fields[9], user_id))
+        update_stmt = self.update_prepare_stmt.bind((fields[0], fields[1], fields[2], fields[3], fields[4], fields[5],
+                                                     fields[6], fields[7], fields[8], fields[9], user_id))
         starting_time = time.time()
-        # future = self.session.execute_async(update_stmt)
-        future = self.session.execute_async('''
-        update ycsb.usertable set field0=%s, field1=%s, field2=%s, field3=%s, field4=%s, field5=%s, field6=%s, field7=%s, field8=%s, field9=%s where y_id=%s if exists
-        ''', (fields[0],fields[1],fields[2],fields[3],fields[4],fields[5],fields[6],fields[7],fields[8],fields[9], user_id))
+        future = self.session.execute_async(update_stmt)
+        # future = self.session.execute_async('''
+        # update ycsb.usertable set field0=%s, field1=%s, field2=%s, field3=%s, field4=%s, field5=%s, field6=%s, field7=%s, field8=%s, field9=%s where y_id=%s if exists
+        # ''', (fields[0],fields[1],fields[2],fields[3],fields[4],fields[5],fields[6],fields[7],fields[8],fields[9], user_id))
         ResultHandler(future, callback, starting_time)
 
 
