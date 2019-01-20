@@ -221,20 +221,6 @@ Open 8 SSH terminal :
 > Note:
 > You just need to edit the send.py and the algorithm at server.py
 
-====================================================================================
-> Python script for preparing the library
-
-	import pandas as pd
-	import io
-	import matplotlib.pyplot as plt
-	import numpy as np
-	import datetime
-	from datetime import timedelta
-	from datetime import datetime
-
-> Python script for getting the random uuid
-	
-
 
 
 ====================================================================================
@@ -317,6 +303,11 @@ Open 8 SSH terminal :
 >Run workload from client
 
     ./bin/ycsb load cassandra-cql -P workloads/workloadb-test -p hosts=IP -threads 10
+
+
+>Copy table ID to a file
+    
+    COPY ycsb.usertable (y_id) TO '/proj/DeepEdgeVideo/zhangxu/y_id.csv' WITH DELIMITER=',' AND HEADER=TRUE;
 
 >Clear Old database
 
