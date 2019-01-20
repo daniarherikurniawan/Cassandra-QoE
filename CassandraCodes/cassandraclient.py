@@ -70,6 +70,7 @@ def sys_main(target_throughput):
         else:
             random.shuffle(payloads)
             req_sender.get_update_latency_non_block(host=hosts[0], user_id=user_id, fields=payloads)
+        print('sleeping time',time_intervals[times]/1000)
         time.sleep(time_intervals[times]/1000)
 
     time.sleep(100)
