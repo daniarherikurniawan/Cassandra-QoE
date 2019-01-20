@@ -15,7 +15,7 @@ class Sender:
         self.session.execute('use ycsb')
         self.read_prepare_stmt = self.session.prepare('select * from usertable where y_id=?')
         self.update_prepare_stmt = self.session.prepare(
-            'update usertable set filed0=?, filed1=?, filed2=?, filed3=?, filed4=?, filed5=?, filed6=?, filed7=?, filed8=?, filed9=? where y_id=? if exists')
+            'update usertable set field0=?, field1=?, field2=?, field3=?, field4=?, field5=?, field6=?, field7=?, field8=?, field9=? where y_id=? if exists')
         self.scan_prepare_stmt = self.session.prepare('select * from usertable where y_id>? limit 100')
 
 
