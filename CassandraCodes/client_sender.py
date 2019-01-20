@@ -15,7 +15,6 @@ class ClientSender:
             self.senders[host] = sd.Sender(host)
 
     def get_read_latency_non_block(self, host, user_id):
-        print(1)
         if host in self.hosts:
             return self.senders[host].get_read_latency_no_block(self.read_non_nonblock_callback, user_id)
 
