@@ -14,9 +14,10 @@ class Sender:
         self.session.set_keyspace('ycsb')
         self.session.execute('use ycsb')
         self.read_prepare_stmt = self.session.prepare('select * from usertable where y_id=?')
-        self.scan_prepare_stmt = self.session.prepare('select * from usertable where y_id>? limit 100')
         self.update_prepare_stmt = self.session.prepare(
             'update usertable set filed0=?, filed1=?, filed2=?, filed3=?, filed4=?, filed5=?, filed6=?, filed7=?, filed8=?, filed9=? where y_id=? if exists')
+        self.scan_prepare_stmt = self.session.prepare('select * from usertable where y_id>? limit 100')
+
 
     def is_address_accepted(self, host):
         return host.address == self.host_address
