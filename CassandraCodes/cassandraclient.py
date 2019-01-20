@@ -58,7 +58,7 @@ def sys_main():
         else:
             random.shuffle(payloads)
             req_sender.get_update_latency_non_block(host=hosts[0], user_id=user_id, fields=payloads)
-        time.sleep(0.0001)
+        time.sleep(0.01)
 
     while (len(req_sender.read_latencies) < read_count):
         print(read_count, len(req_sender.read_latencies))
