@@ -313,8 +313,10 @@ Open 8 SSH terminal :
 
     use ycsb;
     truncate usetable;
+    drop keyspace ycsb;
 
 >Delete Snapshots
+
 
 >Ubuntu Script to Bash
 
