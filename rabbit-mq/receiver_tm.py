@@ -14,7 +14,7 @@ c_properties['x-message-ttl'] = 10000000
 c_properties['x-max-length'] = 10000000
 
 
-connection = pika.BlockingConnection(pika.ConnectionParameters(host='155.98.39.140', credentials=pika_credentials))
+connection = pika.BlockingConnection(pika.ConnectionParameters(host='155.98.39.139', credentials=pika_credentials))
 channel = connection.channel()
 
 channel.exchange_declare(exchange='logs',
