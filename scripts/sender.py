@@ -28,7 +28,7 @@ class Sender:
         cluster = Cluster(
             [self.host_address],
             load_balancing_policy = filter_policy,
-            protocol_version=ProtocolVersion.V3
+            #protocol_version=ProtocolVersion.V3
         )
         # cluster.set_max_requests_per_connection(HostDistance.LOCAL, 10)
         # cluster.set_core_connections_per_host(HostDistance.LOCAL, 2)
